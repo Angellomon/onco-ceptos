@@ -19,6 +19,12 @@
   --secondary-color: #ffe066;
   --light-background: #f4f7f5;
   --dark-background: #50514f;
+
+  --showcase-skew-deg: 8deg;
+  --showcase-skew-deg-opposite: calc(0deg - var(--showcase-skew-deg));
+  --showcase-skew: skew(var(--showcase-skew-deg));
+  --showcase-skew-opposite: skew(var(--showcase-skew-deg-opposite));
+  --showcase-skew-scale: 1.1;
 }
 
 a {
