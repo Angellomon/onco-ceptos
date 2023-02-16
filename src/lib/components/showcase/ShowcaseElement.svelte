@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ShowcaseType } from "../../types/showcase";
+  import type { ShowcaseType } from "../../../types/showcase";
 
   export let showcase: ShowcaseType;
 </script>
@@ -19,6 +19,7 @@
     min-height: 60px;
 
     width: 15vw;
+
     height: 30vw;
 
     display: flex;
@@ -48,15 +49,20 @@
 
   h2 {
     align-self: flex-start;
+
     margin-top: 10px;
+
     transform: var(--showcase-skew);
-    text-align: left;
+
+    text-align: right;
     text-decoration: underline;
   }
 
   p {
     align-self: flex-end;
+
     margin-bottom: 20px;
+
     transform: var(--showcase-skew);
   }
 </style>
