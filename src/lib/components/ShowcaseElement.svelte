@@ -25,7 +25,9 @@
     flex-direction: column;
     justify-content: space-between;
 
-    transform: skew(-20deg);
+    transform: var(--showcase-skew-opposite);
+    transition: transform 0.3s;
+    z-index: 0;
 
     padding: 10px;
   }
@@ -34,16 +36,27 @@
     background-color: var(--secondary-color);
   }
 
+  div:hover {
+    cursor: pointer;
+    transform: scale(1.1) var(--showcase-skew-opposite);
+    z-index: 10;
+  }
+
+  div:hover > h1 p {
+    transform: var(--showcase-skew);
+  }
+
   h2 {
     align-self: flex-start;
     margin-top: 10px;
-    transform: skew(20deg);
+    transform: var(--showcase-skew);
     text-align: left;
+    text-decoration: underline;
   }
 
   p {
     align-self: flex-end;
     margin-bottom: 20px;
-    transform: skew(20deg);
+    transform: var(--showcase-skew);
   }
 </style>
