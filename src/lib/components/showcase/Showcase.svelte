@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ShowcaseType } from "../../../types/showcase";
+  import type { ShowcaseType } from "../../../types/series";
   import { generateTestData } from "../../utils";
   import ShowcaseElement from "./ShowcaseElement.svelte";
 
@@ -26,9 +26,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+    -webkit-box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
   }
 </style>
