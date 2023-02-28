@@ -1,13 +1,11 @@
 <script>
-  import Header from "../components/Header.svelte";
-  import SeriesListing from "../components/listing/SeriesListing.svelte";
-  import Showcase from "../components/showcase/Showcase.svelte";
+  import Router from "svelte-spa-router";
+
+  import { routes } from "../../routes";
 </script>
 
 <main>
-  <Header />
-  <Showcase />
-  <SeriesListing />
+  <Router {routes} />
 </main>
 
 <style>
