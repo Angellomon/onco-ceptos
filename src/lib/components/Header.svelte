@@ -1,6 +1,10 @@
+<script lang="ts">
+  export let title: string = "onconceptos";
+</script>
+
 <header>
   <div class="header">
-    <h1>ONCONCEPTOS</h1>
+    <h1>{title.toUpperCase()}</h1>
   </div>
 </header>
 
