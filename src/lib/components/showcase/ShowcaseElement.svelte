@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ShowcaseType } from "../../../types/showcase";
+  import type { ShowcaseType } from "../../../types/series";
 
   export let showcase: ShowcaseType;
 </script>
@@ -41,6 +41,10 @@
     cursor: pointer;
     transform: scale(1.1) var(--showcase-skew-opposite);
     z-index: 10;
+
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
   }
 
   div:hover > h1 p {
