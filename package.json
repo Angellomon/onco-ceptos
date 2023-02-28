@@ -12,6 +12,8 @@
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.0.2",
     "@tsconfig/svelte": "^3.0.0",
+    "prettier": "^2.8.4",
+    "prettier-plugin-svelte": "^2.9.0",
     "svelte": "^3.55.1",
     "svelte-check": "^2.10.3",
     "tslib": "^2.5.0",
@@ -22,6 +24,7 @@
     "@vime/core": "^5.4.0",
     "@vime/svelte": "^5.4.0",
     "nanoid": "^4.0.1",
-    "svelte-spa-router": "^3.3.0"
+    "svelte-spa-router": "^3.3.0",
+    "xlsx": "^0.18.5"
   }
 }
