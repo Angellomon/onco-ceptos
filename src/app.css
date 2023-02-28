@@ -25,6 +25,9 @@
   --showcase-skew: skew(var(--showcase-skew-deg));
   --showcase-skew-opposite: skew(var(--showcase-skew-deg-opposite));
   --showcase-skew-scale: 1.1;
+
+  --text-size: 20px;
+  --descritption-size: 18px;
 }
 
 a {
