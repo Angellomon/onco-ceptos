@@ -3,13 +3,24 @@
   import EpisodesListingSidebar from "../components/listing/EpisodesListingSidebar.svelte";
   import { selectedEpisode } from "../store";
 
+  let sectionTitle = "";
+
+  function setupSectionTitle() {
+    const episodeTitle = $selectedEpisode?.seriesTitle;
+    sectionTitle = `EPISODIOS ${episodeTitle ? "- " + episodeTitle : ""}`;
+  }
+
   function handleEpisodeClose() {
     selectedEpisode.set(null);
   }
+
+  $: setupSectionTitle();
 </script>
 
 <section transition:slide={{ delay: 100 }}>
-  <h1 id="episodes-title">EPISODIOS</h1>
+  <h1 id="episodes-title">
+    {sectionTitle}
+  </h1>
 
   <div class="content">
     <EpisodesListingSidebar />
