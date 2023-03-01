@@ -1,10 +1,33 @@
 <script lang="ts">
+  import { onDestroy, onMount } from "svelte";
+
   import type { ShowcaseType } from "../../../types/series";
+  import { selectedSeries } from "../../store";
 
   export let showcase: ShowcaseType;
+
+  let divElement: HTMLElement;
+
+  onMount(() => {
+    divElement.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      document
+        .getElementById("series-title")
+        .scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+
+  onDestroy(() => {
+    divElement.removeEventListener("click", () => {});
+  });
+
+  function handleSeriesClick() {
+    selectedSeries.set(showcase);
+  }
 </script>
 
-<div>
+<div bind:this={divElement} on:click={handleSeriesClick} on:keydown={() => {}}>
   <h2>
     {showcase.title}
   </h2>
