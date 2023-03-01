@@ -17,20 +17,25 @@
   }
 </script>
 
-<div class="series-sidebar">
-  <ul class="series-listing" in:fly={{ duration: 500, opacity: 1, x: -200 }}>
-    {#each $episodesStore.filter((e) => $selectedEpisode && e.seriesTitle === $selectedSeries.title) as episode}
-      <li
-        class="series-element"
-        class:selected={$selectedEpisode?.title == episode.title}
-        on:click={() => handleSeriesClick(episode.title)}
-        on:keydown={() => {}}
-      >
-        {episode.title}
-      </li>
-    {/each}
-  </ul>
-</div>
+{#if $selectedEpisode}
+  <div
+    class="series-sidebar"
+    transition:fly={{ duration: 500, opacity: 1, x: -200 }}
+  >
+    <ul class="series-listing">
+      {#each $episodesStore.filter((e) => $selectedEpisode && e.seriesTitle === $selectedSeries.title) as episode}
+        <li
+          class="series-element"
+          class:selected={$selectedEpisode?.title == episode.title}
+          on:click={() => handleSeriesClick(episode.title)}
+          on:keydown={() => {}}
+        >
+          {episode.title}
+        </li>
+      {/each}
+    </ul>
+  </div>
+{/if}
 
 <style>
   div.series-sidebar {
