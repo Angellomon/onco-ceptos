@@ -1,14 +1,25 @@
 <script lang="ts">
+  import { slide } from "svelte/transition";
   import EpisodesListingSidebar from "../components/listing/EpisodesListingSidebar.svelte";
   import { selectedEpisode } from "../store";
+
+  function handleEpisodeClose() {
+    selectedEpisode.set(null);
+  }
 </script>
 
-<section>
-  <h1>EPISODIOS</h1>
+<section transition:slide={{ delay: 100 }}>
+  <h1 id="episodes-title">EPISODIOS</h1>
 
   <div class="content">
     <EpisodesListingSidebar />
   </div>
+
+  <span
+    on:click={handleEpisodeClose}
+    on:keydown={() => {}}
+    class="close-episode">Cerrar</span
+  >
 </section>
 
 <style>
@@ -24,7 +35,7 @@
     padding: 2% 1%;
     margin: 0;
 
-    min-height: 70vh;
+    /* min-height: 70vh; */
 
     position: relative;
   }
@@ -38,5 +49,35 @@
     width: 100%;
     height: 100%;
     padding: 2% 1%;
+    vertical-align: middle;
+  }
+
+  /* span.close-episode::before {
+    content: "x";
+    font-family: monospace;
+    margin-right: 5px;
+  } */
+
+  span.close-episode {
+    font-size: 20px;
+
+    position: absolute;
+    top: 2vw;
+    right: 3vw;
+
+    color: white;
+
+    vertical-align: middle;
+
+    border: 1px solid white;
+    border-radius: 5px;
+
+    padding: 5px 10px;
+  }
+
+  span.close-episode:hover {
+    background-color: white;
+    color: var(--primary-color);
+    cursor: pointer;
   }
 </style>
