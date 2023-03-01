@@ -1,9 +1,16 @@
 <script lang="ts">
+  import { onDestroy } from "svelte";
   import { fade } from "svelte/transition";
   import type { EpisodeType } from "../../../types/series";
   import { episodesStore, selectedSeries, selectedEpisode } from "../../store";
 
   let hoveredEpisode: EpisodeType | null = null;
+  let firstTime = true; // bugfix: on first time render, it won't scroll into episode's section
+  let firstClickTimeout;
+
+  onDestroy(() => {
+    clearTimeout(firstClickTimeout);
+  });
 
   function handleEpisodeHover(episodeTitle: string) {
     const i = $episodesStore.findIndex((e) => e.title == episodeTitle);
@@ -24,9 +31,11 @@
 
     selectedEpisode.set($episodesStore[i]);
 
-    document
-      .getElementById("episodes-title")
-      .scrollIntoView({ behavior: "smooth", block: "start" });
+    firstClickTimeout = setTimeout(() => {
+      document
+        .getElementById("episodes-title")
+        .scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 250);
   }
 </script>
 
