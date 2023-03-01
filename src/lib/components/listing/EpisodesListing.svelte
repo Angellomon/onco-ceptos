@@ -1,7 +1,7 @@
 <script lang="ts">
   import { slide, fade } from "svelte/transition";
   import type { EpisodeType } from "../../../types/series";
-  import { episodesStore, selectedSeries } from "../../store";
+  import { episodesStore, selectedSeries, selectedEpisode } from "../../store";
 
   let hoveredEpisode: EpisodeType | null = null;
 
@@ -16,6 +16,14 @@
   function handleMouseLeave() {
     hoveredEpisode = null;
   }
+
+  function handleEpisodeClick(episodeTitle: string) {
+    const i = $episodesStore.findIndex((e) => e.title == episodeTitle);
+
+    if (i < 0) return;
+
+    selectedEpisode.set($episodesStore[i]);
+  }
 </script>
 
 <ul class="episodes-list">
@@ -26,6 +34,8 @@
       transition:slide|local
       on:mouseenter={() => handleEpisodeHover(episode.title)}
       on:mouseleave={() => handleMouseLeave()}
+      on:click={() => handleEpisodeClick(episode.title)}
+      on:keypress={() => {}}
     >
       <b>{episode.title}</b>
       <span class="episode-number">{episode.episodeNumber}</span>
