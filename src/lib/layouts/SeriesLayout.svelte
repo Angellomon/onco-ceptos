@@ -3,6 +3,9 @@
   import SeriesListingSidebar from "../components/listing/SeriesListingSidebar.svelte";
   import SeriesDescription from "../components/SeriesDescription.svelte";
   import Showcase from "../components/showcase/Showcase.svelte";
+
+  import { selectedEpisode } from "../store";
+  import EpisodeLayout from "./EpisodeLayout.svelte";
 </script>
 
 <Header />
@@ -15,6 +18,9 @@
     <SeriesDescription />
   </div>
 </section>
+{#if $selectedEpisode}
+  <EpisodeLayout />
+{/if}
 
 <style>
   h1 {
@@ -28,7 +34,7 @@
     padding: 2% 1%;
     margin: 0;
 
-    min-height: 70vh;
+    /* min-height: 70vh; */
 
     position: relative;
   }
