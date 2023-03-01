@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { slide, fade } from "svelte/transition";
+  import { fade } from "svelte/transition";
   import type { EpisodeType } from "../../../types/series";
   import { episodesStore, selectedSeries, selectedEpisode } from "../../store";
 
@@ -23,6 +23,10 @@
     if (i < 0) return;
 
     selectedEpisode.set($episodesStore[i]);
+
+    document
+      .getElementById("episodes-title")
+      .scrollIntoView({ behavior: "smooth", block: "start" });
   }
 </script>
 
@@ -31,7 +35,6 @@
     <li
       class="episode-element"
       style={`background-image: url("/preview-img/${episode.previewUrl}")`}
-      transition:slide|local
       on:mouseenter={() => handleEpisodeHover(episode.title)}
       on:mouseleave={() => handleMouseLeave()}
       on:click={() => handleEpisodeClick(episode.title)}
