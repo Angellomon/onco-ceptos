@@ -4,7 +4,7 @@
 </script>
 
 <div class="series-description">
-  <h2>{$selectedSeries?.title}</h2>
+  <h2 id="series-title">{$selectedSeries?.title}</h2>
 
   <p>{$selectedSeries?.description}</p>
 
@@ -26,7 +26,7 @@
     width: 100%;
 
     background-color: #c2e5df;
-    margin-top: -7vh;
+    margin-top: -4vh;
     margin-right: 5vw;
     margin-left: 3vw;
     padding-right: 3vw;
