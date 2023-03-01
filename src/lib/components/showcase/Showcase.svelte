@@ -1,15 +1,11 @@
 <script lang="ts">
   import type { ShowcaseType } from "../../../types/series";
-  import { generateTestData } from "../../utils";
+  import { showcaseStore } from "../../store";
   import ShowcaseElement from "./ShowcaseElement.svelte";
-
-  export let showcases: ShowcaseType[] = generateTestData({
-    limit: 5,
-  });
 </script>
 
 <section>
-  {#each showcases as showcase}
+  {#each $showcaseStore as showcase}
     <ShowcaseElement {showcase} />
   {/each}
 </section>
