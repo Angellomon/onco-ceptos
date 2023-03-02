@@ -21,6 +21,7 @@
       <VideoPlayer
         poster={`/preview-img/${$selectedEpisode.previewUrl}`}
         source={$selectedEpisode.videoUrl}
+        color="#70c1b3"
       />
     </div>
   {:else}
