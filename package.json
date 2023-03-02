@@ -25,6 +25,7 @@
     "@vime/svelte": "^5.4.0",
     "nanoid": "^4.0.1",
     "svelte-spa-router": "^3.3.0",
+    "svelte-video-player": "^1.2.5",
     "xlsx": "^0.18.5"
   }
 }
