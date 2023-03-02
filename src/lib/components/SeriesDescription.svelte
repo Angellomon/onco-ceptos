@@ -1,9 +1,17 @@
 <script lang="ts">
+  import { fly } from "svelte/transition";
   import { selectedSeries, seriesStore } from "../store";
   import EpisodesListing from "./listing/EpisodesListing.svelte";
 </script>
 
-<div class="series-description">
+<div
+  class="series-description"
+  transition:fly={{
+    opacity: 1,
+    x: 500,
+    duration: 500,
+  }}
+>
   <h2 id="series-title">{$selectedSeries?.title}</h2>
 
   <p>{$selectedSeries?.description}</p>
