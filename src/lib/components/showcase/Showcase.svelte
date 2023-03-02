@@ -5,25 +5,42 @@
 </script>
 
 <section>
-  {#each $showcaseStore as showcase}
-    <ShowcaseElement {showcase} />
-  {/each}
+  <h1>DESTACADOS</h1>
+
+  <div class="content">
+    {#each $showcaseStore as showcase}
+      <ShowcaseElement {showcase} />
+    {/each}
+  </div>
 </section>
 
 <style>
+  h1 {
+    color: var(--light-background);
+    margin: 0 4%;
+  }
+
   section {
     background-color: var(--dark-background);
 
+    min-height: 55vh;
+
+    flex-direction: column;
+
+    display: flex;
+    justify-content: center;
+    -webkit-box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    padding-bottom: 5vh;
+  }
+
+  div.content {
     width: 100%;
     height: 100%;
-
-    min-height: 70vh;
 
     display: flex;
     justify-content: center;
     align-items: center;
-    -webkit-box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
-    box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
   }
 </style>
