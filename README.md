@@ -1,47 +1,56 @@
-# Svelte + TS + Vite
+# ONCONCEPTOS
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
+Desarrollo para un cliente de [Umbrella Company](https://www.umbrellacompany.mx/)
 
-## Recommended IDE Setup
+## Objetivo
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+Desarrollar un aplicativo web que funcione como una interfaz para consumir y calificar medios audiovisuales.
 
-## Need an official Svelte framework?
+## Puntos a Considerar
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+- La plataforma donde se publicará el aplicativo es SharePoint
+- Éstos medios se consumen desde la red interna del cliente, la cual está limitada a las políticas de seguridad del mismo.
+- El contenido del aplicativo _debe ser administrable_ por el personal de Umbrella.
+- Tipos de contenido:
+  - Showcase/Destacados: son series/episodios particulares para ser desplegados al inicio. Tiene como atributos: imágen principal, título y descripción
+  - Series: tiene como atributos: título, descripción completa y descripción corta
+  - Episodios: tiene como atributos: título de serie, título de episodio, descripción, número de episodio, url del video y url de la imágen de preview.
+- La expreiencia debe ser parecida a servicios de Streaming (ui/ux)
+- El mecanismo de calificación debe considerar promedio (star rating) y likes
 
-## Technical considerations
+## Estrategias
 
-**Why use this over SvelteKit?**
+### Desarrollo
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+La arquitectura del aplicativo web es SPA (Single Page Application) desarrollado con (Svelte)[https://svelte.dev] en conjunto con (Vite)[https://vitejs.dev], para poder compilar como un sitio estático y poder instalar de manera trivial en SharePoint cambiando el nombre de `index.html` a `index.aspx`.
 
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+### Administración de Contenidos
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
+> TODO: implementar una interfaz para generar el documento `.xlsx`
 
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
+El orígen de los datos se da por medio de un archivo `.xlsx`, que debe llamarse `datos-onconceptos.xlsx`. Éste archivo contiene 3 hojas (sheets) con diversos encabezados:
 
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
+1. series:
+   - titulo
+   - descripcion_completa
+   - descripcion_corta
+2. episodios:
+   - titulo_serie
+   - titulo_episodio
+   - numero
+   - descripcion
+   - video_url
+   - preview_img_url
+3. showcase:
+   - titulo_serie
+   - descripcion
+   - preview_img_url
 
-**Why include `.vscode/extensions.json`?**
+> series->titulo **debe ser igual** a episodios->titulo_serie y showcase->titulo_serie
 
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
+#### Imágenes Preview
 
-**Why enable `allowJs` in the TS template?**
+En la ubicación donde se instale el aplicativo, debe haber una carpeta llamada `preview-img`. Dentro de ésta deben estar **todas** las imagenes que funjan como _preview_. El nombre de los archivos deben corresponder con los campos `preview_img_url` dentro de las _sheets_ del
+E.g. Si una serie "Serie A" tiene un episodio con título "Episodio 1 de Serie A" cuyo archivo preview es `preview_episodio-1-serie-a.jpg`\*. En el excel, en el renglón correspondiente a "Episodio 1 de Serie A", el campo preview_img_url debe ir `preview_episodio-1-serie-a.jpg`, y el directorio de publicación debe quedar como `./preview-img/preview_episodio-1-serie-a.jpg`
 
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
-```
+\*Puede ser cualquier formato de imágen
