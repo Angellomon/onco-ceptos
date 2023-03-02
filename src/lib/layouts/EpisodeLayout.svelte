@@ -2,9 +2,10 @@
   import { fly, slide } from "svelte/transition";
   import EpisodeDescription from "../components/EpisodeDescription.svelte";
   import EpisodesListingSidebar from "../components/listing/EpisodesListingSidebar.svelte";
-  import { selectedEpisode } from "../store";
+  import { selectedEpisode, episodeAlreadyClicked } from "../store";
 
   let sectionTitle = "";
+  let delay: number;
 
   function setupSectionTitle() {
     const episodeTitle = $selectedEpisode?.seriesTitle;
@@ -16,11 +17,17 @@
   }
 
   $: setupSectionTitle();
+  $: delay = $episodeAlreadyClicked ? 100 : 400;
 </script>
 
-<section transition:slide={{ delay: 100 }}>
+<section out:slide>
   <h1
-    transition:fly={{
+    in:fly={{
+      duration: 300,
+      x: -200,
+      delay,
+    }}
+    out:fly={{
       duration: 300,
       x: -200,
     }}
@@ -30,8 +37,8 @@
   </h1>
 
   <div class="content">
-    <EpisodesListingSidebar />
-    <EpisodeDescription />
+    <EpisodesListingSidebar {delay} />
+    <EpisodeDescription {delay} />
   </div>
 
   <span

@@ -10,3 +10,5 @@ export const episodesStore = writable<EpisodeType[]>([]);
 export const selectedSeries = writable<SeriesType | null>(null);
 
 export const selectedEpisode = writable<EpisodeType | null>(null);
+
+export const episodeAlreadyClicked = writable(false);

@@ -2,7 +2,12 @@
   import { onDestroy } from "svelte";
   import { fade } from "svelte/transition";
   import type { EpisodeType } from "../../../types/series";
-  import { episodesStore, selectedSeries, selectedEpisode } from "../../store";
+  import {
+    episodesStore,
+    selectedSeries,
+    selectedEpisode,
+    episodeAlreadyClicked,
+  } from "../../store";
 
   let hoveredEpisode: EpisodeType | null = null;
   let firstClickTimeout: any; // bugfix: on first time render, it won't scroll into episode's section
@@ -30,11 +35,17 @@
 
     selectedEpisode.set($episodesStore[i]);
 
-    firstClickTimeout = setTimeout(() => {
-      document
-        .getElementById("episodes-title")
-        .scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 250);
+    firstClickTimeout = setTimeout(
+      () => {
+        document
+          .getElementById("episodes-title")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+
+        clearTimeout(firstClickTimeout);
+        episodeAlreadyClicked.set(true);
+      },
+      $episodeAlreadyClicked ? 100 : 300
+    );
   }
 </script>
 

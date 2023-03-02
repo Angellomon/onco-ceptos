@@ -2,11 +2,18 @@
   // import { onMount } from "svelte";
   import { fly } from "svelte/transition";
 
-  import { episodesStore, selectedEpisode, selectedSeries } from "../../store";
+  import {
+    episodesStore,
+    selectedEpisode,
+    selectedSeries,
+    episodeAlreadyClicked,
+  } from "../../store";
 
   // onMount(() => {
   //   if ($episodesStore.length > 0) selectedEpisode.set($episodesStore[0]);
   // });
+
+  export let delay = 400;
 
   function handleSeriesClick(title: string) {
     const i = $episodesStore.findIndex((e) => e.title == title);
@@ -14,13 +21,24 @@
     if (i < 0) return;
 
     selectedEpisode.set($episodesStore[i]);
+    episodeAlreadyClicked.set(true);
   }
 </script>
 
 {#if $selectedEpisode}
   <div
     class="series-sidebar"
-    transition:fly={{ duration: 500, opacity: 1, x: -200 }}
+    in:fly={{
+      opacity: 1,
+      x: -200,
+      duration: 300,
+      delay,
+    }}
+    out:fly={{
+      opacity: 1,
+      x: -200,
+      duration: 300,
+    }}
   >
     <ul class="series-listing">
       {#each $episodesStore.filter((e) => $selectedEpisode && e.seriesTitle === $selectedSeries.title) as episode}
