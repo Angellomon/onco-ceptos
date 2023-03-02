@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { slide } from "svelte/transition";
+  import { fade, fly, slide } from "svelte/transition";
+  import EpisodeDescription from "../components/EpisodeDescription.svelte";
   import EpisodesListingSidebar from "../components/listing/EpisodesListingSidebar.svelte";
   import { selectedEpisode } from "../store";
 
@@ -18,15 +19,26 @@
 </script>
 
 <section transition:slide={{ delay: 100 }}>
-  <h1 id="episodes-title">
+  <h1
+    transition:fly={{
+      duration: 300,
+      x: -200,
+    }}
+    id="episodes-title"
+  >
     {sectionTitle}
   </h1>
 
   <div class="content">
     <EpisodesListingSidebar />
+    <EpisodeDescription />
   </div>
 
   <span
+    transition:fly={{
+      duration: 300,
+      x: 200,
+    }}
     on:click={handleEpisodeClose}
     on:keydown={() => {}}
     class="close-episode">Cerrar</span
