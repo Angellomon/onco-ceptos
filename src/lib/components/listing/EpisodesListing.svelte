@@ -5,8 +5,7 @@
   import { episodesStore, selectedSeries, selectedEpisode } from "../../store";
 
   let hoveredEpisode: EpisodeType | null = null;
-  let firstTime = true; // bugfix: on first time render, it won't scroll into episode's section
-  let firstClickTimeout;
+  let firstClickTimeout: any; // bugfix: on first time render, it won't scroll into episode's section
 
   onDestroy(() => {
     clearTimeout(firstClickTimeout);
