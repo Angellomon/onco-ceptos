@@ -14,8 +14,13 @@
 
       document
         .getElementById("series-title")
-        .scrollIntoView({ behavior: "smooth", block: "start" });
+        .scrollIntoView({ behavior: "smooth", block: "center" });
     });
+
+    divElement.style.setProperty(
+      "--background",
+      `url("/preview-img/${showcase.previewUrl}")`
+    );
   });
 
   onDestroy(() => {
@@ -36,14 +41,15 @@
 
 <style>
   div {
-    background-color: var(--primary-color);
+    /* background-color: var(--primary-color); */
 
-    min-width: 30px;
+    min-width: 300px;
     min-height: 60px;
 
     width: 15vw;
+    height: 40vh;
 
-    height: 30vw;
+    position: relative;
 
     display: flex;
     flex-direction: column;
@@ -56,8 +62,8 @@
     padding: 10px;
   }
 
-  div:nth-child(odd) {
-    background-color: var(--secondary-color);
+  div:nth-child(odd)::after {
+    background-image: linear-gradient(var(--secondary-color), transparent);
   }
 
   div:hover {
@@ -74,22 +80,65 @@
     transform: var(--showcase-skew);
   }
 
+  div::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(
+      180deg,
+      var(--primary-color),
+      transparent
+    );
+  }
+
+  div::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--background);
+  }
+
   h2 {
     align-self: flex-start;
-
-    margin-top: 10px;
 
     transform: var(--showcase-skew);
 
     text-align: right;
     text-decoration: underline;
+
+    position: absolute;
+    z-index: 10;
+    top: 5px;
+    right: 20px;
+
+    font-size: 35px;
   }
 
   p {
     align-self: flex-end;
 
-    margin-bottom: 20px;
+    max-width: 230px;
 
     transform: var(--showcase-skew);
+
+    position: absolute;
+    z-index: 10;
+    bottom: 10px;
+    right: 20px;
+
+    font-size: 20px;
+
+    text-align: right;
+
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 5px 10px;
+
+    border-radius: 5px;
   }
 </style>
