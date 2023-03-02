@@ -10,6 +10,7 @@
 
 <style>
   header h1 {
-    margin-left: 4vw;
+    margin-right: 5vw;
+    text-align: right;
   }
 </style>
