@@ -1,5 +1,4 @@
 <script>
-  import { slide } from "svelte/transition";
   import Header from "../components/Header.svelte";
   import SeriesListingSidebar from "../components/listing/SeriesListingSidebar.svelte";
   import SeriesDescription from "../components/SeriesDescription.svelte";
@@ -11,7 +10,7 @@
 
 <Header />
 <Showcase />
-<section class="series-listing" transition:slide={{ delay: 100 }}>
+<section class="series-listing">
   <h1>SERIES</h1>
   <div class="titulo-series" />
   <div class="content">
