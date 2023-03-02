@@ -23,7 +23,7 @@
   section {
     background-color: var(--dark-background);
 
-    min-height: 55vh;
+    /* min-height: 55vh; */
 
     flex-direction: column;
 
@@ -32,7 +32,8 @@
     -webkit-box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
     box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
-    padding-bottom: 5vh;
+    padding-bottom: 4vh;
+    padding-top: 4vh;
   }
 
   div.content {
