@@ -3,14 +3,22 @@
   import { fly } from "svelte/transition";
 
   import { selectedEpisode } from "../store";
+
+  export let delay = 400;
 </script>
 
 <div
   class="episode-description"
-  transition:fly={{
+  in:fly={{
     opacity: 1,
     x: 500,
-    duration: 600,
+    duration: 300,
+    delay,
+  }}
+  out:fly={{
+    opacity: 1,
+    x: 500,
+    duration: 300,
   }}
 >
   {#if $selectedEpisode}
@@ -22,6 +30,7 @@
         poster={`/preview-img/${$selectedEpisode.previewUrl}`}
         source={$selectedEpisode.videoUrl}
         color="#70c1b3"
+        bufferedColor="#ffe066"
       />
     </div>
   {:else}
