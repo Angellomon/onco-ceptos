@@ -79,7 +79,7 @@ function extractEpisodes(data: any) {
       seriesTitle: episode.titulo_serie,
       episodeNumber: episode.numero,
       description: episode.descripcion,
-      videoUrl: episode.url,
+      videoUrl: episode.video_url,
       previewUrl: episode.preview_img_url,
     });
   }
