@@ -1,4 +1,9 @@
-import type { EpisodeType, SeriesType, ShowcaseType } from "../types/series";
+import type {
+  EpisodeType,
+  SeasonType,
+  SeriesType,
+  ShowcaseType,
+} from "../types/series";
 
 import { read, utils } from "xlsx";
 
@@ -51,6 +56,7 @@ interface LoadOptions {
     series?: string;
     episodes?: string;
     showcase?: string;
+    seasons?: string;
   };
   filename?: string;
   debug?: boolean;
@@ -68,6 +74,21 @@ function extractSeries(data: any): SeriesType[] {
   }
 
   return seriesResult;
+}
+
+function extractSeasons(data: any) {
+  const seasonsResult: SeasonType[] = [];
+
+  for (let season of data) {
+    seasonsResult.push({
+      id: season.id_temporada,
+      title: season.titulo,
+      description: season.descripcion,
+      previewUrl: season.preview_img_url,
+    });
+  }
+
+  return seasonsResult;
 }
 
 function extractEpisodes(data: any) {
@@ -108,7 +129,7 @@ export async function loadSeriesData(
     sheetNames: {
       series: "series",
       episodes: "episodios",
-      showcase: "showcase",
+      seasons: "temporadas",
     },
     filename: "/datos-onconceptos.xlsx",
     debug: false,
@@ -125,14 +146,14 @@ export async function loadSeriesData(
   const episodesJson = utils.sheet_to_json(episodesWB);
   const episodes = extractEpisodes(episodesJson);
 
-  const showcaseWB = wb.Sheets[options.sheetNames.showcase];
-  const showcaseJson = utils.sheet_to_json(showcaseWB);
-  const showcase = extractShowcase(showcaseJson);
+  const seasonsWB = wb.Sheets[options.sheetNames.seasons];
+  const seasonsJson = utils.sheet_to_json(seasonsWB);
+  const seasons = extractSeasons(seasonsJson);
 
   const data = {
     series,
     episodes,
-    showcase,
+    seasons,
   };
 
   if (options.debug) console.log(data);
