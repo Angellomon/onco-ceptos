@@ -2,15 +2,35 @@
   import { searchText } from "../../store";
   import Search from "../svg/Search.svelte";
 
+  let isMouseOver = false;
+
   function handleClick() {
     return () => {
       console.log($searchText);
     };
   }
+
+  function handleMouseOver() {
+    return () => {
+      isMouseOver = true;
+    };
+  }
+
+  function handleMouseLeave() {
+    return () => {
+      isMouseOver = false;
+    };
+  }
 </script>
 
-<div class="search">
-  <Search on:click={handleClick()} />
+<div
+  class="search"
+  on:mouseover={handleMouseOver()}
+  on:mouseleave={handleMouseLeave()}
+  on:keypress={() => {}}
+  on:focus={() => {}}
+>
+  <Search on:click={handleClick()} hover={isMouseOver} />
   <input placeholder="Buscar" type="text" bind:value={$searchText} />
 </div>
 
