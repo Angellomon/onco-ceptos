@@ -38,6 +38,8 @@ a {
 body {
   margin: 0;
   display: flex;
+
+  background-color: var(--secondary-color);
   /* place-items: center; */
 }
 
