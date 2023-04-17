@@ -1,13 +1,14 @@
 <script lang="ts">
   import SeasonSearch from "./season-search/SeasonSearch.svelte";
   import SeasonSelect from "./season-select/SeasonSelect.svelte";
+  import OnconceptosLogo from "./svg/OnconceptosLogo.svelte";
 
   export let title: string = "onconceptos";
 </script>
 
 <header>
-  <!-- <img class="logo" src="onconceptos-logo.png" alt={title} /> -->
-  <h1>{title}</h1>
+  <OnconceptosLogo type="color" width={200} alt={title} />
+
   <div class="content">
     <SeasonSelect />
     <SeasonSearch />
@@ -23,29 +24,6 @@
     width: 100vw;
 
     background-color: white;
-  }
-
-  /* img.logo {
-    font-size: 20px;
-    min-width: 150px;
-  } */
-
-  h1 {
-    align-self: center;
-
-    background-image: linear-gradient(
-      90deg,
-      var(--primary-color) 38%,
-      var(--secondary-color) 38%
-    );
-
-    margin-left: 10px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
   }
 
   div.content {
