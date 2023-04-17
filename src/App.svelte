@@ -2,27 +2,19 @@
   import { onMount } from "svelte";
 
   import { loadSeriesData } from "./lib/utils";
-  import { episodesStore, seriesStore, showcaseStore } from "./lib/store";
-  import MainLayout from "./lib/layouts/MainLayout.svelte";
-
-  let ready = false;
+  import { episodesStore, seasonsStore, dataIsLoading } from "./lib/store";
+  import Routes from "./routing/Routes.svelte";
 
   onMount(async () => {
+    dataIsLoading.set(true);
+
     const data = await loadSeriesData();
 
     episodesStore.set(data.episodes);
-    seriesStore.set(data.series);
-    showcaseStore.set(data.showcase);
+    seasonsStore.set(data.seasons);
 
-    ready = true;
+    dataIsLoading.set(false);
   });
 </script>
 
-{#if ready}
-  <MainLayout />
-{:else}
-  <p>cargando</p>
-{/if}
-
-<style>
-</style>
+<Routes />
