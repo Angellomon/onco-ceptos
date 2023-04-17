@@ -1,5 +1,6 @@
 <script>
-  import ChevronSVG from "../../../assets/chevron-down-solid.svg";
+  // import ChevronSVG from "../../../assets/chevron-down-solid.svg";
+  import ChevronSVG from "../../../assets/flecha-menu_abajo.svg";
 
   export let width = 15;
 
@@ -15,6 +16,10 @@
 
 <style>
   img {
+    position: absolute;
+    top: 47%;
+    right: 5px;
+
     transition: all 0.2s ease-in-out;
   }
 
