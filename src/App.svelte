@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  import { loadSeriesData } from "./lib/utils";
+  import { loadSeriesData, loadSavedData } from "./lib/utils";
   import { episodesStore, seasonsStore, dataIsLoading } from "./lib/store";
   import Routes from "./routing/Routes.svelte";
 
@@ -12,6 +12,8 @@
 
     episodesStore.set(data.episodes);
     seasonsStore.set(data.seasons);
+
+    loadSavedData();
 
     dataIsLoading.set(false);
   });

@@ -6,6 +6,7 @@ import type {
 } from "../types/series";
 
 import { read, utils } from "xlsx";
+import { selectedEpisode, selectedSeason } from "./store";
 
 type GenerateTestDataOptions = {
   limit?: number;
@@ -89,8 +90,6 @@ function extractEpisodes(data: any) {
     });
   }
 
-  console.log(episodesResult);
-
   return episodesResult;
 }
 
@@ -120,4 +119,46 @@ export async function loadSeriesData(
   };
 
   return data;
+}
+
+const keyNames = {
+  selectedEpisode: "selected-episode",
+  selectedSeason: "selected-season",
+};
+
+function saveOnLocalStorage(key: string, object: any) {
+  localStorage.setItem(key, JSON.stringify(object));
+}
+
+function loadFromLocalStorage(key: string) {
+  const item = localStorage.getItem(key);
+
+  return item ? JSON.parse(item) : null;
+}
+
+export async function saveData() {
+  let season: SeasonType | null;
+  selectedSeason.subscribe((s) => {
+    season = s;
+  });
+
+  let episode: EpisodeType | null;
+  selectedEpisode.subscribe((e) => {
+    episode = e;
+  });
+
+  saveOnLocalStorage(keyNames.selectedEpisode, episode);
+  saveOnLocalStorage(keyNames.selectedSeason, season);
+}
+
+export async function loadSavedData() {
+  const episode: EpisodeType | null = loadFromLocalStorage(
+    keyNames.selectedEpisode
+  );
+  const season: SeasonType | null = loadFromLocalStorage(
+    keyNames.selectedSeason
+  );
+
+  selectedEpisode.set(episode);
+  selectedSeason.set(season);
 }
