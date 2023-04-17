@@ -53,27 +53,11 @@ export function generateSeriesTestData(
 
 interface LoadOptions {
   sheetNames?: {
-    series?: string;
     episodes?: string;
-    showcase?: string;
     seasons?: string;
   };
   filename?: string;
   debug?: boolean;
-}
-
-function extractSeries(data: any): SeriesType[] {
-  const seriesResult: SeriesType[] = [];
-
-  for (let series of data) {
-    seriesResult.push({
-      title: series.titulo,
-      description: series.descripcion_completa,
-      shortDescription: series.descripcion_corta,
-    });
-  }
-
-  return seriesResult;
 }
 
 function extractSeasons(data: any) {
@@ -110,53 +94,30 @@ function extractEpisodes(data: any) {
   return episodesResult;
 }
 
-function extractShowcase(data: any) {
-  const showcaseResult: ShowcaseType[] = [];
-
-  for (let showcase of data) {
-    showcaseResult.push({
-      title: showcase.titulo_serie,
-      description: showcase.descripcion,
-      previewUrl: showcase.preview_img_url,
-    });
-  }
-
-  return showcaseResult;
-}
-
 export async function loadSeriesData(
   options: LoadOptions = {
     sheetNames: {
-      series: "series",
       episodes: "episodios",
       seasons: "temporadas",
     },
     filename: "/datos-onconceptos.xlsx",
-    debug: false,
   }
 ) {
   const file = await (await fetch(options.filename)).arrayBuffer();
   const wb = read(file);
 
-  const seriesWB = wb.Sheets[options.sheetNames.series];
-  const seriesJson = utils.sheet_to_json(seriesWB);
-  const series = extractSeries(seriesJson);
+  const seasonsWB = wb.Sheets[options.sheetNames.seasons];
+  const seasonsJson = utils.sheet_to_json(seasonsWB);
+  const seasons = extractSeasons(seasonsJson);
 
   const episodesWB = wb.Sheets[options.sheetNames.episodes];
   const episodesJson = utils.sheet_to_json(episodesWB);
   const episodes = extractEpisodes(episodesJson);
 
-  const seasonsWB = wb.Sheets[options.sheetNames.seasons];
-  const seasonsJson = utils.sheet_to_json(seasonsWB);
-  const seasons = extractSeasons(seasonsJson);
-
   const data = {
-    series,
     episodes,
     seasons,
   };
-
-  if (options.debug) console.log(data);
 
   return data;
 }
