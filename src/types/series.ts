@@ -18,3 +18,10 @@ export type ShowcaseType = {
   description?: string;
   previewUrl?: string;
 };
+
+export type SeasonType = {
+  id: string;
+  title: string;
+  description: string;
+  previewUrl: string;
+};

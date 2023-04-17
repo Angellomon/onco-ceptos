@@ -24,7 +24,7 @@ Desarrollar un aplicativo web que funcione como una interfaz para consumir y cal
 
 La arquitectura del aplicativo web es SPA (Single Page Application) desarrollado con (Svelte)[https://svelte.dev] en conjunto con (Vite)[https://vitejs.dev], para poder compilar como un sitio estático y poder instalar de manera trivial en SharePoint cambiando el nombre de `index.html` a `index.aspx`.
 
-### Administración de Contenidos
+### Gestión de Contenidos
 
 > TODO: implementar una interfaz para generar el documento `.xlsx`
 
@@ -54,3 +54,11 @@ En la ubicación donde se instale el aplicativo, debe haber una carpeta llamada 
 E.g. Si una serie "Serie A" tiene un episodio con título "Episodio 1 de Serie A" cuyo archivo preview es `preview_episodio-1-serie-a.jpg`\*. En el excel, en el renglón correspondiente a "Episodio 1 de Serie A", el campo preview_img_url debe ir `preview_episodio-1-serie-a.jpg`, y el directorio de publicación debe quedar como `./preview-img/preview_episodio-1-serie-a.jpg`
 
 \*Puede ser cualquier formato de imágen
+
+### Sistema de Calificación
+
+Backend: SharePoint (definido por el cliente)
+
+Método: REST API de SharePoint para manipular Listas
+
+> Requiere Token Oauth

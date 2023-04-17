@@ -14,11 +14,10 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  --primary-color: #70c1b3;
-  --secondary-color: #ffe066;
-  --sidebar-color: #247ba0;
-  --light-background: #f4f7f5;
-  --dark-background: #50514f;
+  --primary-color: #00857c;
+  --secondary-color: #0c2340;
+  --light-background: #f7f7f7;
+  --dark-background: #9e9e9e;
 
   --showcase-skew-deg: 8deg;
   --showcase-skew-deg-opposite: calc(0deg - var(--showcase-skew-deg));

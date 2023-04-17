@@ -775,6 +775,11 @@ svelte-spa-router@^3.3.0:
   dependencies:
     regexparam "2.0.1"
 
+svelte-svg-spinners@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/svelte-svg-spinners/-/svelte-svg-spinners-0.2.0.tgz#b24586d4a0e9f6a2660812ff6839aadb123cdacc"
+  integrity sha512-qOIcls8oRVOiZAsFqYmaEj9qSIwfHuxsclPhvhcFMnuLieIkwv4Fi0zX70nQfujyOCXoSi5Bxbu5rzWrpYooRA==
+
 svelte-video-player@^1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/svelte-video-player/-/svelte-video-player-1.2.5.tgz#f7f7f9c86fa637011c22f3a97737c4b438294a20"

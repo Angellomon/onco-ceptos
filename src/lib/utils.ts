@@ -1,4 +1,9 @@
-import type { EpisodeType, SeriesType, ShowcaseType } from "../types/series";
+import type {
+  EpisodeType,
+  SeasonType,
+  SeriesType,
+  ShowcaseType,
+} from "../types/series";
 
 import { read, utils } from "xlsx";
 
@@ -48,26 +53,26 @@ export function generateSeriesTestData(
 
 interface LoadOptions {
   sheetNames?: {
-    series?: string;
     episodes?: string;
-    showcase?: string;
+    seasons?: string;
   };
   filename?: string;
   debug?: boolean;
 }
 
-function extractSeries(data: any): SeriesType[] {
-  const seriesResult: SeriesType[] = [];
+function extractSeasons(data: any) {
+  const seasonsResult: SeasonType[] = [];
 
-  for (let series of data) {
-    seriesResult.push({
-      title: series.titulo,
-      description: series.descripcion_completa,
-      shortDescription: series.descripcion_corta,
+  for (let season of data) {
+    seasonsResult.push({
+      id: season.id_temporada,
+      title: season.titulo,
+      description: season.descripcion,
+      previewUrl: season.preview_img_url,
     });
   }
 
-  return seriesResult;
+  return seasonsResult;
 }
 
 function extractEpisodes(data: any) {
@@ -89,53 +94,30 @@ function extractEpisodes(data: any) {
   return episodesResult;
 }
 
-function extractShowcase(data: any) {
-  const showcaseResult: ShowcaseType[] = [];
-
-  for (let showcase of data) {
-    showcaseResult.push({
-      title: showcase.titulo_serie,
-      description: showcase.descripcion,
-      previewUrl: showcase.preview_img_url,
-    });
-  }
-
-  return showcaseResult;
-}
-
 export async function loadSeriesData(
   options: LoadOptions = {
     sheetNames: {
-      series: "series",
       episodes: "episodios",
-      showcase: "showcase",
+      seasons: "temporadas",
     },
     filename: "/datos-onconceptos.xlsx",
-    debug: false,
   }
 ) {
   const file = await (await fetch(options.filename)).arrayBuffer();
   const wb = read(file);
 
-  const seriesWB = wb.Sheets[options.sheetNames.series];
-  const seriesJson = utils.sheet_to_json(seriesWB);
-  const series = extractSeries(seriesJson);
+  const seasonsWB = wb.Sheets[options.sheetNames.seasons];
+  const seasonsJson = utils.sheet_to_json(seasonsWB);
+  const seasons = extractSeasons(seasonsJson);
 
   const episodesWB = wb.Sheets[options.sheetNames.episodes];
   const episodesJson = utils.sheet_to_json(episodesWB);
   const episodes = extractEpisodes(episodesJson);
 
-  const showcaseWB = wb.Sheets[options.sheetNames.showcase];
-  const showcaseJson = utils.sheet_to_json(showcaseWB);
-  const showcase = extractShowcase(showcaseJson);
-
   const data = {
-    series,
     episodes,
-    showcase,
+    seasons,
   };
-
-  if (options.debug) console.log(data);
 
   return data;
 }
