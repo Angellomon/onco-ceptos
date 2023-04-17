@@ -72,9 +72,10 @@
     --submenu-border-radius: 20px;
     --submenu-border: 1px solid white;
     --submenu-bottom-offset: -170px;
-    --submenu-right-offset: 50px;
+    --submenu-right-offset: 0px;
 
-    --select-width: 160px;
+    --select-button-width: 200px;
+    --submenu-select-width: 160px;
     --font-size: 20px;
 
     height: 100%;
@@ -86,13 +87,14 @@
 
     padding: 0 45px;
     padding-right: 0;
+    margin-right: 10px;
 
     cursor: pointer;
   }
 
   button {
     height: 100%;
-    width: 100%;
+    width: var(--select-button-width);
 
     cursor: pointer;
 
@@ -106,7 +108,7 @@
   ul {
     position: absolute;
 
-    width: var(--select-width);
+    width: var(--submenu-select-width);
 
     bottom: var(--submenu-bottom-offset);
     right: var(--submenu-right-offset);
