@@ -8,7 +8,7 @@
   let submenuVisible = false;
   let isMouseOver = false;
 
-  let title = $selectedSeason.title || "Temporadas";
+  let title = $selectedSeason?.title || "Temporadas";
 
   function handleSeasonSelect(season: SeasonType) {
     return () => {
@@ -36,7 +36,7 @@
     };
   }
 
-  $: title = $selectedSeason.title || "Temporadas";
+  $: title = $selectedSeason?.title || "Temporadas";
 </script>
 
 <div
