@@ -20,6 +20,7 @@
     min-height: 40vh;
 
     position: relative;
+    z-index: -5;
   }
 
   div.content {
