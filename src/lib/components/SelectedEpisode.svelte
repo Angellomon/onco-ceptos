@@ -33,6 +33,7 @@
   $: sectionStyle = $selectedEpisode
     ? buildSectionStyle($selectedEpisode.previewUrl)
     : buildSectionWithFirstEpisode();
+  $: episode = $selectedEpisode || $episodesStore[0];
 </script>
 
 <section transition:fade style={sectionStyle}>
@@ -64,10 +65,32 @@
     </div>
   </div>
 
-  <div class="episode-info" />
+  <div class="episode-info">
+    <h2>
+      {episode.title}
+    </h2>
+    <p>{episode.year} • {episode.duration}</p>
+    <p>{episode.description}</p>
+  </div>
 </section>
 
 <style>
+  h2 {
+    color: white;
+
+    font-size: 45px;
+
+    margin: 0;
+  }
+
+  p {
+    color: white;
+
+    font-size: 23px;
+
+    margin-top: 0;
+  }
+
   button {
     cursor: pointer;
 
@@ -111,10 +134,11 @@
       rgba(12, 35, 64, 1) 0%,
       rgba(255, 255, 255, 0.01) 70%
     );
+    background-size: cover;
 
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    /* justify-content: space-evenly; */
     align-items: flex-start;
 
     padding-left: 5%;
@@ -129,21 +153,11 @@
     top: 0;
     content: "";
 
-    filter: brightness(0.7);
     background: linear-gradient(
       0deg,
       rgba(12, 35, 64, 1) 5%,
       rgba(255, 255, 255, 0) 35%
     );
-  }
-  section::before {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-
-    right: 0;
-    top: 0;
-    content: "";
   }
 
   div.episode-controls {
@@ -168,6 +182,10 @@
     align-items: center;
     height: 20vh;
 
+    z-index: 10;
+  }
+
+  div.episode-info {
     z-index: 10;
   }
 </style>
