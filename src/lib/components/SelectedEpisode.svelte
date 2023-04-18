@@ -35,11 +35,37 @@
 
 <style>
   section {
-    height: 50vh;
+    height: 60vh;
     width: 100%;
 
     position: relative;
 
     filter: brightness(0.7);
+    background-image: linear-gradient(
+      0deg,
+      rgba(12, 35, 64, 1) 0%,
+      rgba(255, 255, 255, 0) 40%
+    );
   }
+
+  section::after {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+
+    right: 0;
+    top: 0;
+    content: "";
+
+    background: linear-gradient(
+      0deg,
+      rgba(12, 35, 64, 1) 5%,
+      rgba(255, 255, 255, 0) 35%
+    );
+  }
+
+  /* div.gradient-wrapper {
+    background: linear-gradient(0deg, rgba(12,35,64,1) 0%, rgba(255,255,255,0) 40%);;
+    position: inherit;
+  } */
 </style>
