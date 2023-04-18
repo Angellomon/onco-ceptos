@@ -71,7 +71,8 @@
   div.select {
     --submenu-border-radius: 20px;
     --submenu-border: 1px solid white;
-    --submenu-bottom-offset: -170px;
+    --submenu-bottom-offset: -160%;
+    /* --submenu-bottom-offset: -115%; */
     --submenu-right-offset: 0px;
 
     --select-button-width: 200px;
@@ -140,10 +141,12 @@
 
     background-color: white;
     padding: 10px 15px;
+
+    z-index: 10;
   }
 
-  ul li.is-selected,
-  ul li:hover {
+  li.is-selected,
+  li:hover {
     color: var(--secondary-color);
     transition: color 0.5s;
   }
