@@ -87,6 +87,8 @@ function extractEpisodes(data: any) {
       description: episode.descripcion,
       videoUrl: episode.video_url,
       previewUrl: episode.preview_img_url,
+      year: +episode.año,
+      duration: episode.duracion,
     });
   }
 
