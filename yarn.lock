@@ -780,11 +780,6 @@ svelte-svg-spinners@^0.2.0:
   resolved "https://registry.yarnpkg.com/svelte-svg-spinners/-/svelte-svg-spinners-0.2.0.tgz#b24586d4a0e9f6a2660812ff6839aadb123cdacc"
   integrity sha512-qOIcls8oRVOiZAsFqYmaEj9qSIwfHuxsclPhvhcFMnuLieIkwv4Fi0zX70nQfujyOCXoSi5Bxbu5rzWrpYooRA==
 
-svelte-video-player@^1.2.5:
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/svelte-video-player/-/svelte-video-player-1.2.5.tgz#f7f7f9c86fa637011c22f3a97737c4b438294a20"
-  integrity sha512-iImQY6qnEEE0fngq9aANKMKDD2knTBcsyTLKHc3hyZ/nj/ZExwBAJ7MbxlOnyLpSKzZA1KaSSaqKXeTRWZOOlw==
-
 svelte@^3.55.1:
   version "3.55.1"
   resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.55.1.tgz#6f93b153e5248039906ce5fe196efdb9e05dfce8"

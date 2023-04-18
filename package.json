@@ -26,7 +26,6 @@
     "nanoid": "^4.0.1",
     "svelte-spa-router": "^3.3.0",
     "svelte-svg-spinners": "^0.2.0",
-    "svelte-video-player": "^1.2.5",
     "xlsx": "^0.18.5"
   }
 }
