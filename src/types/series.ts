@@ -11,6 +11,8 @@ export type EpisodeType = {
   description?: string;
   videoUrl: string;
   previewUrl?: string;
+  year: number;
+  duration: number;
 };
 
 export type ShowcaseType = {
