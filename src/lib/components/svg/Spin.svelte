@@ -13,5 +13,6 @@
 <style>
   img {
     position: absolute;
+    z-index: -10;
   }
 </style>
