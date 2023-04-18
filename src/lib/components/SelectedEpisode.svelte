@@ -2,8 +2,13 @@
   import { fade } from "svelte/transition";
   import { selectedEpisode, episodesStore } from "../store";
   import EpisodePlayer from "./player/EpisodePlayer.svelte";
+  import ArrowRight from "./svg/ArrowRight.svelte";
+  import Plus from "./svg/Plus.svelte";
 
   const defaultSectionStyle = "background: var(--secondary-color);";
+
+  let infoHover = false;
+  let nextHover = true;
 
   function buildUrl(previewUrl: string) {
     return `/preview-img/${previewUrl}`;
@@ -22,8 +27,6 @@
 
     const url = buildUrl(firstEpisode.previewUrl);
 
-    console.log(firstEpisode.previewUrl);
-
     return `background: url(${url}) no-repeat center center fixed;`;
   }
 
@@ -35,30 +38,66 @@
 <section transition:fade style={sectionStyle}>
   <div class="episode-controls">
     <EpisodePlayer widthPercent={60} />
+
     <div class="episode-buttons">
-      <button class="info">Más información</button>
-      <button class="next">Siguiente capítulo</button>
+      <button
+        on:mouseover={() => {
+          infoHover = true;
+        }}
+        on:mouseleave={() => {
+          infoHover = false;
+        }}
+        on:focus={() => {}}
+        class="info"><Plus hover={infoHover} /> Más información</button
+      >
+
+      <button
+        on:mouseover={() => {
+          nextHover = true;
+        }}
+        on:mouseleave={() => {
+          nextHover = false;
+        }}
+        on:focus={() => {}}
+        class="next"><ArrowRight hover={nextHover} /> Siguiente capítulo</button
+      >
     </div>
   </div>
+
   <div class="episode-info" />
 </section>
 
 <style>
   button {
+    cursor: pointer;
+
     background-color: white;
+    border-radius: 30px;
+    border: none;
+
+    padding: 10px 20px;
+    width: 100%;
 
     font-size: 22px;
 
-    border-radius: 20px;
-
-    padding: 10px 20px;
+    padding-left: 45px;
 
     /* border-radius: 20px; */
-    border: none;
+    position: relative;
+  }
 
-    width: 100%;
+  button.info {
+    background: rgba(0, 0, 0, 0.2);
 
-    cursor: pointer;
+    border: 2px solid white;
+    color: white;
+
+    backdrop-filter: blur(4px);
+  }
+
+  button.next {
+    background-color: var(--primary-color);
+    color: white;
   }
 
   section {
