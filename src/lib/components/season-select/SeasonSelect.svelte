@@ -51,7 +51,7 @@
     <Chevron hover={isMouseOver} />
   </button>
   {#if submenuVisible}
-    <ul transition:fly>
+    <ul transition:fly={{ y: -50 }}>
       {#each $seasonsStore as season (season.id)}
         <li
           class:is-selected={$selectedSeason
