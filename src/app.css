@@ -14,7 +14,9 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  --primary-color: #00857c;
+  --primary-color: rgb(0, 133, 124);
+  --primary-color-a: rgb(0 133 124);
+  --half-primary-color: rgb(0 133 124 / 0.5);
   --secondary-color: #0c2340;
   --light-background: #f7f7f7;
   --dark-background: #9e9e9e;
