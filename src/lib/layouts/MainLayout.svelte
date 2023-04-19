@@ -1,5 +1,6 @@
 <script lang="ts">
   import Header from "../components/Header.svelte";
+  import SeasonsListing from "../components/seasons-listing/SeasonsListing.svelte";
   import SelectedEpisode from "../components/SelectedEpisode.svelte";
   import Title from "../components/Title.svelte";
   import { dataIsLoading } from "../store";
@@ -13,5 +14,6 @@
     <Header />
     <Title />
     <SelectedEpisode />
+    <SeasonsListing />
   </main>
 {/if}
