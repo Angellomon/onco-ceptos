@@ -76,6 +76,7 @@
 
 <style>
   section {
+    min-height: 500px;
     height: 60vh;
     width: 100%;
 
@@ -168,7 +169,8 @@
     flex-direction: row;
     flex-wrap: wrap;
 
-    height: 40vh;
+    height: 500px;
+    min-height: 300px;
     width: 60%;
   }
 
