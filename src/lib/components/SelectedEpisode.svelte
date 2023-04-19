@@ -75,54 +75,6 @@
 </section>
 
 <style>
-  h2 {
-    color: white;
-
-    font-size: 45px;
-
-    margin: 0;
-  }
-
-  p {
-    color: white;
-
-    font-size: 23px;
-
-    margin-top: 0;
-  }
-
-  button {
-    cursor: pointer;
-
-    background-color: white;
-    border-radius: 30px;
-    border: none;
-
-    padding: 10px 20px;
-    width: 100%;
-
-    font-size: 22px;
-
-    padding-left: 45px;
-
-    /* border-radius: 20px; */
-    position: relative;
-  }
-
-  button.info {
-    background: rgba(0, 0, 0, 0.2);
-
-    border: 2px solid white;
-    color: white;
-
-    backdrop-filter: blur(4px);
-  }
-
-  button.next {
-    background-color: var(--primary-color);
-    color: white;
-  }
-
   section {
     height: 60vh;
     width: 100%;
@@ -158,6 +110,54 @@
       rgba(12, 35, 64, 1) 5%,
       rgba(255, 255, 255, 0) 35%
     );
+  }
+
+  h2 {
+    color: white;
+
+    font-size: 45px;
+
+    margin: 0;
+  }
+
+  p {
+    color: white;
+
+    font-size: 23px;
+
+    margin-top: 0;
+  }
+
+  button {
+    cursor: pointer;
+
+    background-color: white;
+    border-radius: var(--btn-border-radius);
+    border: none;
+
+    padding: 10px 20px;
+    width: 100%;
+
+    font-size: 22px;
+
+    padding-left: 45px;
+
+    /* border-radius: 20px; */
+    position: relative;
+  }
+
+  button.info {
+    background: rgba(0, 0, 0, 0.2);
+
+    border: 2px solid white;
+    color: white;
+
+    backdrop-filter: blur(4px);
+  }
+
+  button.next {
+    background-color: var(--primary-color);
+    color: white;
   }
 
   div.episode-controls {
