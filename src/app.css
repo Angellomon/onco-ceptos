@@ -29,6 +29,8 @@
 
   --text-size: 20px;
   --descritption-size: 18px;
+
+  --btn-border-radius: 30px;
 }
 
 a {
