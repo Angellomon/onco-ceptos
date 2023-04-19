@@ -1,56 +1,7 @@
-import type {
-  EpisodeType,
-  SeasonType,
-  SeriesType,
-  ShowcaseType,
-} from "../types/series";
+import type { EpisodeType, SeasonType } from "../types/series";
 
 import { read, utils } from "xlsx";
 import { selectedEpisode, selectedSeason } from "./store";
-
-type GenerateTestDataOptions = {
-  limit?: number;
-  allowUndefinedDescriptions?: boolean;
-};
-
-export function generateTestData(
-  options: GenerateTestDataOptions = {
-    limit: 10,
-    allowUndefinedDescriptions: false,
-  }
-) {
-  const data: ShowcaseType[] = [];
-
-  for (let i = 1; i <= options.limit; i += 1)
-    data.push({
-      title: `Test ${i}`,
-      description: options.allowUndefinedDescriptions
-        ? undefined
-        : `Descripción Test ${i} a, Descripción Test ${i} b,  Descripción Test ${i} c, Descripción Test ${i}`,
-    });
-
-  return data;
-}
-
-export function generateSeriesTestData(
-  options: GenerateTestDataOptions = {
-    limit: 10,
-    allowUndefinedDescriptions: false,
-  }
-) {
-  const data: SeriesType[] = [];
-
-  for (let i = 1; i <= options.limit; i += 1)
-    data.push({
-      title: `Serie Test ${i}`,
-      description: options.allowUndefinedDescriptions
-        ? undefined
-        : `Descripcion Serie Test ${i}`,
-      shortDescription: `Una Serie Test (${i})`,
-    });
-
-  return data;
-}
 
 interface LoadOptions {
   sheetNames?: {
@@ -81,8 +32,9 @@ function extractEpisodes(data: any) {
 
   for (let episode of data) {
     episodesResult.push({
+      id: episode.id_episodio,
       title: episode.titulo_episodio,
-      seriesTitle: episode.titulo_serie,
+      seasonId: episode.id_temporada,
       episodeNumber: episode.numero,
       description: episode.descripcion,
       videoUrl: episode.video_url,
