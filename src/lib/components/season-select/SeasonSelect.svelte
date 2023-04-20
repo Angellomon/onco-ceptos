@@ -131,6 +131,8 @@
     line-height: inherit;
 
     cursor: pointer;
+
+    z-index: 10;
   }
 
   ul li {
