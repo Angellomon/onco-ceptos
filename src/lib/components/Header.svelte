@@ -19,6 +19,7 @@
   header {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 
     height: 100px;
     width: 100vw;
@@ -28,6 +29,7 @@
 
   div.content {
     display: inline-flex;
+    flex-wrap: wrap;
     justify-content: center;
   }
 </style>
