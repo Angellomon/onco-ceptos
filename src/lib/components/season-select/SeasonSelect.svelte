@@ -15,6 +15,14 @@
       selectedSeason.set(season);
       saveData();
       submenuVisible = false;
+
+      const el = document.getElementById(season.id);
+
+      if (!el) return;
+
+      el.scrollIntoView({
+        behavior: "smooth",
+      });
     };
   }
 

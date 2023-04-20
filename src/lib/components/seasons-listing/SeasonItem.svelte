@@ -22,7 +22,7 @@
   $: episodes = $episodesStore.filter((e) => e.seasonId == season.id);
 </script>
 
-<aside>
+<aside id={season.id}>
   <div class="season-box">
     <h3>{season.title}</h3>
     <button
