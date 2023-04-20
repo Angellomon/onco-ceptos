@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import "@vime/core/themes/default.css";
+  import "@splidejs/svelte-splide/css";
 
   import { loadSeriesData, loadSavedData } from "./lib/utils";
   import { episodesStore, seasonsStore, dataIsLoading } from "./lib/store";
