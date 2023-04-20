@@ -68,8 +68,6 @@
 
     font-size: 30px;
     line-height: 35px;
-
-    margin-top: 26%;
   }
 
   div.title-hover {
@@ -94,6 +92,10 @@
     backdrop-filter: brightness(0.8);
     align-self: center;
     justify-self: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   div.episode-box {
