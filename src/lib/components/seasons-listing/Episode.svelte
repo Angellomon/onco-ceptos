@@ -1,6 +1,7 @@
 <script lang="ts">
   import { fade } from "svelte/transition";
   import type { EpisodeType } from "../../../types/series";
+  import { selectedEpisode, seasonsStore, selectedSeason } from "../../store";
   import PlayButton from "../svg/PlayButton.svelte";
 
   export let episode: EpisodeType;
@@ -8,10 +9,23 @@
   let episodeHover = false;
   let infoHover = false;
 
+  function setCurrentEpisode() {
+    $selectedEpisode = episode;
+    const season = $seasonsStore.find((se) => se.id == episode.seasonId);
+
+    if (!season) return;
+
+    $selectedSeason = season;
+
+    goTop();
+  }
+
+  function goTop() {
+    document.body.scrollIntoView();
+  }
+
   function handleEpisodeClick() {
-    return () => {
-      console.log(episode);
-    };
+    return setCurrentEpisode;
   }
 
   function handleKeyDown() {
@@ -47,7 +61,11 @@
   on:mouseleave={handleMouseLeave()}
 >
   {#if episodeHover}
-    <div in:fade={{ duration: 100 }} class="title-hover">
+    <div
+      in:fade={{ duration: 100 }}
+      class="title-hover"
+      on:click={handleEpisodeClick()}
+    >
       <PlayButton />
     </div>
   {:else}
