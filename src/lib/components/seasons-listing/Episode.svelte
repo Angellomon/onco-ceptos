@@ -53,7 +53,6 @@
 </script>
 
 <div
-  id={episode.id}
   class="episode-box"
   {style}
   on:click={handleEpisodeClick()}
