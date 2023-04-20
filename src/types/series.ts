@@ -8,6 +8,7 @@ export type EpisodeType = {
   previewUrl?: string;
   year: number;
   duration: number;
+  portraitUrl: string;
 };
 
 export type SeasonType = {
