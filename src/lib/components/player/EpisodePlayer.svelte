@@ -5,10 +5,10 @@
   export let widthPercent = 50;
 
   $: episode = $selectedEpisode || $episodesStore[0];
-  $: playerStyle = `width: ${widthPercent}%;`;
+  $: playerStyle = `width: 500px; margin-top: 5%`;
 </script>
 
-<Player style={playerStyle}>
+<Player style={playerStyle} class="player">
   <Video>
     <source data-src={episode.videoUrl} />
   </Video>
@@ -19,4 +19,8 @@
 </Player>
 
 <style>
+  .player {
+    min-width: 500px;
+    width: 100%;
+  }
 </style>
