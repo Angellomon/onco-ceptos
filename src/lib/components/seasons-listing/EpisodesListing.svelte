@@ -1,24 +1,23 @@
 <script lang="ts">
-  import arrowRightSVGSource from "../../../assets/boton-avance_derecha.svg";
-  import arrowLeftSVGSource from "../../../assets/boton-avance_izquierda.svg";
   import { Splide, SplideSlide, SplideTrack } from "@splidejs/svelte-splide";
 
   import type { EpisodeType } from "../../../types/series";
   import Episode from "./Episode.svelte";
+  import NextButton from "../svg/NextButton.svelte";
+  import PrevButton from "../svg/PrevButton.svelte";
 
   export let episodes: EpisodeType[];
-
-  // let showPrevPage;
-  // let showNextPage;
-
-  $: eps = episodes;
 </script>
 
 <Splide
   options={{
     type: "loop",
-    perPage: 4,
+    perPage: 3,
     perMove: 1,
+    gap: "50px",
+    height: "100%",
+    width: "100%",
+    padding: "50px",
   }}
   hasTrack={false}
 >
@@ -32,10 +31,10 @@
 
   <div class="splide__arrows">
     <button class="splide__arrow splide__arrow--prev">
-      <img class="rigtArrow" src={arrowRightSVGSource} alt=">" />
+      <NextButton />
     </button>
     <button class="splide__arrow splide__arrow--next">
-      <img class="rigtArrow" src={arrowLeftSVGSource} alt="<" />
+      <PrevButton />
     </button>
   </div>
 </Splide>
@@ -44,12 +43,13 @@
   .splide__arrows button {
     height: 100%;
     background: none;
+    opacity: 1;
   }
 
   img.rigtArrow {
     cursor: pointer;
 
-    height: 69%;
+    height: 50%;
 
     z-index: 10;
   }

@@ -17,10 +17,3 @@
     <DefaultControls hideOnMouseLeave activeDuration={2000} />
   </DefaultUi>
 </Player>
-
-<style>
-  .player {
-    min-width: 500px;
-    width: 100%;
-  }
-</style>

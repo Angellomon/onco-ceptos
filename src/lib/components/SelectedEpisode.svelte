@@ -175,7 +175,7 @@
   }
 
   div.episode-info {
-    z-index: 10;
+    z-index: 5;
 
     /* margin-left: 5%; */
 

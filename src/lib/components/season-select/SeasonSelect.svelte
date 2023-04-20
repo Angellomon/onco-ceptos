@@ -132,7 +132,7 @@
 
     cursor: pointer;
 
-    z-index: 10;
+    z-index: 50;
   }
 
   ul li {
