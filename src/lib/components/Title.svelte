@@ -15,7 +15,7 @@
   <Saos
     animation={`slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`}
   >
-    <Spin width={600} bottom={-200} right={-100} />
+    <Spin width={600} bottom={-300} right={-150} />
   </Saos>
 </section>
 
@@ -26,6 +26,8 @@
 
     position: relative;
     z-index: -5;
+
+    overflow: hidden;
   }
 
   div.spinner {
