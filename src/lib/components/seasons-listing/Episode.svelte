@@ -2,6 +2,7 @@
   import { fade } from "svelte/transition";
   import type { EpisodeType } from "../../../types/series";
   import { selectedEpisode, seasonsStore, selectedSeason } from "../../store";
+  import { saveData } from "../../utils";
   import PlayButton from "../svg/PlayButton.svelte";
 
   export let episode: EpisodeType;
@@ -18,6 +19,7 @@
     $selectedSeason = season;
 
     goTop();
+    saveData();
   }
 
   function goTop() {

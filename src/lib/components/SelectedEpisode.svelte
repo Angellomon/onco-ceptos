@@ -6,6 +6,7 @@
     seasonsStore,
     selectedSeason,
   } from "../store";
+  import { saveData } from "../utils";
   import EpisodePlayer from "./player/EpisodePlayer.svelte";
   import ArrowRight from "./svg/ArrowRight.svelte";
   import Plus from "./svg/Plus.svelte";
@@ -63,6 +64,8 @@
     } else {
       $selectedEpisode = nextEpisode;
     }
+
+    saveData();
   }
 
   function handleNextEpisode() {
