@@ -8,7 +8,7 @@
   export let left = 0;
   export let duration = 1000;
 
-  let style = `bottom: ${bottom}px; right: -10%; `;
+  let style = `bottom: ${bottom}px; right: ${right}px; `;
 </script>
 
 <img
