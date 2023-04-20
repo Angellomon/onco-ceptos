@@ -41,6 +41,7 @@ function extractEpisodes(data: any) {
       previewUrl: episode.preview_img_url,
       year: +episode.año,
       duration: episode.duracion,
+      portraitUrl: episode.portada,
     });
   }
 
