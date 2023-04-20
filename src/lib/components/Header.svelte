@@ -17,7 +17,7 @@
 
 <style>
   header {
-    display: inline-flex;
+    display: flex;
     justify-content: space-between;
 
     height: 100px;
