@@ -38,7 +38,7 @@
 
 <section transition:fade style={sectionStyle}>
   <div class="episode-controls">
-    <EpisodePlayer widthPercent={60} />
+    <EpisodePlayer />
 
     <div class="episode-buttons">
       <button
@@ -77,7 +77,7 @@
 <style>
   section {
     min-height: 500px;
-    height: 60vh;
+    height: 100%;
     width: 100%;
 
     position: relative;
@@ -94,23 +94,7 @@
     /* justify-content: space-evenly; */
     align-items: flex-start;
 
-    padding-left: 5%;
-  }
-
-  section::after {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-
-    right: 0;
-    top: 0;
-    content: "";
-
-    background: linear-gradient(
-      0deg,
-      rgba(12, 35, 64, 1) 5%,
-      rgba(255, 255, 255, 0) 35%
-    );
+    /* padding-left: 5%; */
   }
 
   h2 {
@@ -169,9 +153,12 @@
     flex-direction: row;
     flex-wrap: wrap;
 
-    height: 500px;
     min-height: 300px;
-    width: 60%;
+    height: 100%;
+    width: 69%;
+
+    margin-left: 3%;
+    margin-bottom: 3%;
   }
 
   div.episode-buttons {
@@ -189,5 +176,23 @@
 
   div.episode-info {
     z-index: 10;
+
+    /* margin-left: 5%; */
+
+    background: rgba(0, 0, 0, 0.2);
+
+    /* filter: blur(5px); */
+    backdrop-filter: blur(4px);
+
+    border-top: 2px solid white;
+
+    width: 100%;
+    padding-left: 5%;
+    padding-top: 2%;
+  }
+
+  h2,
+  p {
+    width: 80%;
   }
 </style>
