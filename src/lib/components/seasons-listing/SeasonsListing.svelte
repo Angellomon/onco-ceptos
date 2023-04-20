@@ -12,7 +12,7 @@
 <style>
   section {
     min-height: 500px;
-    height: 50vh;
+    min-height: 50vh;
 
     display: flex;
     flex-direction: column;
@@ -20,6 +20,8 @@
     width: 100%;
 
     min-height: 500px;
-    height: 50vh;
+    height: 50%;
+
+    position: relative;
   }
 </style>

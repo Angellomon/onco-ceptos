@@ -6,8 +6,6 @@
 
   export let season: SeasonType;
 
-  let seasonBoxStyle = `background: url(/preview-img/${season.previewUrl})`;
-
   let hover = false;
 
   function handleMouseOver() {
@@ -24,20 +22,46 @@
   $: episodes = $episodesStore.filter((e) => e.seasonId == season.id);
 </script>
 
-<div class="season-box" style={seasonBoxStyle}>
-  <h3>{season.title}</h3>
-  <button
-    on:mouseover={handleMouseOver()}
-    on:mouseleave={handleMouseLeave()}
-    on:focus={() => {}}
-    class="quizz"
-  >
-    <Interrogation {hover} /> Quizz</button
-  >
-</div>
-<EpisodesListing {episodes} />
+<aside>
+  <div class="season-box">
+    <h3>{season.title}</h3>
+    <button
+      on:mouseover={handleMouseOver()}
+      on:mouseleave={handleMouseLeave()}
+      on:focus={() => {}}
+      class="quizz"
+    >
+      <Interrogation {hover} /> Quizz</button
+    >
+  </div>
+  <div class="episodes">
+    <EpisodesListing {episodes} />
+  </div>
+</aside>
 
 <style>
+  aside {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    height: 100%;
+    width: 100%;
+
+    justify-self: center;
+    align-self: center;
+
+    margin: 0;
+  }
+
+  div.episodes {
+    width: 100%;
+    margin: 0;
+  }
+
   div.season-box {
     background-repeat: no-repeat;
     background-size: cover;
@@ -49,7 +73,7 @@
     justify-content: space-between;
     align-items: center;
 
-    height: 100px;
+    height: 100%;
     width: 80%;
 
     justify-self: center;
