@@ -1,7 +1,8 @@
 <script lang="ts">
   import arrowRightSVGSource from "../../../assets/boton-avance_derecha.svg";
   import arrowLeftSVGSource from "../../../assets/boton-avance_izquierda.svg";
-  import Carousel from "svelte-carousel";
+  import { Splide, SplideSlide, SplideTrack } from "@splidejs/svelte-splide";
+
   import type { EpisodeType } from "../../../types/series";
   import Episode from "./Episode.svelte";
 
@@ -13,48 +14,43 @@
   $: eps = episodes;
 </script>
 
-<div class="episodes-box">
-  <div class="hero">
-    <Carousel
-      particlesToShow={2}
-      particlesToScroll={1}
-      let:showPrevPage
-      let:showNextPage
-      let:loaded
-    >
-      <img
-        class="carousel-control"
-        src={arrowRightSVGSource}
-        alt=">"
-        slot="prev"
-        on:click={showNextPage}
-        on:keypress={() => {}}
-      />
-      {JSON.stringify(loaded)}
-      {#each eps as episode, imageIndex (episode.id)}
-        {#if loaded.includes(imageIndex)}
-          <Episode {episode} />
-        {:else}
-          hmmm
-        {/if}
-      {/each}
+<Splide
+  options={{
+    type: "loop",
+    perPage: 4,
+    perMove: 1,
+  }}
+  hasTrack={false}
+>
+  <SplideTrack class="track">
+    {#each episodes as episode (episode.id)}
+      <SplideSlide>
+        <Episode {episode} />
+      </SplideSlide>
+    {/each}
+  </SplideTrack>
 
-      <img
-        class="carousel-control"
-        src={arrowLeftSVGSource}
-        alt="<"
-        slot="next"
-        on:click={showPrevPage}
-        on:keypress={() => {}}
-      />
-    </Carousel>
+  <div class="splide__arrows">
+    <button class="splide__arrow splide__arrow--prev">
+      <img class="rigtArrow" src={arrowRightSVGSource} alt=">" />
+    </button>
+    <button class="splide__arrow splide__arrow--next">
+      <img class="rigtArrow" src={arrowLeftSVGSource} alt="<" />
+    </button>
   </div>
-</div>
+</Splide>
 
 <style>
-  img.carousel-control {
-    width: 50px;
+  .splide__arrows button {
+    height: 100%;
+    background: none;
+  }
 
+  img.rigtArrow {
     cursor: pointer;
+
+    height: 69%;
+
+    z-index: 10;
   }
 </style>
