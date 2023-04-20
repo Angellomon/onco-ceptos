@@ -51,6 +51,8 @@
     height: 100%;
     width: 100%;
 
+    min-height: 25vh;
+
     justify-self: center;
     align-self: center;
 
