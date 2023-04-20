@@ -1,6 +1,11 @@
 <script lang="ts">
   import { fade } from "svelte/transition";
-  import { selectedEpisode, episodesStore } from "../store";
+  import {
+    selectedEpisode,
+    episodesStore,
+    seasonsStore,
+    selectedSeason,
+  } from "../store";
   import EpisodePlayer from "./player/EpisodePlayer.svelte";
   import ArrowRight from "./svg/ArrowRight.svelte";
   import Plus from "./svg/Plus.svelte";
@@ -28,6 +33,40 @@
     const url = buildUrl(firstEpisode.previewUrl);
 
     return `background: url(${url}) no-repeat center center fixed;`;
+  }
+
+  function setNextEpisode() {
+    let seasonEpisodes = $episodesStore.filter(
+      (ep) => ep.seasonId == episode.seasonId
+    );
+
+    const i = seasonEpisodes.findIndex((ep) => ep.id == episode.id);
+
+    const nextEpisode = seasonEpisodes[i + 1];
+
+    if (!nextEpisode) {
+      const seasonIndex = $seasonsStore.findIndex(
+        (se) => se.id == episode.seasonId
+      );
+
+      const nextSeason = $seasonsStore[seasonIndex + 1];
+
+      if (!nextSeason) return;
+
+      $selectedSeason = nextSeason;
+
+      seasonEpisodes = $episodesStore.filter(
+        (ep) => ep.seasonId == nextSeason.id
+      );
+
+      $selectedEpisode = seasonEpisodes[0]; // # first episode of next season
+    } else {
+      $selectedEpisode = nextEpisode;
+    }
+  }
+
+  function handleNextEpisode() {
+    return setNextEpisode;
   }
 
   $: sectionStyle = $selectedEpisode
@@ -60,6 +99,7 @@
           nextHover = false;
         }}
         on:focus={() => {}}
+        on:click={handleNextEpisode()}
         class="next"><ArrowRight hover={nextHover} /> Siguiente capítulo</button
       >
     </div>
