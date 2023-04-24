@@ -22,7 +22,7 @@
     flex-wrap: wrap;
 
     height: 100px;
-    width: 100vw;
+    width: 100%;
 
     background-color: white;
   }
