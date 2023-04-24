@@ -38,7 +38,7 @@
   on:keypress={() => {}}
 >
   {#if hover}
-    <p transition:fly={{ x: 30 }}>Guardar</p>
+    <p transition:fly={{ x: 30, duration: 150 }}>Guardar</p>
   {/if}
   <img class:hover src={starSVGSource} {width} {style} alt=">" />
 </div>
