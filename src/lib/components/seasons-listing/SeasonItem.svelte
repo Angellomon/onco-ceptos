@@ -3,6 +3,7 @@
   import type { SeasonType } from "../../../types/series";
   import EpisodesListing from "./EpisodesListing.svelte";
   import Interrogation from "../svg/Interrogation.svelte";
+  import EpisodesGrid from "../episodes-grid/EpisodesGrid.svelte";
 
   export let season: SeasonType;
 
@@ -35,7 +36,8 @@
     >
   </div>
   <div class="episodes">
-    <EpisodesListing {episodes} />
+    <!-- <EpisodesListing {episodes} /> -->
+    <EpisodesGrid seasonId={season.id} />
   </div>
 </aside>
 
@@ -58,12 +60,17 @@
 
     margin: 0;
 
-    margin-bottom: 69px;
+    margin-bottom: 15px;
   }
 
   div.episodes {
     width: 100%;
     margin: 0;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
   }
 
   div.season-box {
