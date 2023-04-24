@@ -57,6 +57,8 @@
     align-self: center;
 
     margin: 0;
+
+    margin-bottom: 69px;
   }
 
   div.episodes {
