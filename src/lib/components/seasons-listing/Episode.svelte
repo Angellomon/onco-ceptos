@@ -111,7 +111,7 @@
   }
 
   div.title-hover {
-    /* height: 100%; */
+    height: 100%;
     width: 100%;
     min-height: 250px;
 
@@ -125,13 +125,10 @@
   }
 
   div.title-wrapper {
-    height: 100%;
     width: 100%;
 
     min-height: 250px;
     backdrop-filter: brightness(0.8);
-    align-self: center;
-    justify-self: center;
 
     display: flex;
     justify-content: center;
