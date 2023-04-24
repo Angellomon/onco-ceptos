@@ -14,3 +14,5 @@ export const episodeAlreadyClicked = writable(false);
 export const dataIsLoading = writable(false);
 
 export const searchText = writable<string | null>(null);
+
+export const selectedEpisodeInfo = writable<EpisodeType | null>(null);
