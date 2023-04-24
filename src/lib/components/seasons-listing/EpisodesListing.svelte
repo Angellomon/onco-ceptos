@@ -20,6 +20,7 @@
     padding: "50px",
   }}
   hasTrack={false}
+  class="splide"
 >
   <SplideTrack class="track">
     {#each episodes as episode (episode.id)}
