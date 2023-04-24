@@ -230,7 +230,8 @@
     border-top: 2px solid white;
 
     width: 100%;
-    padding-left: 5%;
+    /* padding-left: 5%; */
+    padding: 0 1em;
     padding-top: 2%;
   }
 
