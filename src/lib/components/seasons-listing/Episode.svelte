@@ -4,11 +4,23 @@
   import { selectedEpisode, seasonsStore, selectedSeason } from "../../store";
   import { saveData } from "../../utils";
   import PlayButton from "../svg/PlayButton.svelte";
+  import FavButton from "./FavButton.svelte";
+  import InfoButton from "./InfoButton.svelte";
 
   export let episode: EpisodeType;
 
   let episodeHover = false;
   let infoHover = false;
+  let favHover = false;
+  let showInfo = false;
+  let infoModalHidden = true;
+
+  function showEpisodeInfo() {
+    showInfo = true;
+    infoModalHidden = false;
+  }
+
+  function addEpisodeToFavorites() {}
 
   function setCurrentEpisode() {
     $selectedEpisode = episode;
@@ -29,7 +41,12 @@
   }
 
   function handleEpisodeClick() {
-    return setCurrentEpisode;
+    if (infoHover) return showEpisodeInfo();
+    if (favHover) return addEpisodeToFavorites();
+
+    console.log("hmmm 2");
+
+    return setCurrentEpisode();
   }
 
   function handleKeyDown() {
@@ -41,7 +58,6 @@
   function handleMouseOver() {
     return () => {
       episodeHover = true;
-      infoHover = true;
     };
   }
 
@@ -57,17 +73,20 @@
 <div
   class="episode-box"
   {style}
-  on:click={handleEpisodeClick()}
+  on:click={handleEpisodeClick}
   on:focus={() => {}}
   on:keypress={handleKeyDown()}
   on:mouseover={handleMouseOver()}
   on:mouseleave={handleMouseLeave()}
 >
   {#if episodeHover}
+    <InfoButton bind:hover={infoHover} />
+    <FavButton bind:hover={favHover} />
     <div
       in:fade={{ duration: 100 }}
       class="title-hover"
-      on:click={handleEpisodeClick()}
+      on:click={handleEpisodeClick}
+      on:keypress={() => {}}
     >
       <PlayButton />
     </div>
@@ -92,7 +111,7 @@
   }
 
   div.title-hover {
-    height: 100%;
+    /* height: 100%; */
     width: 100%;
     min-height: 250px;
 
@@ -120,7 +139,7 @@
   }
 
   div.episode-box {
-    min-height: 20vh;
+    /* min-height: 20vh; */
 
     background-size: cover;
 
