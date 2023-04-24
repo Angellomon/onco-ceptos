@@ -35,7 +35,7 @@
   <img class:hover src={plusSVGSource} {width} {style} alt=">" />
 
   {#if hover}
-    <p transition:fly={{ x: -30 }}>Información</p>
+    <p transition:fly={{ x: -30, duration: 150 }}>Información</p>
   {/if}
 </div>
 
