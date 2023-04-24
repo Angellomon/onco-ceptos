@@ -122,7 +122,6 @@
     bottom: var(--submenu-bottom-offset);
     right: var(--submenu-right-offset);
 
-    border: 1px solid red;
     list-style-type: none;
 
     background-color: transparent;
