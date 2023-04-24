@@ -49,6 +49,17 @@
   --btn-border-radius: 30px;
 }
 
+::-moz-selection {
+  /* Code for Firefox */
+  color: var(--light-background);
+  background: var(--primary-color);
+}
+
+::selection {
+  color: var(--light-background);
+  background: var(--primary-color);
+}
+
 h1,
 h2 {
   font-family: "Invention Bold";
