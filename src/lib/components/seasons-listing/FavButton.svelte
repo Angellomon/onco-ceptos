@@ -30,10 +30,6 @@
   on:mouseover={handleMouseOver()}
   on:mouseleave={handleMouseLeave()}
   on:focus={() => {}}
-  on:click={(e) => {
-    e.preventDefault();
-    console.log("hmmm");
-  }}
   in:fade={{ duration: 100 }}
   on:keypress={() => {}}
 >

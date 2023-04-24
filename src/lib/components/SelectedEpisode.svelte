@@ -5,6 +5,7 @@
     episodesStore,
     seasonsStore,
     selectedSeason,
+    selectedEpisodeInfo,
   } from "../store";
   import { saveData } from "../utils";
   import EpisodePlayer from "./player/EpisodePlayer.svelte";
@@ -72,6 +73,10 @@
     return setNextEpisode;
   }
 
+  function showInfoClick() {
+    $selectedEpisodeInfo = episode;
+  }
+
   $: sectionStyle = $selectedEpisode
     ? buildSectionStyle($selectedEpisode.previewUrl)
     : buildSectionWithFirstEpisode();
@@ -90,6 +95,7 @@
         on:mouseleave={() => {
           infoHover = false;
         }}
+        on:click={showInfoClick}
         on:focus={() => {}}
         class="info"><Plus hover={infoHover} /> Más información</button
       >

@@ -1,7 +1,12 @@
 <script lang="ts">
   import { fade } from "svelte/transition";
   import type { EpisodeType } from "../../../types/series";
-  import { selectedEpisode, seasonsStore, selectedSeason } from "../../store";
+  import {
+    selectedEpisode,
+    seasonsStore,
+    selectedSeason,
+    selectedEpisodeInfo,
+  } from "../../store";
   import { saveData } from "../../utils";
   import PlayButton from "../svg/PlayButton.svelte";
   import FavButton from "./FavButton.svelte";
@@ -12,12 +17,9 @@
   let episodeHover = false;
   let infoHover = false;
   let favHover = false;
-  let showInfo = false;
-  let infoModalHidden = true;
 
   function showEpisodeInfo() {
-    showInfo = true;
-    infoModalHidden = false;
+    $selectedEpisodeInfo = episode;
   }
 
   function addEpisodeToFavorites() {}
@@ -81,7 +83,7 @@
 >
   {#if episodeHover}
     <InfoButton bind:hover={infoHover} />
-    <FavButton bind:hover={favHover} />
+    <!-- <FavButton bind:hover={favHover} /> -->
     <div
       in:fade={{ duration: 100 }}
       class="title-hover"
