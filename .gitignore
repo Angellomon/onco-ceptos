@@ -30,3 +30,5 @@ public/data
 .env
 
 *.zip
+
+urls.txt
