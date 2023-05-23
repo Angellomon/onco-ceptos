@@ -27,4 +27,6 @@ public/data
 
 .~lock*
 
+.env
+
 *.zip
