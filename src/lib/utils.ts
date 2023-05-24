@@ -12,7 +12,7 @@ interface LoadOptions {
   debug?: boolean;
 }
 
-function extractSeasons(data: any) {
+function extractSeasons(data: any, basePath: string = "/") {
   const seasonsResult: SeasonType[] = [];
 
   for (let season of data) {
@@ -20,28 +20,34 @@ function extractSeasons(data: any) {
       id: season.id_temporada,
       title: season.titulo,
       description: season.descripcion,
-      previewUrl: season.preview_img_url,
+      previewUrl: `${basePath}/preview-img/${season.preview_img_url}`,
     });
   }
 
   return seasonsResult;
 }
 
-function extractEpisodes(data: any) {
+function extractEpisodes(data: any, basePath: string = "/") {
   const episodesResult: EpisodeType[] = [];
+  console.log(basePath);
 
   for (let episode of data) {
+    let videoUrl = String(episode.video_url);
+
+    if (!videoUrl.startsWith("https"))
+      videoUrl = `${basePath}/${episode.video_url}`;
+
     episodesResult.push({
       id: episode.id_episodio,
       title: episode.titulo_episodio,
       seasonId: episode.id_temporada,
       episodeNumber: episode.numero,
       description: episode.descripcion,
-      videoUrl: episode.video_url,
-      previewUrl: episode.preview_img_url,
+      videoUrl,
+      previewUrl: `${basePath}/preview-img/${episode.preview_img_url}`,
       year: +episode.año,
       duration: episode.duracion,
-      portraitUrl: episode.portada,
+      portraitUrl: `${basePath}/preview-img/${episode.portada}`,
     });
   }
 
@@ -54,19 +60,25 @@ export async function loadSeriesData(
       episodes: "episodios",
       seasons: "temporadas",
     },
-    filename: "/datos-onconceptos.xlsx",
+    filename: "datos-onconceptos.xlsx",
   }
 ) {
-  const file = await (await fetch(options.filename)).arrayBuffer();
+  let basePath;
+  if (import.meta.env.BASE_URL == "/") basePath = "http://localhost:3000";
+  else basePath = import.meta.env.BASE_URL;
+
+  const file = await (
+    await fetch(`${basePath}/${options.filename}`)
+  ).arrayBuffer();
   const wb = read(file);
 
   const seasonsWB = wb.Sheets[options.sheetNames.seasons];
   const seasonsJson = utils.sheet_to_json(seasonsWB);
-  const seasons = extractSeasons(seasonsJson);
+  const seasons = extractSeasons(seasonsJson, basePath);
 
   const episodesWB = wb.Sheets[options.sheetNames.episodes];
   const episodesJson = utils.sheet_to_json(episodesWB);
-  const episodes = extractEpisodes(episodesJson);
+  const episodes = extractEpisodes(episodesJson, basePath);
 
   const data = {
     episodes,
