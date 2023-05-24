@@ -9,7 +9,6 @@
   } from "../../store";
   import { saveData } from "../../utils";
   import PlayButton from "../svg/PlayButton.svelte";
-  import FavButton from "./FavButton.svelte";
   import InfoButton from "./InfoButton.svelte";
 
   export let episode: EpisodeType;
@@ -46,8 +45,6 @@
     if (infoHover) return showEpisodeInfo();
     if (favHover) return addEpisodeToFavorites();
 
-    console.log("hmmm 2");
-
     return setCurrentEpisode();
   }
 
@@ -69,7 +66,11 @@
     };
   }
 
-  $: style = `background: no-repeat center/100% url('/preview-img/${episode.portraitUrl}') ;`;
+  function buildUrl(url: string) {
+    return;
+  }
+
+  $: style = `background: no-repeat center/100% url('${episode.portraitUrl}') ;`;
 </script>
 
 <div

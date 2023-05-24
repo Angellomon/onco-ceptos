@@ -17,14 +17,8 @@
   let infoHover = false;
   let nextHover = true;
 
-  function buildUrl(previewUrl: string) {
-    return `/preview-img/${previewUrl}`;
-  }
-
   function buildSectionStyle(previewUrl: string) {
-    const url = buildUrl(previewUrl);
-
-    return `background: url(${url}) no-repeat center center fixed;`;
+    return `background: url(${previewUrl}) no-repeat center center fixed;`;
   }
 
   function buildSectionWithFirstEpisode() {
@@ -32,9 +26,7 @@
 
     if (!firstEpisode) return defaultSectionStyle;
 
-    const url = buildUrl(firstEpisode.previewUrl);
-
-    return `background: url(${url}) no-repeat center center fixed;`;
+    return `background: url(${firstEpisode.previewUrl}) no-repeat center center fixed;`;
   }
 
   function setNextEpisode() {
