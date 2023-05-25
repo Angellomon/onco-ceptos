@@ -64,7 +64,9 @@ export async function loadSeriesData(
   }
 ) {
   let basePath;
-  if (import.meta.env.BASE_URL == "/") basePath = "http://localhost:3000";
+
+  if (import.meta.env.BASE_URL == "/" && import.meta.env.DEV)
+    basePath = "http://localhost:3000";
   else basePath = import.meta.env.BASE_URL;
 
   const file = await (
