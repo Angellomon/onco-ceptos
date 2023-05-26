@@ -1,7 +1,8 @@
-import type { EpisodeType, SeasonType } from "../types/series";
+import type { EpisodeType, SeasonType, User } from "../types/series";
 
 import { read, utils } from "xlsx";
 import { selectedEpisode, selectedSeason } from "./store";
+import { text } from "svelte/internal";
 
 interface LoadOptions {
   sheetNames?: {
@@ -131,3 +132,57 @@ export async function loadSavedData() {
   selectedEpisode.set(episode);
   selectedSeason.set(season);
 }
+
+function extractValueFromString(inputString: string, startTag: string, endTag) {
+  const startIndex = inputString.indexOf(startTag);
+  const endIndex = inputString.indexOf(endTag);
+
+  if (startIndex === -1 || endIndex === -1 || startIndex >= endIndex) {
+    return null; // No valid email found
+  }
+
+  const email = inputString.substring(startIndex + startTag.length, endIndex);
+  return email;
+}
+
+async function _getCompanyUser(): Promise<User | null> {
+  try {
+    const url: string = import.meta.env.VITE_MSD_BASE_URL;
+    const res = await fetch(`${url}/_api/web/currentUser`);
+
+    const text = await res.text();
+
+    const email = extractValueFromString(text, "<d:Email>", "</d:Email>");
+    const id = extractValueFromString(
+      text,
+      '<d:Id m:type="Edm.Int32">',
+      "</d:Id>"
+    );
+    const nameId = extractValueFromString(text, "<d:NameId>", "</d:NameId>");
+    const name = extractValueFromString(text, "<d:Title>", "</d:Title>");
+
+    return {
+      email,
+      id,
+      nameId,
+      name,
+    };
+  } catch (err) {
+    return null;
+  }
+}
+
+export async function getCurrentUser() {
+  const isDev = import.meta.env.DEV;
+
+  if (isDev) return defaultUser;
+
+  return await _getCompanyUser();
+}
+
+export const defaultUser: User = {
+  email: "someone@somewhere.com",
+  id: "000000",
+  nameId: "0000000000000000",
+  name: "Test",
+};
