@@ -7,8 +7,6 @@
   import Title from "../components/Title.svelte";
   import { dataIsLoading } from "../store";
   import Loading from "./Loading.svelte";
-
-  let hidden = true;
 </script>
 
 {#if $dataIsLoading}
@@ -20,7 +18,7 @@
     <SeasonsListing />
     <Title />
     <Footer />
-    <EpisodeInfoModal bind:hidden />
+    <EpisodeInfoModal />
   </main>
 {/if}
 
@@ -28,10 +26,4 @@
   main {
     position: relative;
   }
-
-  /* .scroll-lock {
-    overflow: hidden;
-    margin: 0;
-    height: 100%;
-  } */
 </style>
