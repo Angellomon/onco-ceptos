@@ -3,8 +3,13 @@
   import "@vime/core/themes/default.css";
   import "@splidejs/svelte-splide/css";
 
-  import { loadSeriesData, loadSavedData } from "./lib/utils";
-  import { episodesStore, seasonsStore, dataIsLoading } from "./lib/store";
+  import { loadSeriesData, loadSavedData, getCurrentUser } from "./lib/utils";
+  import {
+    episodesStore,
+    seasonsStore,
+    dataIsLoading,
+    currentUser,
+  } from "./lib/store";
   import Routes from "./routing/Routes.svelte";
 
   onMount(async () => {
@@ -16,6 +21,12 @@
     seasonsStore.set(data.seasons);
 
     loadSavedData();
+
+    const user = await getCurrentUser();
+
+    console.log(user);
+
+    currentUser.set(user);
 
     dataIsLoading.set(false);
   });
