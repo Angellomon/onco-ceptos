@@ -1,4 +1,5 @@
 <script lang="ts">
+  import CurrentUser from "./CurrentUser.svelte";
   import SeasonSearch from "./season-search/SeasonSearch.svelte";
   import SeasonSelect from "./season-select/SeasonSelect.svelte";
   import OnconceptosLogo from "./svg/OnconceptosLogo.svelte";
@@ -12,6 +13,7 @@
   <div class="content">
     <SeasonSelect />
     <SeasonSearch />
+    <CurrentUser />
   </div>
 </header>
 
