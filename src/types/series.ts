@@ -17,3 +17,10 @@ export type SeasonType = {
   description: string;
   previewUrl: string;
 };
+
+export type User = {
+  id: string;
+  email: string;
+  nameId: string;
+  name: string;
+};
