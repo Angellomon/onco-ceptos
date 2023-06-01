@@ -11,6 +11,7 @@
   import EpisodePlayer from "./player/EpisodePlayer.svelte";
   import ArrowRight from "./svg/ArrowRight.svelte";
   import Plus from "./svg/Plus.svelte";
+  import IframePlayer from "./player/IframePlayer.svelte";
 
   const defaultSectionStyle = "background: var(--secondary-color);";
 
@@ -77,7 +78,7 @@
 
 <section transition:fade style={sectionStyle}>
   <div class="episode-controls">
-    <EpisodePlayer />
+    <IframePlayer />
 
     <div class="episode-buttons">
       <button
