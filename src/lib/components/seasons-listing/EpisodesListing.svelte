@@ -46,12 +46,4 @@
     background: none;
     opacity: 1;
   }
-
-  img.rigtArrow {
-    cursor: pointer;
-
-    height: 50%;
-
-    z-index: 10;
-  }
 </style>
