@@ -30,11 +30,6 @@
     overflow: hidden;
   }
 
-  div.spinner {
-    position: absolute;
-    z-index: -10;
-  }
-
   div.content {
     color: white;
 

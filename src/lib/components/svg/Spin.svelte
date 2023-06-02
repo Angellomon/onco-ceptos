@@ -5,7 +5,6 @@
   export let width = 200;
   export let bottom = 0;
   export let right = 0;
-  export let left = 0;
   export let duration = 1000;
 
   let style = `bottom: ${bottom}px; right: ${right}px; `;
