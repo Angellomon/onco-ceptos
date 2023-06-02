@@ -3,7 +3,12 @@
   import "@vime/core/themes/default.css";
   import "@splidejs/svelte-splide/css";
 
-  import { loadSeriesData, loadSavedData, getCurrentUser } from "./lib/utils";
+  import {
+    loadSeriesData,
+    loadSavedData,
+    getCurrentUser,
+    verifyInstalledVersion,
+  } from "./lib/utils";
   import {
     episodesStore,
     seasonsStore,
@@ -27,6 +32,8 @@
     console.log(user);
 
     currentUser.set(user);
+
+    verifyInstalledVersion();
 
     dataIsLoading.set(false);
   });
