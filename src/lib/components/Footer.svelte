@@ -1,5 +1,8 @@
 <script>
   import OnconceptosLogo from "./svg/OnconceptosLogo.svelte";
+
+  const privacyUrl = import.meta.env.VITE_MSD_PRIVACY_URL;
+  const termsUrl = import.meta.env.VITE_MSD_TERMS_URL;
 </script>
 
 <footer>
@@ -7,15 +10,15 @@
 
   <ul>
     <li>
-      <a href="#"> Política de Privacidad </a>
+      <a href={privacyUrl} target="_blank" rel="noreferrer">
+        Política de Privacidad
+      </a>
     </li>
 
     <li>
-      <a href="#"> Aviso de Privacidad </a>
-    </li>
-
-    <li>
-      <a href="#"> Términos y Condiciones </a>
+      <a href={termsUrl} target="_blank" rel="noreferrer">
+        Términos y Condiciones
+      </a>
     </li>
   </ul>
 
@@ -29,10 +32,7 @@
       Av. San Jerónimo 369, Col. La Otra Banda, C.P. 01090, Ciudad de México.
     </p>
     <br />
-    <p>
-      El contenido de este sitio es para uso exclusivo de profesionales de la
-      salud en México.
-    </p>
+    <p>Para uso exclusivo interno.</p>
   </div>
 </footer>
 
