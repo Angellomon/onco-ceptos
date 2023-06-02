@@ -1,8 +1,12 @@
 import type { EpisodeType, SeasonType, User } from "../types/series";
 
 import { read, utils } from "xlsx";
-import { selectedEpisode, selectedSeason } from "./store";
-import { text } from "svelte/internal";
+import {
+  episodesStore,
+  seasonsStore,
+  selectedEpisode,
+  selectedSeason,
+} from "./store";
 
 interface LoadOptions {
   sheetNames?: {
@@ -121,6 +125,11 @@ export async function saveData() {
   saveOnLocalStorage(keyNames.selectedSeason, season);
 }
 
+function deleteLocalData() {
+  saveOnLocalStorage(keyNames.selectedEpisode, null);
+  saveOnLocalStorage(keyNames.selectedSeason, null);
+}
+
 export async function loadSavedData() {
   const episode: EpisodeType | null = loadFromLocalStorage(
     keyNames.selectedEpisode
@@ -128,9 +137,23 @@ export async function loadSavedData() {
   const season: SeasonType | null = loadFromLocalStorage(
     keyNames.selectedSeason
   );
+  console.log(episode, season, !!episode, !!season);
 
-  selectedEpisode.set(episode);
-  selectedSeason.set(season);
+  let firstEpisode: EpisodeType;
+  episodesStore.subscribe((episodes) => {
+    firstEpisode = episodes[0];
+  });
+
+  let firstSeason: SeasonType;
+  seasonsStore.subscribe((seasons) => {
+    firstSeason = seasons[0];
+  });
+  console.log(firstEpisode, firstSeason, !!firstEpisode, !!firstSeason);
+
+  selectedEpisode.set(episode || firstEpisode);
+  selectedSeason.set(season || firstSeason);
+
+  saveData();
 }
 
 function extractValueFromString(inputString: string, startTag: string, endTag) {
@@ -168,7 +191,9 @@ async function _getCompanyUser(): Promise<User | null> {
       name,
     };
   } catch (err) {
-    return null;
+    console.log(`get user info error: ${err}`);
+
+    return defaultUser;
   }
 }
 
@@ -186,3 +211,24 @@ export const defaultUser: User = {
   nameId: "0000000000000000",
   name: "Test",
 };
+
+const MSD_VERSION_KEY = "msd-version";
+
+export function verifyInstalledVersion() {
+  const savedVersion = loadFromLocalStorage(MSD_VERSION_KEY);
+  const servedVersion = import.meta.env.VITE_MSD_VERSION;
+
+  console.log(
+    `served version: ${servedVersion} | saved version: ${savedVersion}`
+  );
+
+  if (!savedVersion || savedVersion === "undefined") {
+    saveOnLocalStorage(MSD_VERSION_KEY, servedVersion);
+  } else if (savedVersion !== servedVersion) {
+    saveOnLocalStorage(MSD_VERSION_KEY, servedVersion);
+
+    deleteLocalData();
+
+    window.location.reload();
+  }
+}
