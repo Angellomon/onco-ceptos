@@ -8,8 +8,8 @@
   <div class="content">
     <OnconceptosLogo paddingLeft={0} type="white" width={500} />
     <p>
-      Una miniserie de MSD Oncología, que te ayudará a entender mejor el impacto
-      del tratamiento contra el cáncer
+      Una miniserie de <b>MSD Oncología</b>, que te ayudará a entender mejor el
+      impacto del tratamiento contra el cáncer
     </p>
   </div>
   <Saos
