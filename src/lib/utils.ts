@@ -29,10 +29,7 @@ function extractSeasons(data: any, basePath: string = "/") {
   const seasonsResult: SeasonType[] = [];
 
   for (let season of data) {
-    console.log(season.preview_img_url);
-
     const previewUrl = extractImageSrc(season.preview_img_url, basePath);
-    console.log(previewUrl);
 
     seasonsResult.push({
       id: season.id_temporada,
@@ -47,7 +44,6 @@ function extractSeasons(data: any, basePath: string = "/") {
 
 function extractEpisodes(data: any, basePath: string = "/") {
   const episodesResult: EpisodeType[] = [];
-  console.log(basePath);
 
   for (let episode of data) {
     let videoUrl = String(episode.video_url);
@@ -57,8 +53,6 @@ function extractEpisodes(data: any, basePath: string = "/") {
 
     const previewUrl = extractImageSrc(episode.preview_img_url, basePath);
     const portraitUrl = extractImageSrc(episode.portada, basePath);
-
-    console.log(previewUrl, portraitUrl);
 
     episodesResult.push({
       id: episode.id_episodio,
@@ -155,7 +149,6 @@ export async function loadSavedData() {
   const season: SeasonType | null = loadFromLocalStorage(
     keyNames.selectedSeason
   );
-  console.log(episode, season, !!episode, !!season);
 
   let firstEpisode: EpisodeType;
   episodesStore.subscribe((episodes) => {
@@ -166,7 +159,6 @@ export async function loadSavedData() {
   seasonsStore.subscribe((seasons) => {
     firstSeason = seasons[0];
   });
-  console.log(firstEpisode, firstSeason, !!firstEpisode, !!firstSeason);
 
   selectedEpisode.set(episode || firstEpisode);
   selectedSeason.set(season || firstSeason);
