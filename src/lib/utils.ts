@@ -17,15 +17,28 @@ interface LoadOptions {
   debug?: boolean;
 }
 
+function extractImageSrc(src: string, basePath = "/", imgPath = "preview-img") {
+  if (src.startsWith("https")) {
+    return src;
+  }
+
+  return `${basePath}/${imgPath}/${src}`;
+}
+
 function extractSeasons(data: any, basePath: string = "/") {
   const seasonsResult: SeasonType[] = [];
 
   for (let season of data) {
+    console.log(season.preview_img_url);
+
+    const previewUrl = extractImageSrc(season.preview_img_url, basePath);
+    console.log(previewUrl);
+
     seasonsResult.push({
       id: season.id_temporada,
       title: season.titulo,
       description: season.descripcion,
-      previewUrl: `${basePath}/preview-img/${season.preview_img_url}`,
+      previewUrl,
     });
   }
 
@@ -42,17 +55,22 @@ function extractEpisodes(data: any, basePath: string = "/") {
     if (!videoUrl.startsWith("https"))
       videoUrl = `${basePath}/${episode.video_url}`;
 
+    const previewUrl = extractImageSrc(episode.preview_img_url, basePath);
+    const portraitUrl = extractImageSrc(episode.portada, basePath);
+
+    console.log(previewUrl, portraitUrl);
+
     episodesResult.push({
       id: episode.id_episodio,
       title: episode.titulo_episodio,
       seasonId: episode.id_temporada,
       episodeNumber: episode.numero,
       description: episode.descripcion,
-      videoUrl,
-      previewUrl: `${basePath}/preview-img/${episode.preview_img_url}`,
       year: +episode.año,
       duration: episode.duracion,
-      portraitUrl: `${basePath}/preview-img/${episode.portada}`,
+      videoUrl,
+      previewUrl,
+      portraitUrl,
     });
   }
 
