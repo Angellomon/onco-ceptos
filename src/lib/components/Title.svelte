@@ -8,8 +8,8 @@
   <div class="content">
     <OnconceptosLogo paddingLeft={0} type="white" width={500} />
     <p>
-      Toda la información que necesitas para <br /> el desarrollo de tu ejercicio
-      profesional
+      Una miniserie de MSD Oncología, que te ayudará a entender mejor el impacto
+      del tratamiento contra el cáncer
     </p>
   </div>
   <Saos
@@ -48,6 +48,8 @@
   div.content p {
     margin: 0;
     margin-top: 40px;
+
+    width: 85%;
   }
 
   /* ----------------------------------------------
