@@ -35,7 +35,7 @@
 
     cursor: pointer;
 
-    height: 100%;
+    /* height: 100%; */
     width: 100px;
 
     z-index: 10;
