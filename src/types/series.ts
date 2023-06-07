@@ -9,6 +9,7 @@ export type EpisodeType = {
   year: number;
   duration: number;
   portraitUrl: string;
+  pendingRelease: boolean;
 };
 
 export type SeasonType = {
