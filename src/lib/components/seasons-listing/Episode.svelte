@@ -42,78 +42,89 @@
   }
 
   function handleEpisodeClick() {
+    console.log(episode);
+
+    // if (episode.pendingRelease) return;
+
     if (infoHover) return showEpisodeInfo();
     if (favHover) return addEpisodeToFavorites();
 
     return setCurrentEpisode();
   }
 
-  function handleKeyDown() {
-    return (e) => {
-      console.log(e);
-    };
+  function handleKeyDown(e) {
+    console.log(e);
   }
 
   function handleMouseOver() {
-    return () => {
-      episodeHover = true;
-    };
+    console.log("enter");
+    episodeHover = true;
   }
 
   function handleMouseLeave() {
-    return () => {
-      episodeHover = false;
-    };
+    episodeHover = false;
+
+    console.log("leave");
   }
 
-  function buildUrl(url: string) {
-    return;
-  }
-
-  $: style = `background: no-repeat center/100% url('${episode.portraitUrl}') ;`;
+  $: style = `background: no-repeat center/100% url('${episode.portraitUrl}'); background-size: cover;`;
 </script>
 
-<div
-  class="episode-box"
-  {style}
-  on:click={handleEpisodeClick}
-  on:focus={() => {}}
-  on:keypress={handleKeyDown()}
-  on:mouseover={handleMouseOver()}
-  on:mouseleave={handleMouseLeave()}
->
-  {#if episodeHover}
+{#if episode.pendingRelease}
+  <div class="pending-release">
+    <div in:fade={{ duration: 100 }} class="title-wrapper">
+      <h3>PRÓXIMAMENTE</h3>
+    </div>
+  </div>
+{:else}
+  <div
+    class="episode-box"
+    {style}
+    on:click={handleEpisodeClick}
+    on:focus={() => {}}
+    on:keypress={handleKeyDown}
+    on:mouseover={handleMouseOver}
+    on:mouseleave={handleMouseLeave}
+  >
     <InfoButton bind:hover={infoHover} />
     <!-- <FavButton bind:hover={favHover} /> -->
-    <div
-      in:fade={{ duration: 100 }}
-      class="title-hover"
-      on:click={handleEpisodeClick}
-      on:keypress={() => {}}
-    >
-      <PlayButton />
-    </div>
-  {:else}
+    <!-- <div
+        in:fade={{ duration: 100 }}
+        class="title-hover"
+        on:click={handleEpisodeClick}
+        on:keypress={() => {}}
+      >
+    </div> -->
     <div in:fade={{ duration: 100 }} class="title-wrapper">
+      <PlayButton bind:hover={episodeHover} />
       <h3>
         {episode.title}
       </h3>
     </div>
-  {/if}
-</div>
+  </div>
+{/if}
 
 <style>
   h3 {
     color: white;
     height: 100%;
-    width: 95%;
-    text-align: center;
+    width: 90%;
+    /* text-align: center; */
 
     font-size: 30px;
-    line-height: 35px;
+    line-height: 30px;
+
+    text-shadow: 1px 0px 30px rgba(1, 1, 1, 0.5);
+
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 10%;
+    bottom: 0;
+    margin: auto;
   }
 
-  div.title-hover {
+  /* div.title-hover {
     height: 100%;
     width: 100%;
     min-height: 250px;
@@ -124,22 +135,27 @@
     align-items: center;
 
     backdrop-filter: brightness(0.8);
-    /* backdrop-filter: blur(2px); */
-  }
+  } */
 
   div.title-wrapper {
     width: 100%;
+    min-width: 30vw;
 
-    min-height: 250px;
+    height: 250px;
     backdrop-filter: brightness(0.8);
 
     display: flex;
     justify-content: center;
     align-items: center;
+
+    position: relative;
   }
 
   div.episode-box {
     /* min-height: 20vh; */
+    width: 100%;
+
+    min-width: 30vw;
 
     background-size: cover;
 
@@ -150,5 +166,10 @@
     position: relative;
 
     cursor: pointer;
+  }
+
+  div.pending-release {
+    background-color: var(--primary-color);
+    cursor: default;
   }
 </style>
