@@ -42,6 +42,15 @@ function extractSeasons(data: any, basePath: string = "/") {
   return seasonsResult;
 }
 
+function extractpendingRelease(pending: string) {
+  if (["si", "yes", "true", "verdadero"].includes(pending.toLowerCase()))
+    return true;
+  else if (["no", "false", "falso"].includes(pending.toLowerCase()))
+    return false;
+
+  return true;
+}
+
 function extractEpisodes(data: any, basePath: string = "/") {
   const episodesResult: EpisodeType[] = [];
 
@@ -54,6 +63,8 @@ function extractEpisodes(data: any, basePath: string = "/") {
     const previewUrl = extractImageSrc(episode.preview_img_url, basePath);
     const portraitUrl = extractImageSrc(episode.portada, basePath);
 
+    const pendingRelease = extractpendingRelease(episode.proximamente);
+
     episodesResult.push({
       id: episode.id_episodio,
       title: episode.titulo_episodio,
@@ -65,6 +76,7 @@ function extractEpisodes(data: any, basePath: string = "/") {
       videoUrl,
       previewUrl,
       portraitUrl,
+      pendingRelease,
     });
   }
 
