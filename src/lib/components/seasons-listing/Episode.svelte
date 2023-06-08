@@ -44,10 +44,9 @@
   function handleEpisodeClick() {
     console.log(episode);
 
-    // if (episode.pendingRelease) return;
-
     if (infoHover) return showEpisodeInfo();
     if (favHover) return addEpisodeToFavorites();
+    if (episode.pendingRelease) return;
 
     return setCurrentEpisode();
   }
@@ -70,39 +69,34 @@
   $: style = `background: no-repeat center/100% url('${episode.portraitUrl}'); background-size: cover;`;
 </script>
 
-{#if episode.pendingRelease}
-  <div class="pending-release">
-    <div in:fade={{ duration: 100 }} class="title-wrapper">
-      <h3>PRÓXIMAMENTE</h3>
-    </div>
-  </div>
-{:else}
-  <div
-    class="episode-box"
-    {style}
-    on:click={handleEpisodeClick}
-    on:focus={() => {}}
-    on:keypress={handleKeyDown}
-    on:mouseover={handleMouseOver}
-    on:mouseleave={handleMouseLeave}
-  >
-    <InfoButton bind:hover={infoHover} />
-    <!-- <FavButton bind:hover={favHover} /> -->
-    <!-- <div
+<div
+  class="episode-box"
+  class:pending-release={episode.pendingRelease}
+  {style}
+  on:click={handleEpisodeClick}
+  on:focus={() => {}}
+  on:keypress={handleKeyDown}
+  on:mouseover={handleMouseOver}
+  on:mouseleave={handleMouseLeave}
+>
+  <InfoButton bind:hover={infoHover} />
+  <!-- <FavButton bind:hover={favHover} /> -->
+  <!-- <div
         in:fade={{ duration: 100 }}
         class="title-hover"
         on:click={handleEpisodeClick}
         on:keypress={() => {}}
       >
     </div> -->
-    <div in:fade={{ duration: 100 }} class="title-wrapper">
+  <div in:fade={{ duration: 100 }} class="title-wrapper">
+    {#if !episode.pendingRelease}
       <PlayButton bind:hover={episodeHover} />
-      <h3>
-        {episode.title}
-      </h3>
-    </div>
+    {/if}
+    <h3>
+      {episode.title}
+    </h3>
   </div>
-{/if}
+</div>
 
 <style>
   h3 {
