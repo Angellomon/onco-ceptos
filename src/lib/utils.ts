@@ -190,6 +190,22 @@ function extractValueFromString(inputString: string, startTag: string, endTag) {
   return email;
 }
 
+async function registerUserActivity(
+  activity: string,
+  params: Record<string, any>
+) {
+  console.log("activity", activity);
+  console.log("params", params);
+
+  const url: string = import.meta.env.VITE_MSD_BASE_URL;
+
+  try {
+    const res = await fetch(`${url}/_api/web/currentUser`);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 async function _getCompanyUser(): Promise<User | null> {
   try {
     const url: string = import.meta.env.VITE_MSD_BASE_URL;
