@@ -10,6 +10,7 @@ export type EpisodeType = {
   duration: number;
   portraitUrl: string;
   pendingRelease: boolean;
+  quizzUrl: string;
 };
 
 export type SeasonType = {
