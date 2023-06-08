@@ -77,6 +77,7 @@ function extractEpisodes(data: any, basePath: string = "/") {
       previewUrl,
       portraitUrl,
       pendingRelease,
+      quizzUrl: episode.quizz_url || "#",
     });
   }
 
