@@ -7,6 +7,7 @@ import {
   selectedEpisode,
   selectedSeason,
 } from "./store";
+import dayjs from "dayjs";
 
 interface LoadOptions {
   sheetNames?: {
@@ -35,6 +36,7 @@ function extractSeasons(data: any, basePath: string = "/") {
       id: season.id_temporada,
       title: season.titulo,
       description: season.descripcion,
+      seasonNumber: season.numero ?? 0,
       previewUrl,
     });
   }
@@ -77,8 +79,13 @@ function extractEpisodes(data: any, basePath: string = "/") {
       previewUrl,
       portraitUrl,
       pendingRelease,
-      quizzUrl: episode.quizz_url || "#",
+      quizzUrl: episode.quizz_url,
+      releaseDate: episode.fecha_estreno,
+      releaseHour: episode.hora_estreno ?? "12",
+      releaseMinute: episode.minuto_estreno ?? "00",
     });
+
+    console.log(episode.hora_estreno);
   }
 
   return episodesResult;
