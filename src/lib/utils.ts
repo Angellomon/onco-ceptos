@@ -7,7 +7,6 @@ import {
   selectedEpisode,
   selectedSeason,
 } from "./store";
-import dayjs from "dayjs";
 
 interface LoadOptions {
   sheetNames?: {
@@ -214,27 +213,52 @@ async function registerUserActivity(
   }
 }
 
+function getElementsFromArray(arr: any[], fields: string[]) {
+  let resultObject: Record<string, string> = {};
+
+  for (let element of arr) {
+    if (!fields.includes(element.Key)) continue;
+
+    resultObject[element.Key] = element.Value;
+  }
+
+  return resultObject;
+}
+
 async function _getCompanyUser(): Promise<User | null> {
   try {
     const url: string = import.meta.env.VITE_MSD_BASE_URL;
-    const res = await fetch(`${url}/_api/web/currentUser`);
-
-    const text = await res.text();
-
-    const email = extractValueFromString(text, "<d:Email>", "</d:Email>");
-    const id = extractValueFromString(
-      text,
-      '<d:Id m:type="Edm.Int32">',
-      "</d:Id>"
+    const res = await fetch(
+      `${url}/_api/SP.UserProfiles.PeopleManager/GetMyProperties`,
+      {
+        headers: {
+          Accept: "application/json;odata=verbose",
+        },
+      }
     );
-    const nameId = extractValueFromString(text, "<d:NameId>", "</d:NameId>");
-    const name = extractValueFromString(text, "<d:Title>", "</d:Title>");
+
+    const resJson = await res.json();
+
+    const keys = [
+      "PreferredName",
+      "WorkEmail",
+      "UserProfile_GUID",
+      "Department",
+    ];
+    const values = getElementsFromArray(resJson.UserProfileProperties, keys);
+
+    const email = values.WorkEmail;
+    const id = values.UserProfile_GUID;
+    const nameId = values.UserProfile_GUID;
+    const name = values.PreferredName;
+    const department = values.Department;
 
     return {
       email,
       id,
       nameId,
       name,
+      department,
     };
   } catch (err) {
     console.log(`get user info error: ${err}`);
@@ -256,6 +280,7 @@ export const defaultUser: User = {
   id: "000000",
   nameId: "0000000000000000",
   name: "Test",
+  department: "",
 };
 
 const MSD_VERSION_KEY = "msd-version";
