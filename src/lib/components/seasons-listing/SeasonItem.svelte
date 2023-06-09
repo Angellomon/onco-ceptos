@@ -25,12 +25,11 @@
     align-items: center;
 
     height: 100%;
-    width: 100%;
 
     min-height: 25vh;
 
-    justify-self: center;
-    align-self: center;
+    /* justify-self: center;
+    align-self: center; */
 
     margin: 0;
 
@@ -55,14 +54,15 @@
 
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    /* justify-content: space-between; */
+
+    text-align: left;
 
     height: 100%;
-    width: 80%;
+    width: 95%;
 
-    justify-self: center;
-    align-self: center;
+    /* justify-self: center; */
+    /* align-self: center; */
   }
 
   h3 {
