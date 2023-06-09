@@ -1,4 +1,5 @@
 import type { EpisodeType, SeasonType, User } from "../types/series";
+import { nanoid } from "nanoid";
 
 import { read, utils } from "xlsx";
 import {
@@ -7,6 +8,7 @@ import {
   selectedEpisode,
   selectedSeason,
 } from "./store";
+import dayjs from "dayjs";
 
 interface LoadOptions {
   sheetNames?: {
@@ -197,23 +199,77 @@ function extractValueFromString(inputString: string, startTag: string, endTag) {
   return email;
 }
 
-async function registerUserActivity(
-  activity: string,
-  params: Record<string, any>
-) {
-  console.log("activity", activity);
-  console.log("params", params);
-
+async function getSiteContextDigest(): Promise<string> {
   const url: string = import.meta.env.VITE_MSD_BASE_URL;
+  const basePath: string = import.meta.env.VITE_MSD_BASE_PATH;
 
   try {
-    const res = await fetch(`${url}/_api/web/currentUser`);
+    const contextResult = await fetch(`${url}/${basePath}/_api/contextinfo`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json;odata=verbose",
+      },
+    });
+
+    const contextJson = await contextResult.json();
+
+    return contextJson.d.GetContextWebInformation.FormDigestValue;
   } catch (err) {
-    console.log(err);
+    console.log("error getting site context", err);
+
+    return "";
+  }
+}
+
+export async function registerUserVisit(user: User) {
+  const url: string = import.meta.env.VITE_MSD_BASE_URL;
+  const basePath: string = import.meta.env.VITE_MSD_BASE_PATH;
+  // const visitListName = import.meta.env.VITE_MSD_SP_VISITS_LIST_NAME;
+  const visitListTitle = import.meta.env.VITE_MSD_SP_VISITS_LIST_TITLE;
+
+  const userInfo = await getCurrentUser();
+
+  try {
+    const contextDigest = await getSiteContextDigest();
+
+    const body = {
+      // "__metadata": {
+      //   type: visitListName
+      // },
+      Title: nanoid(),
+      Correo: userInfo.email,
+      Nombre: user.name,
+      OData__x00da_ltimavisita: dayjs().toISOString(),
+      Departamento: user.department,
+    };
+
+    const bodyLength = JSON.stringify(body).length.toString();
+
+    const res = await fetch(
+      `${url}${basePath}/_api/web/lists/GetByTitle('${visitListTitle}')/items`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json;odata=verbose",
+          "Content-Length": bodyLength,
+          "X-RequestDigest": contextDigest,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      }
+    );
+
+    const resJson = await res.json();
+
+    console.log(resJson);
+  } catch (err) {
+    console.log("error registering user visit", err);
   }
 }
 
 function getElementsFromArray(arr: any[], fields: string[]) {
+  console.log(arr, fields);
+
   let resultObject: Record<string, string> = {};
 
   for (let element of arr) {
@@ -245,7 +301,10 @@ async function _getCompanyUser(): Promise<User | null> {
       "UserProfile_GUID",
       "Department",
     ];
-    const values = getElementsFromArray(resJson.UserProfileProperties, keys);
+    const values = getElementsFromArray(
+      resJson.d.UserProfileProperties.results,
+      keys
+    );
 
     const email = values.WorkEmail;
     const id = values.UserProfile_GUID;
