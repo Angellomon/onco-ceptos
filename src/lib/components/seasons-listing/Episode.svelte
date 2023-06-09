@@ -85,7 +85,6 @@
         .isAfter(releaseDate);
 
       $pendingRelease = !isEpisodeReleased;
-      console.log(episode.id, $pendingRelease);
     }, 1000);
   });
 
@@ -115,6 +114,7 @@
       isEpisodeReleased
     );
   }
+  // TODO: fix season number dislplay (always displays 1)
 </script>
 
 <div
@@ -134,7 +134,7 @@
       <PlayButton bind:hover={episodeHover} />
     {/if}
     <h3>
-      T{$selectedSeason.seasonNumber}E{episode.episodeNumber}
+      T1E{episode.episodeNumber}
       "{episode.title}"
     </h3>
   </div>
