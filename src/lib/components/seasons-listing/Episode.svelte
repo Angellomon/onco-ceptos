@@ -1,5 +1,6 @@
 <script lang="ts">
   import { fade } from "svelte/transition";
+  import { writable } from "svelte/store";
   import type { EpisodeType } from "../../../types/series";
   import {
     selectedEpisode,
@@ -10,6 +11,13 @@
   import { saveData } from "../../utils";
   import PlayButton from "../svg/PlayButton.svelte";
   import InfoButton from "./InfoButton.svelte";
+  import { onDestroy, onMount } from "svelte";
+  import dayjs from "dayjs";
+  import utc from "dayjs/plugin/utc";
+  import timezone from "dayjs/plugin/timezone";
+
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
 
   export let episode: EpisodeType;
 
@@ -46,7 +54,7 @@
 
     if (infoHover) return showEpisodeInfo();
     if (favHover) return addEpisodeToFavorites();
-    if (episode.pendingRelease) return;
+    if ($pendingRelease) return;
 
     return setCurrentEpisode();
   }
@@ -66,12 +74,52 @@
     console.log("leave");
   }
 
+  let interval: any;
+  let isEpisodeReleased: boolean;
+
+  onMount(() => {
+    interval = setInterval(() => {
+      isEpisodeReleased = dayjs()
+        .tz("America/Mexico_City")
+        .subtract(1, "hour")
+        .isAfter(releaseDate);
+
+      $pendingRelease = !isEpisodeReleased;
+      console.log(episode.id, $pendingRelease);
+    }, 1000);
+  });
+
+  onDestroy(() => {
+    clearInterval(interval);
+  });
+
+  const pendingRelease = writable(true);
+
+  $: releaseDate = episode
+    ? dayjs(
+        `${episode.releaseDate} ${episode.releaseHour}:${episode.releaseMinute}`,
+        "d/MMM/Y h:m",
+        "America/Mexico_City"
+      )
+    : null;
+
   $: style = `background: no-repeat center/100% url('${episode.portraitUrl}'); background-size: cover;`;
+  $: {
+    console.log(releaseDate);
+    console.log(
+      $selectedEpisodeInfo?.releaseHour,
+      $selectedEpisodeInfo?.releaseMinute
+    );
+    console.log(
+      dayjs().tz("America/Mexico_City").subtract(1, "hour"),
+      isEpisodeReleased
+    );
+  }
 </script>
 
 <div
   class="episode-box"
-  class:pending-release={episode.pendingRelease}
+  class:pending-release={$pendingRelease}
   {style}
   on:click={handleEpisodeClick}
   on:focus={() => {}}
@@ -80,20 +128,14 @@
   on:mouseleave={handleMouseLeave}
 >
   <InfoButton bind:hover={infoHover} />
-  <!-- <FavButton bind:hover={favHover} /> -->
-  <!-- <div
-        in:fade={{ duration: 100 }}
-        class="title-hover"
-        on:click={handleEpisodeClick}
-        on:keypress={() => {}}
-      >
-    </div> -->
+
   <div in:fade={{ duration: 100 }} class="title-wrapper">
-    {#if !episode.pendingRelease}
+    {#if !$pendingRelease}
       <PlayButton bind:hover={episodeHover} />
     {/if}
     <h3>
-      {episode.title}
+      T{$selectedSeason.seasonNumber}E{episode.episodeNumber}
+      "{episode.title}"
     </h3>
   </div>
 </div>
@@ -103,9 +145,8 @@
     color: white;
     height: 100%;
     width: 90%;
-    /* text-align: center; */
 
-    font-size: 30px;
+    font-size: 25px;
     line-height: 30px;
 
     text-shadow: 1px 0px 30px rgba(1, 1, 1, 0.5);
@@ -117,19 +158,6 @@
     bottom: 0;
     margin: auto;
   }
-
-  /* div.title-hover {
-    height: 100%;
-    width: 100%;
-    min-height: 250px;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-
-    backdrop-filter: brightness(0.8);
-  } */
 
   div.title-wrapper {
     width: 100%;
