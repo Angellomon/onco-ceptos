@@ -10,6 +10,8 @@
 
   function handleResultClick(episode: EpisodeType) {
     return () => {
+      if (episode.pendingRelease) return;
+
       $selectedEpisode = episode;
       searchResults = [];
     };
