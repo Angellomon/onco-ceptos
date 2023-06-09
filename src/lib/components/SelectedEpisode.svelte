@@ -8,10 +8,10 @@
     selectedEpisodeInfo,
   } from "../store";
   import { saveData } from "../utils";
-  import EpisodePlayer from "./player/EpisodePlayer.svelte";
   import ArrowRight from "./svg/ArrowRight.svelte";
   import Plus from "./svg/Plus.svelte";
   import IframePlayer from "./player/IframePlayer.svelte";
+  import QuizzButton from "./buttons/QuizzButton.svelte";
 
   const defaultSectionStyle = "background: var(--secondary-color);";
 
@@ -104,6 +104,10 @@
         on:click={handleNextEpisode()}
         class="next"><ArrowRight hover={nextHover} /> Siguiente capítulo</button
       >
+
+      {#if $selectedEpisode.quizzUrl}
+        <QuizzButton />
+      {/if}
     </div>
   </div>
 
@@ -185,6 +189,7 @@
   button.next {
     background-color: var(--primary-color);
     color: white;
+    border: 2px solid white;
   }
 
   div.episode-controls {
@@ -207,11 +212,12 @@
     display: flex;
 
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-around;
 
-    align-content: space-evenly;
+    align-content: space-around;
+    gap: 10px;
     align-items: center;
-    height: 20vh;
+    /* height: 20vh; */
 
     z-index: 10;
   }
