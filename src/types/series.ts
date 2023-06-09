@@ -11,6 +11,9 @@ export type EpisodeType = {
   portraitUrl: string;
   pendingRelease: boolean;
   quizzUrl: string;
+  releaseDate: string;
+  releaseHour: string;
+  releaseMinute: string;
 };
 
 export type SeasonType = {
@@ -18,6 +21,7 @@ export type SeasonType = {
   title: string;
   description: string;
   previewUrl: string;
+  seasonNumber: number;
 };
 
 export type User = {
