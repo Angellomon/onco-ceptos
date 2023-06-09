@@ -1,24 +1,53 @@
 <script lang="ts">
+  import dayjs from "dayjs";
+  import "dayjs/locale/es";
+  import utc from "dayjs/plugin/utc";
+  import timezone from "dayjs/plugin/timezone";
+
   import { fade } from "svelte/transition";
   import { selectedEpisodeInfo } from "../../store";
   import XMark from "../svg/XMark.svelte";
+  import EpisodeInfo from "../EpisodeInfo.svelte";
 
   export const hidden = !!!$selectedEpisodeInfo;
+
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
 
   function handleCloseClick() {
     $selectedEpisodeInfo = null;
   }
+
+  $: releaseDate = $selectedEpisodeInfo
+    ? dayjs(
+        `${$selectedEpisodeInfo.releaseDate} ${$selectedEpisodeInfo.releaseHour}:${$selectedEpisodeInfo.releaseMinute}`,
+        "d/MMM/Y h:m",
+        "America/Mexico_City"
+      )
+    : null;
+
+  $: isEpisodeReleased = dayjs()
+    .tz("America/Mexico_City")
+    .subtract(10, "minutes")
+    .isAfter(releaseDate);
+
+  // $: {
+  //   console.log(releaseDate);
+  //   console.log(
+  //     $selectedEpisodeInfo?.releaseHour,
+  //     $selectedEpisodeInfo?.releaseMinute
+  //   );
+  //   console.log(
+  //     dayjs().tz("America/Mexico_City").subtract(16, "minutes"),
+  //     isEpisodeReleased
+  //   );
+  // }
 </script>
 
 {#if $selectedEpisodeInfo}
   <div class="modal-wrapper" transition:fade={{ duration: 150 }}>
     <div class="info-wrapper">
-      <h2>
-        {$selectedEpisodeInfo.title}
-      </h2>
-
-      <p>{$selectedEpisodeInfo.year} • {$selectedEpisodeInfo.duration}</p>
-      <p>{$selectedEpisodeInfo.description}</p>
+      <EpisodeInfo episode={$selectedEpisodeInfo} />
 
       <XMark on:click={handleCloseClick} />
     </div>
@@ -26,17 +55,6 @@
 {/if}
 
 <style>
-  h2 {
-    text-align: left;
-
-    font-size: 30px;
-    line-height: 35px;
-  }
-
-  p {
-    font-size: 18px;
-  }
-
   div.modal-wrapper {
     position: fixed;
     top: 0;
