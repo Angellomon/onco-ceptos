@@ -8,6 +8,7 @@
     loadSavedData,
     getCurrentUser,
     verifyInstalledVersion,
+    registerUserVisit,
   } from "./lib/utils";
   import {
     episodesStore,
@@ -34,6 +35,8 @@
     currentUser.set(user);
 
     verifyInstalledVersion();
+
+    await registerUserVisit(user);
 
     dataIsLoading.set(false);
   });
