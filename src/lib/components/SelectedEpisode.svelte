@@ -12,6 +12,13 @@
   import Plus from "./svg/Plus.svelte";
   import IframePlayer from "./player/IframePlayer.svelte";
   import QuizzButton from "./buttons/QuizzButton.svelte";
+  import dayjs from "dayjs";
+  import "dayjs/locale/es";
+  import utc from "dayjs/plugin/utc";
+  import timezone from "dayjs/plugin/timezone";
+
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
 
   const defaultSectionStyle = "background: var(--secondary-color);";
 
@@ -56,6 +63,18 @@
 
       $selectedEpisode = seasonEpisodes[0]; // # first episode of next season
     } else {
+      let releaseDate = dayjs(
+        `${nextEpisode.releaseDate} ${nextEpisode.releaseHour}:${nextEpisode.releaseMinute}`,
+        "d/MMM/Y h:m"
+      ).tz("America/Mexico_City");
+
+      let isEpisodeReleased = dayjs()
+        .tz("America/Mexico_City")
+        .subtract(1, "hour")
+        .isAfter(releaseDate);
+
+      if (!isEpisodeReleased) return;
+
       $selectedEpisode = nextEpisode;
     }
 
@@ -113,9 +132,10 @@
 
   <div class="episode-info">
     <h2>
-      {episode.title}
+      T1E{episode.episodeNumber}
+      "{episode.title}"
     </h2>
-    <p>{episode.year} • {episode.duration}</p>
+    <p>{episode.year} • {episode.duration} . Disponible</p>
     <p>{episode.description}</p>
   </div>
 </section>
