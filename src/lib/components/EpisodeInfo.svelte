@@ -23,10 +23,13 @@
     console.log(isEpisodeReleased);
     console.log(dayjs().tz("America/Mexico_City").subtract(1, "hour"));
   }
+
+  // TODO: fix season number dislplay (always displays 1)
 </script>
 
 <h2>
-  {episode.title}
+  T1E{episode.episodeNumber}
+  "{episode.title}"
 </h2>
 
 <p>
