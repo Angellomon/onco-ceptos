@@ -29,4 +29,5 @@ export type User = {
   email: string;
   nameId: string;
   name: string;
+  department: string;
 };
