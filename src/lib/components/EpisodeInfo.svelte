@@ -20,21 +20,27 @@
   // TODO: fix season number dislplay (always displays 1)
 </script>
 
-<h2>
-  T1E{episode.episodeNumber}
-  "{episode.title}"
-</h2>
+<div>
+  <h2>
+    T1E{episode.episodeNumber}
+    "{episode.title}"
+  </h2>
 
-<p>
-  {episode.year} • {episode.duration}
-  • Disponible
-  {#if !isEpisodeReleased}
-    el <b>{releaseDate.format("DD/MMM/YYYY hh:mm A")}</b>
-  {/if}
-</p>
-<p>{episode.description}</p>
+  <p>
+    {episode.year} • {episode.duration}
+    • Disponible
+    {#if !isEpisodeReleased}
+      el <b>{releaseDate.format("DD/MMM/YYYY hh:mm A")}</b>
+    {/if}
+  </p>
+  <p>{episode.description}</p>
+</div>
 
 <style>
+  div {
+    overflow-y: scroll;
+  }
+
   h2 {
     text-align: left;
 
@@ -44,5 +50,17 @@
 
   p {
     font-size: 18px;
+  }
+
+  @media screen and (max-width: 821px) and (min-width: 500px) {
+    div {
+      margin: 5ch;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    div {
+      margin: 5ch;
+    }
   }
 </style>
