@@ -69,6 +69,7 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    overflow-y: scroll;
 
     background: transparent;
 
@@ -77,12 +78,26 @@
 
   div.info-wrapper {
     position: relative;
-    height: 60vh;
-    width: 50vw;
+    height: auto;
+    width: 90%;
 
     padding: 10px 20px;
 
     background-color: var(--light-background);
     color: var(--secondary-color);
+  }
+
+  @media screen and (max-width: 821px) and (min-width: 500px) {
+    div.info-wrapper {
+      padding: 0;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    div.info-wrapper {
+      padding: 0;
+
+      margin-top: 15ch;
+    }
   }
 </style>
