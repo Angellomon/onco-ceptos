@@ -6,6 +6,7 @@
     seasonsStore,
     selectedSeason,
     selectedEpisodeInfo,
+    isTablet,
   } from "../store";
   import { saveData } from "../utils";
   import ArrowRight from "./svg/ArrowRight.svelte";
@@ -26,7 +27,7 @@
   let nextHover = true;
 
   function buildSectionStyle(previewUrl: string) {
-    return `background: url(${previewUrl}) no-repeat center center fixed;`;
+    return `background: url(${previewUrl}) no-repeat top center fixed;`;
   }
 
   function buildSectionWithFirstEpisode() {
@@ -34,7 +35,7 @@
 
     if (!firstEpisode) return defaultSectionStyle;
 
-    return `background: url(${firstEpisode.previewUrl}) no-repeat center center fixed;`;
+    return `background: url(${firstEpisode.previewUrl}) no-repeat top center fixed;`;
   }
 
   function setNextEpisode() {
@@ -135,7 +136,7 @@
       T1E{episode.episodeNumber}
       "{episode.title}"
     </h2>
-    <p>{episode.year} • {episode.duration} . Disponible</p>
+    <p>{episode.year} • {episode.duration} • Disponible</p>
     <p>{episode.description}</p>
   </div>
 </section>
@@ -214,18 +215,18 @@
 
   div.episode-controls {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
 
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 
     min-height: 300px;
     height: 100%;
-    width: 69%;
+    width: 100%;
 
-    margin-left: 3%;
-    margin-bottom: 3%;
+    margin-top: 30px;
+    margin-bottom: 30px;
   }
 
   div.episode-buttons {
@@ -234,7 +235,7 @@
     flex-direction: column;
     justify-content: space-around;
 
-    align-content: space-around;
+    /* align-content: space-around; */
     gap: 10px;
     align-items: center;
     /* height: 20vh; */
@@ -263,5 +264,21 @@
   h2,
   p {
     width: 80%;
+  }
+
+  @media screen and (max-width: 821px) and (min-width: 500px) {
+    button {
+      font-size: 19px;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    div.episode-controls {
+      flex-direction: column;
+    }
+
+    div.episode-buttons {
+      margin-top: 3ch;
+    }
   }
 </style>
