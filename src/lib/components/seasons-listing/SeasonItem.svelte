@@ -39,10 +39,11 @@
   div.episodes {
     width: 100%;
     margin: 0;
+    padding: 0;
 
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
   }
 
