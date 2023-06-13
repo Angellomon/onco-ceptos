@@ -8,7 +8,7 @@ import {
   selectedEpisode,
   selectedSeason,
 } from "./store";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 
@@ -367,10 +367,14 @@ export function verifyInstalledVersion() {
   }
 }
 
+export function isUserAgenSafari() {
+  return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+}
+
 export function getDate(date: string, hour: string, minute: string) {
   console.log("determinig user agent");
 
-  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  const isSafari = isUserAgenSafari();
   // let isSafari =
   //   navigator.vendor.match(/apple/i) &&
   //   !navigator.userAgent.match(/crios/i) &&
@@ -384,6 +388,8 @@ export function getDate(date: string, hour: string, minute: string) {
 
     let d = new Date(date);
 
+    console.log("date", d);
+
     let result = dayjs(d).tz("America/Mexico_City");
 
     result.set("hours", +hour);
@@ -394,5 +400,13 @@ export function getDate(date: string, hour: string, minute: string) {
     return dayjs(`${date} ${hour}:${minute}`, "d/MMM/Y h:m").tz(
       "America/Mexico_City"
     );
+  }
+}
+
+export function getDateFormat(date: Dayjs) {
+  const isSafari = isUserAgenSafari();
+
+  if (isSafari) {
+  } else {
   }
 }
