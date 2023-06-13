@@ -239,7 +239,10 @@ export async function registerUserVisit(user: User) {
       Title: nanoid(),
       Correo: userInfo.email,
       Nombre: user.name,
-      OData__x00da_ltimavisita: dayjs().toISOString(),
+      OData__x00da_ltimavisita: dayjs()
+        .tz("America/Mexico_City")
+        .subtract(1, "hour")
+        .toISOString(),
       Departamento: user.department,
     };
 
