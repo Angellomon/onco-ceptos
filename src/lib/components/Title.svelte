@@ -2,11 +2,15 @@
   import Saos from "saos";
   import OnconceptosLogo from "./svg/OnconceptosLogo.svelte";
   import Spin from "./svg/Spin.svelte";
+  import { isMobile } from "../store";
+
+  $: logoWidth = $isMobile ? 300 : 500;
+  $: spinBottom = $isMobile ? -500 : -270;
 </script>
 
 <section>
   <div class="content">
-    <OnconceptosLogo paddingLeft={0} type="white" width={500} />
+    <OnconceptosLogo paddingLeft={0} type="white" width={logoWidth} />
     <p>
       Una miniserie de <b>MSD Oncología</b>, que te ayudará a entender mejor el
       impacto del tratamiento contra el cáncer
@@ -15,7 +19,7 @@
   <Saos
     animation={`slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`}
   >
-    <Spin width={600} bottom={-300} right={-150} />
+    <Spin width={600} bottom={spinBottom} right={-150} />
   </Saos>
 </section>
 
@@ -35,14 +39,15 @@
 
     font-size: 25px;
 
-    margin: 50px 5vw;
+    /* margin: 50px 5vw; */
+    margin-top: 12vh;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    width: 50%;
+    width: 100%;
   }
 
   div.content p {
@@ -82,6 +87,19 @@
     100% {
       -webkit-transform: translateX(-100px);
       transform: translateX(-100px);
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    div.content {
+      width: 50%;
+      margin: 50px 5vw;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    section {
+      height: 85vh;
     }
   }
 </style>
