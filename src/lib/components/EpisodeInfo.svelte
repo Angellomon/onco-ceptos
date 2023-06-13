@@ -17,13 +17,6 @@
     // .subtract(30, "seconds")
     .isAfter(releaseDate);
 
-  $: {
-    console.log(releaseDate);
-    console.log(episode?.releaseHour, episode?.releaseMinute);
-    console.log(isEpisodeReleased);
-    console.log(dayjs().tz("America/Mexico_City").subtract(1, "hour"));
-  }
-
   // TODO: fix season number dislplay (always displays 1)
 </script>
 
