@@ -384,7 +384,7 @@ export function getDate(date: string, hour: string, minute: string) {
   console.log("is safari", isSafari);
 
   if (isSafari) {
-    date = date.replaceAll("-", "/");
+    date = date.replaceAll("/", "-");
 
     let d = new Date(date);
 
@@ -407,6 +407,8 @@ export function getDateFormat(date: Dayjs) {
   const isSafari = isUserAgenSafari();
 
   if (isSafari) {
+    return date.format("DD-MMM-YYYY hh:mm A");
   } else {
+    return date.format("DD/MMM/YYYY hh:mm A");
   }
 }

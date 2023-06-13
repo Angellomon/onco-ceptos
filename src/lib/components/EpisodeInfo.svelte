@@ -2,7 +2,7 @@
   import dayjs from "dayjs";
   import "dayjs/locale/es";
   import type { EpisodeType } from "../../types/series";
-  import { getDate } from "../utils";
+  import { getDate, getDateFormat } from "../utils";
 
   export let episode: EpisodeType;
 
@@ -28,7 +28,7 @@
     {episode.year} • {episode.duration}
     • Disponible
     {#if !isEpisodeReleased}
-      el <b>{releaseDate.format("DD/MMM/YYYY hh:mm A")}</b>
+      el <b>{getDateFormat(releaseDate)}</b>
     {/if}
   </p>
   <p>{episode.description}</p>
