@@ -4,6 +4,7 @@
   import type { EpisodeType } from "../../../types/series";
   import { searchText, episodesStore, selectedEpisode } from "../../store";
   import Search from "../svg/Search.svelte";
+  import { isMenuOpen } from "../../store";
 
   let isMouseOver = false;
   let searchResults: EpisodeType[] = [];
@@ -14,6 +15,9 @@
 
       $selectedEpisode = episode;
       searchResults = [];
+
+      $isMenuOpen = false;
+      $searchText = null;
     };
   }
 
