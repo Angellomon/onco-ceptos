@@ -3,6 +3,7 @@
   import userSolidSrc from "../../assets/user-solid.svg";
 
   let hover = false;
+  export let border = true;
 
   function handleMouseOver() {
     hover = true;
@@ -13,6 +14,11 @@
   }
 
   function _default() {}
+
+  $: style = border
+    ? `border: 3px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;`
+    : "";
 </script>
 
 <div
@@ -20,6 +26,7 @@
   on:mouseleave={handleMouseLeave}
   on:keypress={_default}
   on:focus={_default}
+  {style}
 >
   <span>
     <img src={userSolidSrc} alt="user" class:hover />
@@ -56,8 +63,6 @@
     cursor: pointer;
 
     background-color: white;
-    border: 3px solid rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
 
     font-size: var(--font-size);
     color: var(--secondary-color);
@@ -82,5 +87,11 @@
 
   img.hover {
     transform: scale(1.2);
+  }
+
+  @media screen and (max-width: 1300px) {
+    div {
+      height: 55%;
+    }
   }
 </style>
