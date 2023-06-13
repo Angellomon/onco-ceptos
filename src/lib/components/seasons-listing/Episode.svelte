@@ -50,8 +50,6 @@
   }
 
   function handleEpisodeClick() {
-    console.log(episode);
-
     if (infoHover) return showEpisodeInfo();
     if (favHover) return addEpisodeToFavorites();
     if ($pendingRelease) return;
@@ -59,26 +57,21 @@
     return setCurrentEpisode();
   }
 
-  function handleKeyDown(e) {
-    console.log(e);
-  }
+  function handleKeyDown(e) {}
 
   function handleMouseOver() {
-    console.log("enter");
     episodeHover = true;
   }
 
   function handleMouseLeave() {
     episodeHover = false;
-
-    console.log("leave");
   }
 
-  let interval: any;
+  let episodeReleaseInterval: any;
   let isEpisodeReleased: boolean;
 
   onMount(() => {
-    interval = setInterval(() => {
+    episodeReleaseInterval = setInterval(() => {
       isEpisodeReleased = dayjs()
         .tz("America/Mexico_City")
         .subtract(1, "hour")
@@ -89,7 +82,7 @@
   });
 
   onDestroy(() => {
-    clearInterval(interval);
+    clearInterval(episodeReleaseInterval);
   });
 
   const pendingRelease = writable(true);
@@ -103,17 +96,7 @@
     : null;
 
   $: style = `background: no-repeat center/100% url('${episode.portraitUrl}'); background-size: cover;`;
-  $: {
-    console.log(releaseDate);
-    console.log(
-      $selectedEpisodeInfo?.releaseHour,
-      $selectedEpisodeInfo?.releaseMinute
-    );
-    console.log(
-      dayjs().tz("America/Mexico_City").subtract(1, "hour"),
-      isEpisodeReleased
-    );
-  }
+
   // TODO: fix season number dislplay (always displays 1)
 </script>
 
@@ -193,5 +176,17 @@
   div.pending-release {
     background-color: var(--primary-color);
     cursor: default;
+  }
+
+  @media screen and (max-width: 821px) {
+    div.episode-box {
+      width: 45vw;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    div.episode-box {
+      width: 90vw;
+    }
   }
 </style>
