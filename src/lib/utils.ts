@@ -90,8 +90,6 @@ function extractEpisodes(data: any, basePath: string = "/") {
       releaseHour: episode.hora_estreno ?? "12",
       releaseMinute: episode.minuto_estreno ?? "00",
     });
-
-    console.log(episode.hora_estreno);
   }
 
   return episodesResult;
@@ -367,4 +365,11 @@ export function verifyInstalledVersion() {
 
     window.location.reload();
   }
+}
+
+export function getDate(date: string) {
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+  if (isSafari) return date.replaceAll("-", "/");
+  else return date;
 }
