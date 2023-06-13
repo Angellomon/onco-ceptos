@@ -25,4 +25,18 @@
     margin-top: 15px;
     padding: 0 1em;
   }
+
+  @media screen and (max-width: 821px) {
+    div.episodes-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2em;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    div.episodes-grid {
+      grid-template-columns: repeat(1, 1fr);
+      gap: 2em;
+    }
+  }
 </style>
