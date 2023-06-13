@@ -8,7 +8,7 @@
     selectedEpisodeInfo,
     isTablet,
   } from "../store";
-  import { saveData } from "../utils";
+  import { getDate, saveData } from "../utils";
   import ArrowRight from "./svg/ArrowRight.svelte";
   import Plus from "./svg/Plus.svelte";
   import IframePlayer from "./player/IframePlayer.svelte";
@@ -65,7 +65,9 @@
       $selectedEpisode = seasonEpisodes[0]; // # first episode of next season
     } else {
       let releaseDate = dayjs(
-        `${nextEpisode.releaseDate} ${nextEpisode.releaseHour}:${nextEpisode.releaseMinute}`,
+        `${getDate(nextEpisode.releaseDate)} ${nextEpisode.releaseHour}:${
+          nextEpisode.releaseMinute
+        }`,
         "d/MMM/Y h:m"
       ).tz("America/Mexico_City");
 

@@ -8,6 +8,7 @@
   import { selectedEpisodeInfo } from "../../store";
   import XMark from "../svg/XMark.svelte";
   import EpisodeInfo from "../EpisodeInfo.svelte";
+  import { getDate } from "../../utils";
 
   export const hidden = !!!$selectedEpisodeInfo;
 
@@ -20,7 +21,9 @@
 
   $: releaseDate = $selectedEpisodeInfo
     ? dayjs(
-        `${$selectedEpisodeInfo.releaseDate} ${$selectedEpisodeInfo.releaseHour}:${$selectedEpisodeInfo.releaseMinute}`,
+        `${getDate($selectedEpisodeInfo.releaseDate)} ${
+          $selectedEpisodeInfo.releaseHour
+        }:${$selectedEpisodeInfo.releaseMinute}`,
         "d/MMM/Y h:m",
         "America/Mexico_City"
       )

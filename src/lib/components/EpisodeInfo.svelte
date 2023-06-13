@@ -2,12 +2,15 @@
   import dayjs from "dayjs";
   import "dayjs/locale/es";
   import type { EpisodeType } from "../../types/series";
+  import { getDate } from "../utils";
 
   export let episode: EpisodeType;
 
   $: releaseDate = episode
     ? dayjs(
-        `${episode.releaseDate} ${episode.releaseHour}:${episode.releaseMinute}`,
+        `${getDate(episode.releaseDate)} ${episode.releaseHour}:${
+          episode.releaseMinute
+        }`,
         "d/MMM/Y h:m"
       ).tz("America/Mexico_City")
     : null;
