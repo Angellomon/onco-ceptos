@@ -5,8 +5,9 @@
   import SeasonsListing from "../components/seasons-listing/SeasonsListing.svelte";
   import SelectedEpisode from "../components/SelectedEpisode.svelte";
   import Title from "../components/Title.svelte";
-  import { dataIsLoading } from "../store";
+  import { dataIsLoading, isMenuOpen } from "../store";
   import Loading from "./Loading.svelte";
+  import MobileMenu from "../components/mobile-menu/MobileMenu.svelte";
 </script>
 
 {#if $dataIsLoading}
@@ -19,6 +20,9 @@
     <Title />
     <Footer />
     <EpisodeInfoModal />
+    {#if $isMenuOpen}
+      <MobileMenu />
+    {/if}
   </main>
 {/if}
 
