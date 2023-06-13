@@ -94,7 +94,7 @@
 
     position: relative;
 
-    padding: 0 45px;
+    /* padding: 0 45px; */
     padding-right: 0;
     margin-right: 10px;
 
@@ -115,11 +115,12 @@
   }
 
   ul {
+    box-shadow: 0px 10px 15px -5px rgba(0, 0, 0, 0.1);
     position: absolute;
 
     width: var(--submenu-select-width);
 
-    bottom: var(--submenu-bottom-offset);
+    /* bottom: var(--submenu-bottom-offset); */
     right: var(--submenu-right-offset);
 
     list-style-type: none;
