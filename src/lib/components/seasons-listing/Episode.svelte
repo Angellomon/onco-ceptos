@@ -8,7 +8,7 @@
     selectedSeason,
     selectedEpisodeInfo,
   } from "../../store";
-  import { saveData } from "../../utils";
+  import { getDate, saveData } from "../../utils";
   import PlayButton from "../svg/PlayButton.svelte";
   import InfoButton from "./InfoButton.svelte";
   import { onDestroy, onMount } from "svelte";
@@ -88,11 +88,7 @@
   const pendingRelease = writable(true);
 
   $: releaseDate = episode
-    ? dayjs(
-        `${episode.releaseDate} ${episode.releaseHour}:${episode.releaseMinute}`,
-        "d/MMM/Y h:m",
-        "America/Mexico_City"
-      )
+    ? getDate(episode.releaseDate, episode.releaseHour, episode.releaseMinute)
     : null;
 
   $: style = `background: no-repeat center/100% url('${episode.portraitUrl}'); background-size: cover;`;
