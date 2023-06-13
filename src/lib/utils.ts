@@ -367,7 +367,7 @@ export function verifyInstalledVersion() {
   }
 }
 
-export function getDate(date: string) {
+export function getDate(date: string, hour: string, minute: string) {
   console.log("determinig user agent");
 
   // const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -379,6 +379,20 @@ export function getDate(date: string) {
 
   console.log("is safari", isSafari);
 
-  if (isSafari) return date.replaceAll("-", "/");
-  else return date;
+  if (isSafari) {
+    date = date.replaceAll("-", "/");
+
+    let d = new Date(date);
+
+    let result = dayjs(d).tz("America/Mexico_City");
+
+    result.set("hours", +hour);
+    result.set("minutes", +minute);
+
+    return result;
+  } else {
+    return dayjs(`${date} ${hour}:${minute}`, "d/MMM/Y h:m").tz(
+      "America/Mexico_City"
+    );
+  }
 }

@@ -20,12 +20,10 @@
   }
 
   $: releaseDate = $selectedEpisodeInfo
-    ? dayjs(
-        `${getDate($selectedEpisodeInfo.releaseDate)} ${
-          $selectedEpisodeInfo.releaseHour
-        }:${$selectedEpisodeInfo.releaseMinute}`,
-        "d/MMM/Y h:m",
-        "America/Mexico_City"
+    ? getDate(
+        $selectedEpisodeInfo.releaseDate,
+        $selectedEpisodeInfo.releaseMinute,
+        $selectedEpisodeInfo.releaseMinute
       )
     : null;
 
