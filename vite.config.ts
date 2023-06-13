@@ -11,7 +11,7 @@ export default ({ mode }) => {
       include: ["lodash.get", "lodash.isequal", "lodash.clonedeep"],
     },
     build: {
-      target: ["edge88", "firefox78", "chrome87", "safari14"],
+      target: ["edge88", "firefox78", "chrome87", "safari12"],
     },
   });
 };
