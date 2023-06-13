@@ -1,6 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
   import xMarkSVGSource from "../../../assets/boton-cerrar.svg";
+  import { fade } from "svelte/transition";
 
   export let width = 30;
   export let hover = false;
@@ -18,6 +19,7 @@
   class:hover
   src={xMarkSVGSource}
   alt="x"
+  transition:fade
   {width}
 />
 
