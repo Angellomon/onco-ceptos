@@ -65,9 +65,9 @@
       $selectedEpisode = seasonEpisodes[0]; // # first episode of next season
     } else {
       let releaseDate = getDate(
-        episode.releaseDate,
-        episode.releaseMinute,
-        episode.releaseMinute
+        nextEpisode.releaseDate,
+        nextEpisode.releaseHour,
+        nextEpisode.releaseMinute
       );
 
       let isEpisodeReleased = dayjs()

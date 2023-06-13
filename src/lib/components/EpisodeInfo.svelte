@@ -7,7 +7,7 @@
   export let episode: EpisodeType;
 
   $: releaseDate = episode
-    ? getDate(episode.releaseDate, episode.releaseMinute, episode.releaseMinute)
+    ? getDate(episode.releaseDate, episode.releaseHour, episode.releaseMinute)
     : null;
 
   $: isEpisodeReleased = dayjs()

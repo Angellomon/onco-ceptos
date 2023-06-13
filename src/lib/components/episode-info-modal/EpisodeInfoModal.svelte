@@ -22,7 +22,7 @@
   $: releaseDate = $selectedEpisodeInfo
     ? getDate(
         $selectedEpisodeInfo.releaseDate,
-        $selectedEpisodeInfo.releaseMinute,
+        $selectedEpisodeInfo.releaseHour,
         $selectedEpisodeInfo.releaseMinute
       )
     : null;
