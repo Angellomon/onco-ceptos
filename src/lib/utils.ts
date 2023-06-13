@@ -370,6 +370,8 @@ export function verifyInstalledVersion() {
 export function getDate(date: string) {
   const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
+  console.log("is safari", isSafari);
+
   if (isSafari) return date.replaceAll("-", "/");
   else return date;
 }
