@@ -246,7 +246,7 @@ export async function registerUserVisit(user: User) {
       Nombre: user.name,
       OData__x00da_ltimavisita: dayjs()
         .tz("America/Mexico_City")
-        .subtract(1, "hour")
+        .subtract(2, "hour")
         .toISOString(),
       Departamento: user.department,
     };
@@ -276,8 +276,6 @@ export async function registerUserVisit(user: User) {
 }
 
 function getElementsFromArray(arr: any[], fields: string[]) {
-  console.log(arr, fields);
-
   let resultObject: Record<string, string> = {};
 
   for (let element of arr) {
