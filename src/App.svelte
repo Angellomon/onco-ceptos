@@ -28,15 +28,19 @@
 
     loadSavedData();
 
-    const user = await getCurrentUser();
+    const autoRegister = JSON.parse(
+      import.meta.env.VITE_MSD_AUTO_REGISTER ?? "false"
+    );
 
-    console.log(user);
+    const user = await getCurrentUser();
 
     currentUser.set(user);
 
-    verifyInstalledVersion();
+    if (autoRegister) {
+      await registerUserVisit(user);
+    }
 
-    await registerUserVisit(user);
+    verifyInstalledVersion();
 
     dataIsLoading.set(false);
   });
