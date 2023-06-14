@@ -8,6 +8,12 @@
   import DebugData from "../debug/DebugData.svelte";
   import { registerUserVisit } from "../../utils";
 
+  export let submitted = false;
+
+  const formRegister = JSON.parse(
+    import.meta.env.VITE_MSD_FORM_REGISTER ?? false
+  );
+
   const _localUser: LocalUser = $localUser || {
     department: "",
     email: "",
@@ -23,22 +29,24 @@
 
     const isDev = import.meta.env.DEV;
 
-    console.log("isDev", isDev);
-
-    if (isDev) {
-      $localUser = _localUser;
-      $registrationErrorJson = null;
-
-      return;
-    }
-
     try {
+      if (isDev) {
+        $localUser = _localUser;
+        $registrationErrorJson = null;
+
+        return;
+      }
+
+      if (!formRegister) return;
+
       await registerUserVisit(_localUser);
 
       $localUser = _localUser;
       $registrationErrorJson = null;
     } catch (err) {
       console.log(err);
+    } finally {
+      submitted = true;
     }
   }
 </script>
