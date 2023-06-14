@@ -31,3 +31,5 @@ export type User = {
   name: string;
   department: string;
 };
+
+export type LocalUser = User | null;
