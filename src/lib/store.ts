@@ -1,5 +1,5 @@
 import { readable, writable } from "svelte/store";
-import type { EpisodeType, SeasonType, User } from "../types/series";
+import type { EpisodeType, LocalUser, SeasonType, User } from "../types/series";
 
 export const episodesStore = writable<EpisodeType[]>([]);
 
@@ -39,3 +39,9 @@ window.addEventListener("resize", (e: any) => {
 });
 
 export const isMenuOpen = writable(false);
+
+export const registrationErrorJson = writable<string | null>(null);
+
+export const dataCollectionErrorJson = writable<string | null>(null);
+
+export const localUser = writable<LocalUser>(null);
