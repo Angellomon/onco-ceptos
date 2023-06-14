@@ -29,14 +29,10 @@
     const isDev = import.meta.env.DEV;
 
     try {
-      if (isDev) {
-        $localUser = _localUser;
-        $registrationErrorJson = null;
+      $localUser = _localUser;
+      $registrationErrorJson = null;
 
-        return;
-      }
-
-      if (!formRegister) return;
+      if (isDev || !formRegister) return;
 
       await registerUserVisit(_localUser);
 
