@@ -17,7 +17,12 @@
   import DataCollect from "../components/data-collect/DataCollect.svelte";
 
   $: shoulCollectData =
-    !!$registrationErrorJson || !!$dataCollectionErrorJson || !$localUser;
+    !!activeRegistrationError || !!activeDataCollectionError || !$localUser;
+
+  $: activeRegistrationError = ["null", "{}"].includes($registrationErrorJson);
+  $: activeDataCollectionError = ["null", "{}"].includes(
+    $dataCollectionErrorJson
+  );
 </script>
 
 {#if $dataIsLoading}
