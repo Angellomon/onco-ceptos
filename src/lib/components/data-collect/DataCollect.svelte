@@ -32,7 +32,11 @@
       $localUser = _localUser;
       $registrationErrorJson = null;
 
+      console.log("formRegister", formRegister);
+
       if (isDev || !formRegister) return;
+
+      console.log("form registering");
 
       await registerUserVisit(_localUser);
 
