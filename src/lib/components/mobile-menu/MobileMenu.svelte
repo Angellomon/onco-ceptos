@@ -6,7 +6,6 @@
   import CurrentUser from "../CurrentUser.svelte";
   import SeasonSearch from "../season-search/SeasonSearch.svelte";
   import SeasonSelect from "../season-select/SeasonSelect.svelte";
-  import DebugData from "../debug/DebugData.svelte";
 </script>
 
 <div transition:slide class="menu-wrapper">
@@ -22,8 +21,6 @@
   <div class="content">
     <SeasonSearch />
     <SeasonSelect />
-
-    <DebugData />
   </div>
 
   <div class="footer" transition:fade>

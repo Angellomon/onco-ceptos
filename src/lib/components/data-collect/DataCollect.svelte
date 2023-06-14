@@ -5,7 +5,6 @@
   import OnconceptosLogo from "../svg/OnconceptosLogo.svelte";
   import { localUser, registrationErrorJson } from "../../store";
   import type { LocalUser } from "../../../types/series";
-  import DebugData from "../debug/DebugData.svelte";
   import { registerUserVisit } from "../../utils";
 
   export let submitted = false;
@@ -75,9 +74,6 @@
     <button on:click={handleClick}>Continuar</button>
   </div>
 
-  <div>
-    <DebugData />
-  </div>
   <!-- <XMark
     on:click={() => {
       $isMenuOpen = false;
