@@ -23,6 +23,8 @@
 
     const isDev = import.meta.env.DEV;
 
+    console.log("isDev", isDev);
+
     if (isDev) {
       $localUser = _localUser;
       $registrationErrorJson = null;
