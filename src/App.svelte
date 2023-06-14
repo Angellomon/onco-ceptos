@@ -26,6 +26,8 @@
 
     loadSavedData();
 
+    verifyInstalledVersion();
+
     const autoRegister = JSON.parse(
       import.meta.env.VITE_MSD_AUTO_REGISTER ?? "false"
     );
@@ -35,10 +37,10 @@
     currentUser.set(user);
 
     if (autoRegister) {
+      console.log("auto registering");
+
       await registerUserVisit(user);
     }
-
-    verifyInstalledVersion();
 
     dataIsLoading.set(false);
   });
