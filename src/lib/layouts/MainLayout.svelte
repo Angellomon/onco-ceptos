@@ -16,13 +16,15 @@
   import MobileMenu from "../components/mobile-menu/MobileMenu.svelte";
   import DataCollect from "../components/data-collect/DataCollect.svelte";
 
-  $: shoulCollectData =
-    !!activeRegistrationError || !!activeDataCollectionError || !$localUser;
+  let submitted: boolean;
 
-  $: activeRegistrationError = ["null", "{}"].includes($registrationErrorJson);
-  $: activeDataCollectionError = ["null", "{}"].includes(
-    $dataCollectionErrorJson
-  );
+  $: shoulCollectData = !$localUser || !submitted;
+  // !$localUser || !!activeRegistrationError || !!activeDataCollectionError;
+
+  // $: activeRegistrationError = ["null", "{}"].includes($registrationErrorJson);
+  // $: activeDataCollectionError = ["null", "{}"].includes(
+  //   $dataCollectionErrorJson
+  // );
 </script>
 
 {#if $dataIsLoading}
@@ -39,7 +41,7 @@
       <MobileMenu />
     {/if}
     {#if shoulCollectData}
-      <DataCollect />
+      <DataCollect bind:submitted />
     {/if}
   </main>
 {/if}
