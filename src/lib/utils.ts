@@ -1,9 +1,12 @@
-import type { EpisodeType, SeasonType, User } from "../types/series";
+import type { EpisodeType, LocalUser, SeasonType, User } from "../types/series";
 import { nanoid } from "nanoid";
 
 import { read, utils } from "xlsx";
 import {
+  dataCollectionErrorJson,
   episodesStore,
+  localUser,
+  registrationErrorJson,
   seasonsStore,
   selectedEpisode,
   selectedSeason,
@@ -134,6 +137,7 @@ export async function loadSeriesData(
 const keyNames = {
   selectedEpisode: "selected-episode",
   selectedSeason: "selected-season",
+  localUser: "local-user",
 };
 
 function saveOnLocalStorage(key: string, object: any) {
@@ -157,13 +161,20 @@ export async function saveData() {
     episode = e;
   });
 
+  let _localUser: LocalUser;
+  localUser.subscribe((u) => {
+    _localUser = u;
+  });
+
   saveOnLocalStorage(keyNames.selectedEpisode, episode);
   saveOnLocalStorage(keyNames.selectedSeason, season);
+  saveOnLocalStorage(keyNames.localUser, _localUser);
 }
 
 function deleteLocalData() {
   saveOnLocalStorage(keyNames.selectedEpisode, null);
   saveOnLocalStorage(keyNames.selectedSeason, null);
+  saveOnLocalStorage(keyNames.localUser, null);
 }
 
 export async function loadSavedData() {
@@ -187,6 +198,10 @@ export async function loadSavedData() {
   selectedEpisode.set(episode || firstEpisode);
   selectedSeason.set(season || firstSeason);
 
+  const loadedLocalUser: LocalUser = loadFromLocalStorage(keyNames.localUser);
+
+  localUser.set(loadedLocalUser);
+
   saveData();
 }
 
@@ -199,6 +214,7 @@ function extractValueFromString(inputString: string, startTag: string, endTag) {
   }
 
   const email = inputString.substring(startIndex + startTag.length, endIndex);
+
   return email;
 }
 
@@ -214,11 +230,17 @@ async function getSiteContextDigest(): Promise<string> {
       },
     });
 
+    console.log(contextResult);
+
     const contextJson = await contextResult.json();
 
     return contextJson.d.GetContextWebInformation.FormDigestValue;
   } catch (err) {
-    console.log("error getting site context", err);
+    console.log(JSON.stringify(err));
+
+    // console.log("error getting site context");
+    // console.log(typeof err);
+    // console.log(JSON.stringify(err));
 
     return "";
   }
@@ -268,8 +290,12 @@ export async function registerUserVisit(user: User) {
     const resJson = await res.json();
 
     console.log(resJson);
+
+    registrationErrorJson.set(null);
   } catch (err) {
     console.log("error registering user visit", err);
+
+    registrationErrorJson.set(JSON.stringify(err));
   }
 }
 
@@ -316,6 +342,8 @@ async function _getCompanyUser(): Promise<User | null> {
     const name = values.PreferredName;
     const department = values.Department;
 
+    dataCollectionErrorJson.set(null);
+
     return {
       email,
       id,
@@ -325,6 +353,8 @@ async function _getCompanyUser(): Promise<User | null> {
     };
   } catch (err) {
     console.log(`get user info error: ${err}`);
+
+    dataCollectionErrorJson.set(JSON.stringify(err));
 
     return defaultUser;
   }
@@ -367,14 +397,14 @@ export function verifyInstalledVersion() {
   }
 }
 
-export function isUserAgenSafari() {
+export function isUserAgentSafari() {
   return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 }
 
 export function getDate(date: string, hour: string, minute: string) {
   console.log("determinig user agent");
 
-  const isSafari = isUserAgenSafari();
+  const isSafari = isUserAgentSafari();
   // let isSafari =
   //   navigator.vendor.match(/apple/i) &&
   //   !navigator.userAgent.match(/crios/i) &&
@@ -404,11 +434,15 @@ export function getDate(date: string, hour: string, minute: string) {
 }
 
 export function getDateFormat(date: Dayjs) {
-  const isSafari = isUserAgenSafari();
+  const isSafari = isUserAgentSafari();
 
   if (isSafari) {
     return date.format("DD-MMM-YYYY hh:mm A");
   } else {
     return date.format("DD/MMM/YYYY hh:mm A");
   }
+}
+
+function delay(time = 1000) {
+  return new Promise((resolve) => setTimeout(resolve, time));
 }
