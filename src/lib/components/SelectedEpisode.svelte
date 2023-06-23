@@ -6,10 +6,8 @@
     seasonsStore,
     selectedSeason,
     selectedEpisodeInfo,
-    isTablet,
-    localeOffset,
   } from "../store";
-  import { getDate, saveData } from "../utils";
+  import { saveData } from "../utils";
   import ArrowRight from "./svg/ArrowRight.svelte";
   import Plus from "./svg/Plus.svelte";
   import IframePlayer from "./player/IframePlayer.svelte";
@@ -65,18 +63,18 @@
 
       $selectedEpisode = seasonEpisodes[0]; // # first episode of next season
     } else {
-      let releaseDate = getDate(
-        nextEpisode.releaseDate,
-        nextEpisode.releaseHour,
-        nextEpisode.releaseMinute
-      );
+      // let releaseDate = getDate(
+      //   nextEpisode.releaseDate,
+      //   nextEpisode.releaseHour,
+      //   nextEpisode.releaseMinute
+      // );
 
-      let isEpisodeReleased = dayjs()
-        .tz("America/Mexico_City")
-        .subtract($localeOffset, "hours")
-        .isAfter(releaseDate);
+      // let isEpisodeReleased = dayjs()
+      //   .tz("America/Mexico_City")
+      //   .subtract($localeOffset, "hours")
+      //   .isAfter(releaseDate);
 
-      if (!isEpisodeReleased) return;
+      // if (!isEpisodeReleased) return;
 
       $selectedEpisode = nextEpisode;
     }
