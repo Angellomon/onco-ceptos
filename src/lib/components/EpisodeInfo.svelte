@@ -3,17 +3,18 @@
   import "dayjs/locale/es";
   import type { EpisodeType } from "../../types/series";
   import { getDate, getDateFormat } from "../utils";
+  import { localeOffset } from "../store";
 
   export let episode: EpisodeType;
 
   $: releaseDate = episode
     ? getDate(episode.releaseDate, episode.releaseHour, episode.releaseMinute)
     : null;
-
   $: isEpisodeReleased = dayjs()
     .tz("America/Mexico_City")
-    // .subtract(30, "seconds")
-    .isAfter(releaseDate);
+    .subtract($localeOffset, "hours")
+    .isAfter(releaseDate.tz("America/Mexico_City"));
+  // $: pendingRelease = !isEpisodeReleased;
 
   // TODO: fix season number dislplay (always displays 1)
 </script>
