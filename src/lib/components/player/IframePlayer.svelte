@@ -36,11 +36,7 @@
 
       isEpisodeReleased = now.isAfter(releaseDate);
 
-      console.log("releaseDate", releaseDate, `offset ${$localeOffset}`);
-      console.log("now", now);
-
       pendingRelease = !isEpisodeReleased;
-      console.log(pendingRelease);
     }, 1000);
   });
 
