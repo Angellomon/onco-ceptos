@@ -73,10 +73,12 @@
 
   onMount(() => {
     episodeReleaseInterval = setInterval(() => {
-      isEpisodeReleased = dayjs()
+      const now = dayjs()
         .tz("America/Mexico_City")
-        .subtract($localeOffset, "hours")
-        .isAfter(releaseDate);
+        // .utc()
+        .subtract($localeOffset, "hours");
+
+      isEpisodeReleased = now.isAfter(releaseDate);
 
       $pendingRelease = !isEpisodeReleased;
     }, 1000);
