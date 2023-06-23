@@ -5,6 +5,7 @@ import { read, utils } from "xlsx";
 import {
   dataCollectionErrorJson,
   episodesStore,
+  localeOffset,
   localUser,
   registrationErrorJson,
   seasonsStore,
@@ -257,6 +258,11 @@ export async function registerUserVisit(user: User) {
   try {
     const contextDigest = await getSiteContextDigest();
 
+    let offset: number;
+    localeOffset.subscribe((o) => {
+      offset = o;
+    });
+
     const body = {
       // "__metadata": {
       //   type: visitListName
@@ -266,7 +272,7 @@ export async function registerUserVisit(user: User) {
       Nombre: user.name,
       OData__x00da_ltimavisita: dayjs()
         .tz("America/Mexico_City")
-        .subtract(2, "hour")
+        .subtract(offset, "hours")
         .toISOString(),
       Departamento: user.department,
     };
