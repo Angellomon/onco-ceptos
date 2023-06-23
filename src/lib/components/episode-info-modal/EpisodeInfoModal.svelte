@@ -18,31 +18,6 @@
   function handleCloseClick() {
     $selectedEpisodeInfo = null;
   }
-
-  $: releaseDate = $selectedEpisodeInfo
-    ? getDate(
-        $selectedEpisodeInfo.releaseDate,
-        $selectedEpisodeInfo.releaseHour,
-        $selectedEpisodeInfo.releaseMinute
-      )
-    : null;
-
-  $: isEpisodeReleased = dayjs()
-    .tz("America/Mexico_City")
-    .subtract(10, "minutes")
-    .isAfter(releaseDate);
-
-  // $: {
-  //   console.log(releaseDate);
-  //   console.log(
-  //     $selectedEpisodeInfo?.releaseHour,
-  //     $selectedEpisodeInfo?.releaseMinute
-  //   );
-  //   console.log(
-  //     dayjs().tz("America/Mexico_City").subtract(16, "minutes"),
-  //     isEpisodeReleased
-  //   );
-  // }
 </script>
 
 {#if $selectedEpisodeInfo}
