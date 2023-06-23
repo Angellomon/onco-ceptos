@@ -7,6 +7,7 @@
     seasonsStore,
     selectedSeason,
     selectedEpisodeInfo,
+    localeOffset,
   } from "../../store";
   import { getDate, saveData } from "../../utils";
   import PlayButton from "../svg/PlayButton.svelte";
@@ -74,7 +75,7 @@
     episodeReleaseInterval = setInterval(() => {
       isEpisodeReleased = dayjs()
         .tz("America/Mexico_City")
-        .subtract(1, "hour")
+        .subtract($localeOffset, "hours")
         .isAfter(releaseDate);
 
       $pendingRelease = !isEpisodeReleased;

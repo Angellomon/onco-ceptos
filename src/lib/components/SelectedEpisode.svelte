@@ -7,6 +7,7 @@
     selectedSeason,
     selectedEpisodeInfo,
     isTablet,
+    localeOffset,
   } from "../store";
   import { getDate, saveData } from "../utils";
   import ArrowRight from "./svg/ArrowRight.svelte";
@@ -72,7 +73,7 @@
 
       let isEpisodeReleased = dayjs()
         .tz("America/Mexico_City")
-        .subtract(1, "hour")
+        .subtract($localeOffset, "hours")
         .isAfter(releaseDate);
 
       if (!isEpisodeReleased) return;
