@@ -46,4 +46,4 @@ export const dataCollectionErrorJson = writable<string | null>(null);
 
 export const localUser = writable<LocalUser>(null);
 
-export const localeOffset = readable(2);
+export const localeOffset = readable(1);
