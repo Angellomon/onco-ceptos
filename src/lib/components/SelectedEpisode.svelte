@@ -6,8 +6,9 @@
     seasonsStore,
     selectedSeason,
     selectedEpisodeInfo,
+    localeOffset,
   } from "../store";
-  import { saveData } from "../utils";
+  import { getDate, getDateFormat, saveData } from "../utils";
   import ArrowRight from "./svg/ArrowRight.svelte";
   import Plus from "./svg/Plus.svelte";
   import IframePlayer from "./player/IframePlayer.svelte";
@@ -94,6 +95,13 @@
     ? buildSectionStyle($selectedEpisode.previewUrl)
     : buildSectionWithFirstEpisode();
   $: episode = $selectedEpisode || $episodesStore[0];
+  $: releaseDate = episode
+    ? getDate(episode.releaseDate, episode.releaseHour, episode.releaseMinute)
+    : null;
+  $: isEpisodeReleased = dayjs()
+    .tz("America/Mexico_City")
+    .subtract($localeOffset, "hours")
+    .isAfter(releaseDate.tz("America/Mexico_City"));
 </script>
 
 <section transition:fade style={sectionStyle}>
@@ -136,7 +144,12 @@
       T1E{episode.episodeNumber}
       "{episode.title}"
     </h2>
-    <p>{episode.year} • {episode.duration} • Disponible</p>
+    <p>
+      {episode.year} • {episode.duration} • Disponible
+      {#if !isEpisodeReleased}
+        el <b>{getDateFormat(releaseDate)}</b>
+      {/if}
+    </p>
     <p>{episode.description}</p>
   </div>
 </section>
