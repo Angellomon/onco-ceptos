@@ -45,5 +45,4 @@ export const registrationErrorJson = writable<string | null>(null);
 export const dataCollectionErrorJson = writable<string | null>(null);
 
 export const localUser = writable<LocalUser>(null);
-
-export const localeOffset = readable(1);
+export const localeOffset = readable(2);
