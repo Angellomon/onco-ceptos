@@ -9,7 +9,7 @@
     selectedEpisodeInfo,
     localeOffset,
   } from "../../store";
-  import { getDate, saveData } from "../../utils";
+  import { getDate, saveData, searchSeasonByEpisode } from "../../utils";
   import PlayButton from "../svg/PlayButton.svelte";
   import InfoButton from "./InfoButton.svelte";
   import { onDestroy, onMount } from "svelte";
@@ -96,7 +96,8 @@
 
   $: style = `background: no-repeat center/100% url('${episode.portraitUrl}'); background-size: cover;`;
 
-  // TODO: fix season number dislplay (always displays 1)
+  $: season = searchSeasonByEpisode(episode);
+  $: seasonNumber = season ? season.seasonNumber : 1;
 </script>
 
 <div
@@ -116,7 +117,7 @@
       <PlayButton bind:hover={episodeHover} />
     {/if}
     <h3>
-      T1E{episode.episodeNumber}
+      T{seasonNumber}E{episode.episodeNumber}
       "{episode.title}"
     </h3>
   </div>

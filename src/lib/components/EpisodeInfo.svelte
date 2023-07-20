@@ -2,7 +2,7 @@
   import dayjs from "dayjs";
   import "dayjs/locale/es";
   import type { EpisodeType } from "../../types/series";
-  import { getDate, getDateFormat } from "../utils";
+  import { getDate, getDateFormat, searchSeasonByEpisode } from "../utils";
   import { localeOffset } from "../store";
 
   export let episode: EpisodeType;
@@ -17,11 +17,14 @@
   // $: pendingRelease = !isEpisodeReleased;
 
   // TODO: fix season number dislplay (always displays 1)
+
+  $: season = searchSeasonByEpisode(episode);
+  $: seasonNumber = season ? season.seasonNumber : 1;
 </script>
 
 <div>
   <h2>
-    T1E{episode.episodeNumber}
+    T{seasonNumber}E{episode.episodeNumber}
     "{episode.title}"
   </h2>
 
