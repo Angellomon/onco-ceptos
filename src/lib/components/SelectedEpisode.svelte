@@ -8,7 +8,13 @@
     selectedEpisodeInfo,
     localeOffset,
   } from "../store";
-  import { getDate, getDateFormat, saveData } from "../utils";
+  import {
+    getDate,
+    getDateFormat,
+    isLastEpisiode,
+    saveData,
+    searchSeasonByEpisode,
+  } from "../utils";
   import ArrowRight from "./svg/ArrowRight.svelte";
   import Plus from "./svg/Plus.svelte";
   import IframePlayer from "./player/IframePlayer.svelte";
@@ -102,6 +108,9 @@
     .tz("America/Mexico_City")
     .subtract($localeOffset, "hours")
     .isAfter(releaseDate.tz("America/Mexico_City"));
+
+  $: season = searchSeasonByEpisode(episode);
+  $: seasonNumber = season ? season.seasonNumber : 1;
 </script>
 
 <section transition:fade style={sectionStyle}>
@@ -121,17 +130,20 @@
         class="info"><Plus hover={infoHover} /> Más información</button
       >
 
-      <button
-        on:mouseover={() => {
-          nextHover = true;
-        }}
-        on:mouseleave={() => {
-          nextHover = false;
-        }}
-        on:focus={() => {}}
-        on:click={handleNextEpisode()}
-        class="next"><ArrowRight hover={nextHover} /> Siguiente capítulo</button
-      >
+      {#if !isLastEpisiode(episode)}
+        <button
+          on:mouseover={() => {
+            nextHover = true;
+          }}
+          on:mouseleave={() => {
+            nextHover = false;
+          }}
+          on:focus={() => {}}
+          on:click={handleNextEpisode()}
+          class="next"
+          ><ArrowRight hover={nextHover} /> Siguiente capítulo</button
+        >
+      {/if}
 
       {#if $selectedEpisode.quizzUrl}
         <QuizzButton />
@@ -141,7 +153,7 @@
 
   <div class="episode-info">
     <h2>
-      T1E{episode.episodeNumber}
+      T{seasonNumber}E{episode.episodeNumber}
       "{episode.title}"
     </h2>
     <p>
