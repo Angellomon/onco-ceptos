@@ -452,3 +452,31 @@ export function getDateFormat(date: Dayjs) {
 function delay(time = 1000) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
+
+export function searchSeasonByEpisode(episode: EpisodeType) {
+  let seasons: SeasonType[];
+
+  seasonsStore.subscribe((s) => {
+    seasons = s;
+  });
+
+  for (let season of seasons) {
+    if (season.id == episode.seasonId) return season;
+  }
+
+  return null;
+}
+
+export function isLastEpisiode(episode: EpisodeType) {
+  let episodesInSeason: EpisodeType[];
+
+  episodesStore.subscribe((eps) => {
+    episodesInSeason = eps.filter((ep) => ep.seasonId == episode.seasonId);
+  });
+
+  const lastEpisode = episodesInSeason[episodesInSeason.length - 1];
+
+  if (!lastEpisode) return false;
+
+  return lastEpisode.id === episode.id;
+}
