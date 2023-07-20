@@ -42,7 +42,9 @@
   $: searchResults = $episodesStore.filter(
     (ep) =>
       $searchText &&
-      ep.title.toLocaleLowerCase().search($searchText.toLowerCase()) >= 0
+      (ep.title.toLocaleLowerCase().search($searchText.toLowerCase()) >= 0 ||
+        ep.description.toLocaleLowerCase().search($searchText.toLowerCase()) >=
+          0)
   );
 </script>
 
