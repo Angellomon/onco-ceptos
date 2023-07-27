@@ -290,7 +290,7 @@ export function getDateStringWithOffset() {
     .toISOString();
 }
 
-type ButtonType = "mas_info" | "quizz";
+type ButtonType = "mas_info" | "quizz" | "reproductor";
 
 export async function registerEpisiodeButtonClickByUser(
   episode: EpisodeType,
