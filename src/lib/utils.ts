@@ -239,48 +239,21 @@ async function getSiteContextDigest(): Promise<string> {
   } catch (err) {
     console.log(JSON.stringify(err));
 
-    // console.log("error getting site context");
-    // console.log(typeof err);
-    // console.log(JSON.stringify(err));
-
     return "";
   }
 }
 
-export async function registerUserVisit(user: User) {
+async function postJsonToList(listName: string, body: any) {
   const url: string = import.meta.env.VITE_MSD_BASE_URL;
   const basePath: string = import.meta.env.VITE_MSD_BASE_PATH;
-  // const visitListName = import.meta.env.VITE_MSD_SP_VISITS_LIST_NAME;
-  const visitListTitle = import.meta.env.VITE_MSD_SP_VISITS_LIST_TITLE;
 
-  const userInfo = await getCurrentUser();
+  const bodyLength = JSON.stringify(body).length.toString();
 
   try {
     const contextDigest = await getSiteContextDigest();
 
-    let offset: number;
-    localeOffset.subscribe((o) => {
-      offset = o;
-    });
-
-    const body = {
-      // "__metadata": {
-      //   type: visitListName
-      // },
-      Title: nanoid(),
-      Correo: userInfo.email,
-      Nombre: user.name,
-      OData__x00da_ltimavisita: dayjs()
-        .tz("America/Mexico_City")
-        .subtract(offset, "hours")
-        .toISOString(),
-      Departamento: user.department,
-    };
-
-    const bodyLength = JSON.stringify(body).length.toString();
-
     const res = await fetch(
-      `${url}${basePath}/_api/web/lists/GetByTitle('${visitListTitle}')/items`,
+      `${url}${basePath}/_api/web/lists/GetByTitle('${listName}')/items`,
       {
         method: "POST",
         headers: {
@@ -293,11 +266,41 @@ export async function registerUserVisit(user: User) {
       }
     );
 
+    registrationErrorJson.set(null);
+
     const resJson = await res.json();
 
     console.log(resJson);
+  } catch (err) {
+    console.log("error registering user visit", err);
 
-    registrationErrorJson.set(null);
+    registrationErrorJson.set(JSON.stringify(err));
+  }
+}
+
+export async function registerUserVisit(user: User) {
+  const visitListTitle = import.meta.env.VITE_MSD_SP_VISITS_LIST_TITLE;
+
+  const userInfo = await getCurrentUser();
+
+  try {
+    let offset: number;
+    localeOffset.subscribe((o) => {
+      offset = o;
+    });
+
+    const body = {
+      Title: nanoid(),
+      Correo: userInfo.email,
+      Nombre: user.name,
+      OData__x00da_ltimavisita: dayjs()
+        .tz("America/Mexico_City")
+        .subtract(offset, "hours")
+        .toISOString(),
+      Departamento: user.department,
+    };
+
+    await postJsonToList(visitListTitle, body);
   } catch (err) {
     console.log("error registering user visit", err);
 
