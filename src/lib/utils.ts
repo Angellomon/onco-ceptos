@@ -278,34 +278,28 @@ async function postJsonToList(listName: string, body: any) {
   }
 }
 
-export async function registerUserVisit(user: User) {
+export async function registerUserVisit(user?: User) {
   const visitListTitle = import.meta.env.VITE_MSD_SP_VISITS_LIST_TITLE;
 
-  const userInfo = await getCurrentUser();
+  const userInfo = user || (await getCurrentUser());
 
-  try {
-    let offset: number;
-    localeOffset.subscribe((o) => {
-      offset = o;
-    });
+  let offset: number;
+  localeOffset.subscribe((o) => {
+    offset = o;
+  });
 
-    const body = {
-      Title: nanoid(),
-      Correo: userInfo.email,
-      Nombre: user.name,
-      OData__x00da_ltimavisita: dayjs()
-        .tz("America/Mexico_City")
-        .subtract(offset, "hours")
-        .toISOString(),
-      Departamento: user.department,
-    };
+  const body = {
+    Title: nanoid(),
+    Correo: userInfo.email,
+    Nombre: userInfo.name,
+    OData__x00da_ltimavisita: dayjs()
+      .tz("America/Mexico_City")
+      .subtract(offset, "hours")
+      .toISOString(),
+    Departamento: userInfo.department,
+  };
 
-    await postJsonToList(visitListTitle, body);
-  } catch (err) {
-    console.log("error registering user visit", err);
-
-    registrationErrorJson.set(JSON.stringify(err));
-  }
+  await postJsonToList(visitListTitle, body);
 }
 
 function getElementsFromArray(arr: any[], fields: string[]) {
