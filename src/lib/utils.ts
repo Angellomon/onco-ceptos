@@ -290,6 +290,29 @@ export function getDateStringWithOffset() {
     .toISOString();
 }
 
+export async function registerEpisodeVisitedByUser(
+  episode: EpisodeType,
+  user?: User
+) {
+  const visitedEpisodeListName = import.meta.env
+    .VITE_MSD_SP_VIDEO_CLICKED_LIST_TITLE;
+
+  const userInfo = user || (await getCurrentUser());
+
+  const dateString = getDateStringWithOffset();
+
+  const body = {
+    Title: nanoid(),
+    Correo: userInfo.email,
+    IdTemporada: episode.seasonId,
+    IdEpisodio: episode.id,
+    TituloEpisodio: episode.title,
+    Momento: dateString,
+  };
+
+  await postJsonToList(visitedEpisodeListName, body);
+}
+
 export async function registerUserVisit(user?: User) {
   const visitListTitle = import.meta.env.VITE_MSD_SP_VISITS_LIST_TITLE;
 
