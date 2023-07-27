@@ -47,6 +47,7 @@
   });
 
   $: episode = $selectedEpisode || $episodesStore[0];
+  $: registerEpisodeVisitedByUser(episode);
 
   $: src = $selectedEpisode.videoUrl;
   $: title = $selectedEpisode.title;
