@@ -2,6 +2,7 @@
   import Interrogation from "../svg/Interrogation.svelte";
 
   import { selectedEpisode } from "../../store";
+  import { registerEpisiodeButtonClickByUser } from "../../utils";
 
   let hover = false;
 
@@ -16,9 +17,18 @@
       hover = false;
     };
   }
+
+  async function handleLinkClick() {
+    await registerEpisiodeButtonClickByUser($selectedEpisode, "quizz");
+  }
 </script>
 
-<a href={$selectedEpisode.quizzUrl} target="_blank" rel="noreferrer">
+<a
+  href={$selectedEpisode.quizzUrl}
+  target="_blank"
+  rel="noreferrer"
+  on:click={handleLinkClick}
+>
   <button
     on:mouseover={handleMouseOver()}
     on:mouseleave={handleMouseLeave()}

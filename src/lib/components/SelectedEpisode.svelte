@@ -12,6 +12,7 @@
     getDate,
     getDateFormat,
     isLastEpisiode,
+    registerEpisiodeButtonClickByUser,
     saveData,
     searchSeasonByEpisode,
   } from "../utils";
@@ -93,8 +94,10 @@
     return setNextEpisode;
   }
 
-  function showInfoClick() {
+  async function showInfoClick() {
     $selectedEpisodeInfo = episode;
+
+    await registerEpisiodeButtonClickByUser(episode, "mas_info");
   }
 
   $: sectionStyle = $selectedEpisode
