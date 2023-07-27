@@ -290,6 +290,33 @@ export function getDateStringWithOffset() {
     .toISOString();
 }
 
+type ButtonType = "mas_info" | "quizz";
+
+export async function registerEpisiodeButtonClickByUser(
+  episode: EpisodeType,
+  buttonType: ButtonType,
+  user?: User
+) {
+  const buttonClickedListName = import.meta.env
+    .VITE_MSD_SP_VIDEO_BUTTON_CLICK_LIST_TITLE;
+
+  const userInfo = user || (await getCurrentUser());
+
+  const dateString = getDateStringWithOffset();
+
+  const body = {
+    Title: nanoid(),
+    Correo: userInfo.email,
+    IdTemporada: episode.seasonId,
+    IdEpisodio: episode.id,
+    TituloEpisodio: episode.title,
+    TipoBoton: buttonType.toLocaleUpperCase(),
+    Momento: dateString,
+  };
+
+  await postJsonToList(buttonClickedListName, body);
+}
+
 export async function registerEpisodeVisitedByUser(
   episode: EpisodeType,
   user?: User
