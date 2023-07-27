@@ -5,7 +5,7 @@
     selectedEpisode,
     localeOffset,
   } from "../../store";
-  import { getDate } from "../../utils";
+  import { getDate, registerEpisodeVisitedByUser } from "../../utils";
 
   import dayjs from "dayjs";
   import "dayjs/locale/es";
@@ -27,7 +27,9 @@
 
   let episodeReleaseInterval: any;
 
-  onMount(() => {
+  onMount(async () => {
+    await registerEpisodeVisitedByUser(episode);
+
     episodeReleaseInterval = setInterval(() => {
       const now = dayjs()
         .tz("America/Mexico_City")
