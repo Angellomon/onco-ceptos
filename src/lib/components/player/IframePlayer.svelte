@@ -5,7 +5,11 @@
     selectedEpisode,
     localeOffset,
   } from "../../store";
-  import { getDate, registerEpisodeVisitedByUser } from "../../utils";
+  import {
+    getDate,
+    registerEpisiodeButtonClickByUser,
+    registerEpisodeVisitedByUser,
+  } from "../../utils";
 
   import dayjs from "dayjs";
   import "dayjs/locale/es";
@@ -40,10 +44,28 @@
 
       pendingRelease = !isEpisodeReleased;
     }, 1000);
+
+    // iframe trick to register a click
+    window.focus();
+
+    window.addEventListener("blur", () => {
+      setTimeout(async () => {
+        if (document.activeElement.tagName === "IFRAME") {
+          // message.textContent = "clicked " + Date.now();
+          await registerEpisiodeButtonClickByUser(
+            $selectedEpisode,
+            "reproductor"
+          );
+          window.focus();
+        }
+      });
+    });
   });
 
   onDestroy(() => {
     clearInterval(episodeReleaseInterval);
+
+    window.removeEventListener("blur", () => {});
   });
 
   $: episode = $selectedEpisode || $episodesStore[0];
