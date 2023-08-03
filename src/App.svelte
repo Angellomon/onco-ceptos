@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import TimeMe from "timeme.js";
 
   import {
     loadSeriesData,
@@ -7,6 +8,7 @@
     getCurrentUser,
     verifyInstalledVersion,
     registerUserVisit,
+    registerUserUsageTimeInSeconds,
   } from "./lib/utils";
   import {
     episodesStore,
@@ -18,6 +20,11 @@
 
   onMount(async () => {
     dataIsLoading.set(true);
+
+    TimeMe.initialize({
+      currentPageName: "site-onconceptos", // current page
+      idleTimeoutInSeconds: 240, // seconds
+    });
 
     const data = await loadSeriesData();
 
@@ -44,6 +51,19 @@
 
     dataIsLoading.set(false);
   });
+
+  async function loadStart() {}
+
+  async function beforeUnload(event: BeforeUnloadEvent) {
+    const message = null;
+    (event || window.event).returnValue = message;
+
+    await registerUserUsageTimeInSeconds();
+
+    return message;
+  }
 </script>
+
+<svelte:window on:beforeunload|preventDefault={beforeUnload} />
 
 <Routes />
