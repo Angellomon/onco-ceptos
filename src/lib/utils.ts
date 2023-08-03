@@ -49,6 +49,7 @@ function extractSeasons(data: any, basePath: string = "/") {
       description: season.descripcion,
       seasonNumber: season.numero ?? 0,
       previewUrl,
+      quizzUrl: season.quizz_url,
     });
   }
 
