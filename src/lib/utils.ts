@@ -337,6 +337,7 @@ export async function registerUserUsageTimeInSeconds(user?: User) {
 
   const timeSpentInSeconds = getUserSpentTimeOnSite();
 
+  // ? for debugging purposes only
   await fetch("google.com");
   localStorage.setItem("endMoment", timeSpentInSeconds);
 
