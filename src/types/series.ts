@@ -22,6 +22,7 @@ export type SeasonType = {
   description: string;
   previewUrl: string;
   seasonNumber: number;
+  quizzUrl?: string;
 };
 
 export type User = {
