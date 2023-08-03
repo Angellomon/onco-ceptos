@@ -5,13 +5,16 @@
   import { searchText, episodesStore, selectedEpisode } from "../../store";
   import Search from "../svg/Search.svelte";
   import { isMenuOpen } from "../../store";
+  import { registerUserSearch } from "../../utils";
 
   let isMouseOver = false;
   let searchResults: EpisodeType[] = [];
 
   function handleResultClick(episode: EpisodeType) {
-    return () => {
+    return async () => {
       if (episode.pendingRelease) return;
+
+      await registerUserSearch($searchText, episode);
 
       $selectedEpisode = episode;
       searchResults = [];
@@ -22,7 +25,8 @@
   }
 
   function handleClick() {
-    return () => {
+    return async () => {
+      await registerUserSearch($searchText, null);
       console.log($searchText);
     };
   }
