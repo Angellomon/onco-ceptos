@@ -324,6 +324,31 @@ export async function registerEpisiodeButtonClickByUser(
   await postJsonToList(buttonClickedListName, body);
 }
 
+export async function registerUserSearch(
+  searchTerm: string,
+  episode: EpisodeType | null,
+  user?: User
+) {
+  const episodeId = episode ? episode.id : "NINGUNO";
+
+  const searchTermListName = import.meta.env
+    .VITE_MSD_SP_USER_SEARCH_TERM_LIST_TITLE;
+
+  const userInfo = user || (await getCurrentUser());
+
+  const dateString = getDateStringWithOffset();
+
+  const body = {
+    Title: nanoid(),
+    Correo: userInfo.email,
+    TerminoBusqueda: searchTerm,
+    IdEpisodio: episodeId,
+    Momento: dateString,
+  };
+
+  await postJsonToList(searchTermListName, body);
+}
+
 function getUserSpentTimeOnSite() {
   return TimeMe.getTimeOnCurrentPageInSeconds();
 }
