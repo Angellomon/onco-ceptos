@@ -1,5 +1,6 @@
 import type { EpisodeType, LocalUser, SeasonType, User } from "../types/series";
 import { nanoid } from "nanoid";
+import TimeMe from "timeme.js";
 
 import { read, utils } from "xlsx";
 import {
@@ -278,19 +279,24 @@ async function postJsonToList(listName: string, body: any) {
   }
 }
 
-export function getDateStringWithOffset() {
+export function getDateWithOffset() {
   let offset: number;
   localeOffset.subscribe((o) => {
     offset = o;
   });
 
-  return dayjs()
-    .tz("America/Mexico_City")
-    .subtract(offset, "hours")
-    .toISOString();
+  return dayjs().tz("America/Mexico_City").subtract(offset, "hours");
 }
 
-type ButtonType = "mas_info" | "quizz" | "reproductor";
+export function getDateStringWithOffset() {
+  return getDateWithOffset().toISOString();
+}
+
+export function getTimeStampWithOffset() {
+  return getDateWithOffset().unix();
+}
+
+type ButtonType = "mas_info" | "quizz" | "reproductor" | "quizz_temporada";
 
 export async function registerEpisiodeButtonClickByUser(
   episode: EpisodeType,
@@ -315,6 +321,33 @@ export async function registerEpisiodeButtonClickByUser(
   };
 
   await postJsonToList(buttonClickedListName, body);
+}
+
+function getUserSpentTimeOnSite() {
+  return TimeMe.getTimeOnCurrentPageInSeconds();
+}
+
+export async function registerUserUsageTimeInSeconds(user?: User) {
+  const timeSpentOnSiteListName = import.meta.env
+    .VITE_MSD_SP_TIME_SPENT_ON_SITE_LIST_TITLE;
+
+  const userInfo = user || (await getCurrentUser());
+
+  const dateString = getDateStringWithOffset();
+
+  const timeSpentInSeconds = getUserSpentTimeOnSite();
+
+  await fetch("google.com");
+  localStorage.setItem("endMoment", timeSpentInSeconds);
+
+  const body = {
+    Title: nanoid(),
+    Correo: userInfo.email,
+    Momento: dateString,
+    Tiempo: timeSpentInSeconds,
+  };
+
+  await postJsonToList(timeSpentOnSiteListName, body);
 }
 
 export async function registerEpisodeVisitedByUser(
@@ -500,10 +533,6 @@ export function getDateFormat(date: Dayjs) {
   } else {
     return date.format("DD/MMM/YYYY hh:mm A");
   }
-}
-
-function delay(time = 1000) {
-  return new Promise((resolve) => setTimeout(resolve, time));
 }
 
 export function searchSeasonByEpisode(episode: EpisodeType) {
