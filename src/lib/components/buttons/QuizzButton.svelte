@@ -3,8 +3,15 @@
 
   import { selectedEpisode } from "../../store";
   import { registerEpisiodeButtonClickByUser } from "../../utils";
+  import type { SeasonType } from "../../../types/series";
 
   let hover = false;
+  export let season: SeasonType;
+  export let seasonQuizz = false;
+
+  let buttonTitle = " Quizz";
+
+  if (seasonQuizz) buttonTitle += " Temporada";
 
   function handleMouseOver() {
     return () => {
@@ -19,23 +26,25 @@
   }
 
   async function handleLinkClick() {
-    await registerEpisiodeButtonClickByUser($selectedEpisode, "quizz");
+    if (seasonQuizz)
+      await registerEpisiodeButtonClickByUser(
+        $selectedEpisode,
+        "quizz_temporada"
+      );
+    else await registerEpisiodeButtonClickByUser($selectedEpisode, "quizz");
   }
+
+  $: quizzUrl = seasonQuizz ? season.quizzUrl : $selectedEpisode.quizzUrl;
 </script>
 
-<a
-  href={$selectedEpisode.quizzUrl}
-  target="_blank"
-  rel="noreferrer"
-  on:click={handleLinkClick}
->
+<a href={quizzUrl} target="_blank" rel="noreferrer" on:click={handleLinkClick}>
   <button
     on:mouseover={handleMouseOver()}
     on:mouseleave={handleMouseLeave()}
     on:focus={() => {}}
     class="quizz"
   >
-    <Interrogation {hover} /> Quizz</button
+    <Interrogation {hover} />{buttonTitle}</button
   >
 </a>
 
