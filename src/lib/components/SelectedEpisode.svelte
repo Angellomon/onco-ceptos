@@ -114,6 +114,7 @@
 
   $: season = searchSeasonByEpisode(episode);
   $: seasonNumber = season ? season.seasonNumber : 1;
+  $: isLast = isLastEpisiode(episode);
 </script>
 
 <section transition:fade style={sectionStyle}>
@@ -133,7 +134,7 @@
         class="info"><Plus hover={infoHover} /> Más información</button
       >
 
-      {#if !isLastEpisiode(episode)}
+      {#if !isLast}
         <button
           on:mouseover={() => {
             nextHover = true;
@@ -149,7 +150,11 @@
       {/if}
 
       {#if $selectedEpisode.quizzUrl}
-        <QuizzButton />
+        <QuizzButton {season} />
+      {/if}
+
+      {#if isLast && season.quizzUrl}
+        <QuizzButton {season} seasonQuizz />
       {/if}
     </div>
   </div>
