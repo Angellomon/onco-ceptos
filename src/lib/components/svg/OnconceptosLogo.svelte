@@ -8,6 +8,17 @@
   export let alt = "onconceptos";
 
   let style = `padding-left: ${paddingLeft}px`;
+
+  function reloadPage() {
+    location.reload();
+  }
 </script>
 
-<img {width} {style} {alt} src={type == "white" ? WhiteLogo : ColoredLogo} />
+<img
+  on:click={reloadPage}
+  on:keypress={reloadPage}
+  {width}
+  {style}
+  {alt}
+  src={type == "white" ? WhiteLogo : ColoredLogo}
+/>
