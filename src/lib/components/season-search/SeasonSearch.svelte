@@ -10,25 +10,20 @@
   let isMouseOver = false;
   let searchResults: EpisodeType[] = [];
 
-  function handleResultClick(episode: EpisodeType) {
-    return async () => {
-      if (episode.pendingRelease) return;
+  async function handleResultClick(episode: EpisodeType) {
+    $isMenuOpen = false;
 
-      await registerUserSearch($searchText, episode);
+    await registerUserSearch($searchText, episode);
 
-      $selectedEpisode = episode;
-      searchResults = [];
+    $selectedEpisode = episode;
+    searchResults = [];
 
-      $isMenuOpen = false;
-      $searchText = null;
-    };
+    $searchText = null;
   }
 
-  function handleClick() {
-    return async () => {
-      await registerUserSearch($searchText, null);
-      console.log($searchText);
-    };
+  async function handleClick() {
+    await registerUserSearch($searchText, null);
+    console.log($searchText);
   }
 
   function handleMouseOver() {
@@ -41,6 +36,11 @@
     return () => {
       isMouseOver = false;
     };
+  }
+
+  async function handleEnter() {
+    if (searchResults.length > 0) await handleResultClick(searchResults[0]);
+    else await handleClick();
   }
 
   $: searchResults = $episodesStore.filter(
@@ -59,8 +59,13 @@
   on:keypress={() => {}}
   on:focus={() => {}}
 >
-  <Search on:click={handleClick()} hover={isMouseOver} />
-  <input placeholder="Buscar" type="text" bind:value={$searchText} />
+  <Search on:click={() => handleClick()} hover={isMouseOver} />
+  <input
+    placeholder="Buscar"
+    type="text"
+    bind:value={$searchText}
+    on:keypress={(e) => e.code == "Enter" && handleEnter()}
+  />
 
   {#if searchResults.length > 0}
     <ul class="search-results">
@@ -68,7 +73,7 @@
         <li
           animate:flip={{ duration: 300 }}
           transition:fade
-          on:click={handleResultClick(ep)}
+          on:click={() => handleResultClick(ep)}
           on:keypress={() => {}}
         >
           {ep.title}
