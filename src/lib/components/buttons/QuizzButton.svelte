@@ -11,7 +11,7 @@
 
   let buttonTitle = " Quizz";
 
-  if (seasonQuizz) buttonTitle += " Temporada";
+  if (seasonQuizz) buttonTitle = "Encuesta de Salida";
 
   function handleMouseOver() {
     return () => {
@@ -43,8 +43,12 @@
     on:mouseleave={handleMouseLeave()}
     on:focus={() => {}}
     class="quizz"
+    class:season-quizz={seasonQuizz}
   >
-    <Interrogation {hover} />{buttonTitle}</button
+    {#if !seasonQuizz}
+      <Interrogation {hover} />
+    {/if}
+    {buttonTitle}</button
   >
 </a>
 
@@ -84,5 +88,9 @@
     font-size: 18px;
 
     cursor: pointer;
+  }
+
+  button.season-quizz {
+    padding-left: 20px;
   }
 </style>
