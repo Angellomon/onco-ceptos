@@ -6,11 +6,8 @@
     seasonsStore,
     selectedSeason,
     selectedEpisodeInfo,
-    localeOffset,
   } from "../store";
   import {
-    getDate,
-    getDateFormat,
     isLastEpisiode,
     registerEpisiodeButtonClickByUser,
     saveData,
@@ -24,6 +21,7 @@
   import "dayjs/locale/es";
   import utc from "dayjs/plugin/utc";
   import timezone from "dayjs/plugin/timezone";
+  import EpisodeInfo from "./EpisodeInfo.svelte";
 
   dayjs.extend(utc);
   dayjs.extend(timezone);
@@ -71,19 +69,6 @@
 
       $selectedEpisode = seasonEpisodes[0]; // # first episode of next season
     } else {
-      // let releaseDate = getDate(
-      //   nextEpisode.releaseDate,
-      //   nextEpisode.releaseHour,
-      //   nextEpisode.releaseMinute
-      // );
-
-      // let isEpisodeReleased = dayjs()
-      //   .tz("America/Mexico_City")
-      //   .subtract($localeOffset, "hours")
-      //   .isAfter(releaseDate);
-
-      // if (!isEpisodeReleased) return;
-
       $selectedEpisode = nextEpisode;
     }
 
@@ -104,16 +89,8 @@
     ? buildSectionStyle($selectedEpisode.previewUrl)
     : buildSectionWithFirstEpisode();
   $: episode = $selectedEpisode || $episodesStore[0];
-  $: releaseDate = episode
-    ? getDate(episode.releaseDate, episode.releaseHour, episode.releaseMinute)
-    : null;
-  $: isEpisodeReleased = dayjs()
-    .tz("America/Mexico_City")
-    .subtract($localeOffset, "hours")
-    .isAfter(releaseDate.tz("America/Mexico_City"));
 
   $: season = searchSeasonByEpisode(episode);
-  $: seasonNumber = season ? season.seasonNumber : 1;
   $: isLast = isLastEpisiode(episode);
 </script>
 
@@ -160,17 +137,7 @@
   </div>
 
   <div class="episode-info">
-    <h2>
-      T{seasonNumber}E{episode.episodeNumber}
-      "{episode.title}"
-    </h2>
-    <p>
-      {episode.year} • {episode.duration} • Disponible
-      {#if !isEpisodeReleased}
-        el <b>{getDateFormat(releaseDate)}</b>
-      {/if}
-    </p>
-    <p>{episode.description}</p>
+    <EpisodeInfo {episode} white />
   </div>
 </section>
 
@@ -195,22 +162,6 @@
     align-items: flex-start;
 
     /* padding-left: 5%; */
-  }
-
-  h2 {
-    color: white;
-
-    font-size: 45px;
-
-    margin: 0;
-  }
-
-  p {
-    color: white;
-
-    font-size: 23px;
-
-    margin-top: 0;
   }
 
   button {
@@ -292,11 +243,6 @@
     /* padding-left: 5%; */
     padding: 0 1em;
     padding-top: 2%;
-  }
-
-  h2,
-  p {
-    width: 80%;
   }
 
   @media screen and (max-width: 821px) and (min-width: 500px) {
