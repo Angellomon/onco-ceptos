@@ -16,9 +16,13 @@ import {
 import dayjs, { Dayjs } from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import updateLocale from "dayjs/plugin/updateLocale";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.extend(updateLocale);
+
+dayjs.updateLocale("en-mx", {});
 
 interface LoadOptions {
   sheetNames?: {
@@ -554,6 +558,8 @@ export function getDate(date: string, hour: string, minute: string) {
 
 export function getDateFormat(date: Dayjs) {
   const isSafari = isUserAgentSafari();
+
+  date = date.locale("es-mx");
 
   if (isSafari) {
     return date.format("DD-MMM-YYYY hh:mm A");
