@@ -91,7 +91,7 @@
   $: pendingRelease = !isEpisodeReleased;
 </script>
 
-{#if pendingRelease}
+{#if episode.pendingRelease || pendingRelease}
   <div in:fade {style}><h2><i>PRÓXIMAMENTE</i></h2></div>
 {:else}
   <iframe in:fade {title} {width} {height} {src} allowfullscreen />
