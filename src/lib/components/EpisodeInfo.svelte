@@ -7,6 +7,8 @@
 
   export let episode: EpisodeType;
 
+  export let white = false;
+
   $: releaseDate = episode
     ? getDate(episode.releaseDate, episode.releaseHour, episode.releaseMinute)
     : null;
@@ -14,28 +16,28 @@
     .tz("America/Mexico_City")
     .subtract($localeOffset, "hours")
     .isAfter(releaseDate.tz("America/Mexico_City"));
-  // $: pendingRelease = !isEpisodeReleased;
-
-  // TODO: fix season number dislplay (always displays 1)
 
   $: season = searchSeasonByEpisode(episode);
   $: seasonNumber = season ? season.seasonNumber : 1;
 </script>
 
 <div>
-  <h2>
+  <h2 class:white-h2={white}>
     T{seasonNumber}E{episode.episodeNumber}
     "{episode.title}"
   </h2>
 
-  <p>
-    {episode.year} • {episode.duration}
-    • Disponible
+  <p class:white-p={white}>
+    {releaseDate.year()}
+    {#if !episode.pendingRelease}
+      • {episode.duration}
+      • Disponible
+    {/if}
     {#if !isEpisodeReleased}
       el <b>{getDateFormat(releaseDate)}</b>
     {/if}
   </p>
-  <p>{episode.description}</p>
+  <p class:white-p={white}>{episode.description}</p>
 </div>
 
 <style>
@@ -52,6 +54,26 @@
 
   p {
     font-size: 18px;
+  }
+
+  .white-h2 {
+    color: white;
+
+    font-size: 45px;
+
+    margin: 0;
+    line-height: 35px;
+    line-height: unset;
+  }
+
+  .white-p {
+    color: white;
+
+    font-size: 23px;
+
+    margin-top: 0;
+
+    width: 80%;
   }
 
   @media screen and (max-width: 821px) and (min-width: 500px) {
