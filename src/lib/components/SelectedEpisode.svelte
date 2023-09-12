@@ -8,6 +8,7 @@
     selectedEpisodeInfo,
   } from "../store";
   import {
+    getDate,
     isLastEpisiode,
     registerEpisiodeButtonClickByUser,
     saveData,
@@ -22,6 +23,7 @@
   import utc from "dayjs/plugin/utc";
   import timezone from "dayjs/plugin/timezone";
   import EpisodeInfo from "./EpisodeInfo.svelte";
+  import { localeOffset } from "../store";
 
   dayjs.extend(utc);
   dayjs.extend(timezone);
@@ -90,6 +92,15 @@
     : buildSectionWithFirstEpisode();
   $: episode = $selectedEpisode || $episodesStore[0];
 
+  $: releaseDate = episode
+    ? getDate(episode.releaseDate, episode.releaseHour, episode.releaseMinute)
+    : null;
+
+  $: isEpisodeReleased = dayjs()
+    .tz("America/Mexico_City")
+    .subtract($localeOffset, "hours")
+    .isAfter(releaseDate.tz("America/Mexico_City"));
+
   $: season = searchSeasonByEpisode(episode);
   $: isLast = isLastEpisiode(episode);
 </script>
@@ -126,7 +137,7 @@
         >
       {/if}
 
-      {#if $selectedEpisode.quizzUrl}
+      {#if $selectedEpisode.quizzUrl && isEpisodeReleased}
         <QuizzButton {season} />
       {/if}
 
